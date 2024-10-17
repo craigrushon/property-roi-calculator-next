@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model products {
+  id           Int      @id @default(autoincrement())
+  image_url    String
+  name         String
+  status       status
+  price        Decimal  @db.Decimal(10, 2)
+  stock        Int
+  available_at DateTime @db.Timestamp(6)
+}
+
+model users {
+  id       Int     @id @default(autoincrement())
+  email    String  @db.VarChar(255)
+  name     String? @db.VarChar(255)
+  username String? @db.VarChar(255)
+}
+
+enum status {
+  active
+  inactive
+  archived
+}
