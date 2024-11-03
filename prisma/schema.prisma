@@ -35,3 +35,38 @@ enum status {
   inactive
   archived
 }
+
+model Expense {
+  id          Int      @id @default(autoincrement())
+  name        String
+  amount      Decimal
+  type        String
+  propertyId  Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  property    Property @relation(fields: [propertyId], references: [id])
+
+  @@index([propertyId], name: "index_expenses_on_property_id")
+}
+
+model Income {
+  id          Int      @id @default(autoincrement())
+  amount      Decimal
+  type        String
+  propertyId  Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  property    Property @relation(fields: [propertyId], references: [id])
+
+  @@index([propertyId], name: "index_incomes_on_property_id")
+}
+
+model Property {
+  id        Int       @id @default(autoincrement())
+  address   String
+  price     Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  expenses  Expense[]
+  incomes   Income[]
+}
