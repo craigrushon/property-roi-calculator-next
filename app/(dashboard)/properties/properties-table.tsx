@@ -5,6 +5,7 @@ import { GenericTable } from '../table';
 import { PropertyRow } from './property-row';
 
 interface Property {
+  id: number;
   address: string;
   price: number;
   returnOnInvestment: number;

@@ -9,8 +9,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
+import Link from 'next/link';
 
 interface Property {
+  id: number;
   address: string;
   price: number;
   returnOnInvestment: number;
@@ -44,7 +46,9 @@ export function PropertyRow({ item: property }: { item: Property }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={`/properties/${property.id}`}>Edit</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <button type="submit">Delete</button>
             </DropdownMenuItem>
