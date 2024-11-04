@@ -1,5 +1,9 @@
 import prisma from 'lib/prisma';
-import { Property } from 'prisma/models/property';
+import {
+  Property,
+  SimplifiedExpense,
+  SimplifiedIncome
+} from 'prisma/models/property';
 
 export async function getProperties(
   search: string,
@@ -31,12 +35,22 @@ export async function getProperties(
 
   // Map data to instances of the Property class
   const properties = propertiesData.map((data) => {
+    const incomes: SimplifiedIncome[] = data.incomes.map((income) => ({
+      ...income,
+      amount: Number(income.amount) // Convert Decimal to number
+    }));
+
+    const expenses: SimplifiedExpense[] = data.expenses.map((expense) => ({
+      ...expense,
+      amount: Number(expense.amount) // Convert Decimal to number
+    }));
+
     const property = new Property(
       data.id,
       data.address,
       Number(data.price),
-      data.incomes,
-      data.expenses
+      incomes,
+      expenses
     );
 
     return property.toObject();
