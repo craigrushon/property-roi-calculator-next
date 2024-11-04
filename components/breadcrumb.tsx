@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
 import {
   Breadcrumb,
@@ -22,18 +23,19 @@ function DashboardBreadcrumb() {
     const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
 
     return (
-      <BreadcrumbItem key={href}>
-        {index === pathSegments.length - 1 ? (
-          <BreadcrumbPage>{capitalize(segment)}</BreadcrumbPage>
-        ) : (
-          <>
+      <React.Fragment key={href}>
+        <BreadcrumbItem>
+          {index === pathSegments.length - 1 ? (
+            <BreadcrumbPage>{capitalize(segment)}</BreadcrumbPage>
+          ) : (
             <BreadcrumbLink asChild>
               <Link href={href}>{capitalize(segment)}</Link>
             </BreadcrumbLink>
-            <BreadcrumbSeparator />
-          </>
-        )}
-      </BreadcrumbItem>
+          )}
+        </BreadcrumbItem>
+        {/* Render the separator only if it's not the last item */}
+        {index < pathSegments.length - 1 && <BreadcrumbSeparator />}
+      </React.Fragment>
     );
   });
 

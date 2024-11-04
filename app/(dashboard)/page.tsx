@@ -1,8 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { File, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { PropertiesTable } from './properties-table';
+import { PropertiesTable } from './properties/properties-table';
 import { getProperties } from 'prisma/helpers/property';
+import Link from 'next/link';
 
 export default async function PropertiesPage({
   searchParams
@@ -34,12 +35,14 @@ export default async function PropertiesPage({
               Export
             </span>
           </Button>
-          <Button size="sm" className="h-8 gap-1">
-            <PlusCircle className="h-3.5 w-3.5" />
-            <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Add Property
-            </span>
-          </Button>
+          <Link href="/properties/new">
+            <Button size="sm" className="h-8 gap-1">
+              <PlusCircle className="h-3.5 w-3.5" />
+              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
+                Add Property
+              </span>
+            </Button>
+          </Link>
         </div>
       </div>
       <TabsContent value="all">

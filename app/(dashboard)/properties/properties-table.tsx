@@ -1,7 +1,7 @@
 'use client';
 
 import { TableHead } from '@/components/ui/table';
-import { GenericTable } from './table';
+import { GenericTable } from '../table';
 import { PropertyRow } from './property-row';
 
 interface Property {
