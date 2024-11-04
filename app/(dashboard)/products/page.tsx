@@ -1,17 +1,17 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { File, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { PropertiesTable } from './properties-table';
-import { getProperties } from 'prisma/helpers/property';
+import { ProductsTable } from './products-table';
+import { getProducts } from 'prisma/helpers/product';
 
-export default async function PropertiesPage({
+export default async function ProductsPage({
   searchParams
 }: {
   searchParams: { q: string; offset: string };
 }) {
   const search = searchParams.q ?? '';
   const offset = searchParams.offset ?? 0;
-  const { properties, newOffset, totalProperties } = await getProperties(
+  const { products, newOffset, totalProducts } = await getProducts(
     search,
     Number(offset)
   );
@@ -37,16 +37,16 @@ export default async function PropertiesPage({
           <Button size="sm" className="h-8 gap-1">
             <PlusCircle className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-              Add Property
+              Add Product
             </span>
           </Button>
         </div>
       </div>
       <TabsContent value="all">
-        <PropertiesTable
-          properties={properties}
+        <ProductsTable
+          products={products}
           offset={newOffset}
-          totalProperties={totalProperties}
+          totalProducts={totalProducts}
         />
       </TabsContent>
     </Tabs>

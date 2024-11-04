@@ -13,7 +13,7 @@ import { TableCell, TableRow } from '@/components/ui/table';
 import { SelectProduct } from 'prisma/types';
 import { deleteProduct } from './actions';
 
-export function Product({ product }: { product: SelectProduct }) {
+export function Product({ item: product }: { item: SelectProduct }) {
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">

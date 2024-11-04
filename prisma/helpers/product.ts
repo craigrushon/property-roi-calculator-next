@@ -32,17 +32,14 @@ export async function getProducts(
     return { products: [], newOffset: null, totalProducts: 0 };
   }
 
-  const totalProducts = await prisma.product.count(); // Use count() for total products
+  const totalProducts = await prisma.product.count();
 
   const moreProducts = await prisma.product.findMany({
-    take: 5, // Equivalent to .limit(5)
-    skip: offset // Equivalent to .offset(offset)
+    take: 5,
+    skip: offset
   });
 
   const newOffset = moreProducts.length >= 5 ? offset + 5 : null;
-
-  // console.log('newOffset', newOffset);
-  // console.log('totalProducts', totalProducts);
 
   return {
     products: mapProducts(moreProducts),

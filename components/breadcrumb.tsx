@@ -40,7 +40,17 @@ function DashboardBreadcrumb() {
   return (
     <Breadcrumb className="hidden md:flex">
       <BreadcrumbList>
-        {path !== '/' && (
+        {path === '/' ? (
+          <>
+            <BreadcrumbItem>
+              <BreadcrumbPage>Dashboard</BreadcrumbPage>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Properties</BreadcrumbPage>
+            </BreadcrumbItem>
+          </>
+        ) : (
           <>
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
