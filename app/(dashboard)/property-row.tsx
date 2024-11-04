@@ -33,7 +33,7 @@ export function PropertyRow({ item: property }: { item: Property }) {
       <TableCell className="font-medium">{property.address}</TableCell>
       <TableCell className="hidden md:table-cell">{`$${property.price.toLocaleString()}`}</TableCell>
       <TableCell>{`${property.returnOnInvestment.toFixed(2)}%`}</TableCell>
-      <TableCell className="hidden md:table-cell">{`$${property.cashflow.toLocaleString()}`}</TableCell>
+      <TableCell className="hidden md:table-cell">{`$${property.cashflow.toFixed(2)}`}</TableCell>
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
