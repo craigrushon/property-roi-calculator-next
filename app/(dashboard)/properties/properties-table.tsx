@@ -10,7 +10,7 @@ interface Property {
   price: number;
   returnOnInvestment: number;
   cashflow: number;
-  imageUrl: string;
+  imageUrl: string | null;
 }
 
 export function PropertiesTable({

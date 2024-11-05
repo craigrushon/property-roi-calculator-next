@@ -7,9 +7,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal } from 'lucide-react';
+import { HousePlus, MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import Link from 'next/link';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from '@/components/ui/tooltip';
 
 interface Property {
   id: number;
@@ -17,20 +22,33 @@ interface Property {
   price: number;
   returnOnInvestment: number;
   cashflow: number;
-  imageUrl: string;
+  imageUrl: string | null;
 }
 
 export function PropertyRow({ item: property }: { item: Property }) {
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
-        <Image
-          alt={`Image of ${property.address}`}
-          className="aspect-square rounded-md object-cover"
-          height={64}
-          src={`${property.imageUrl}`}
-          width={64}
-        />
+        {property.imageUrl ? (
+          <Image
+            alt={`Image of ${property.address}`}
+            className="aspect-square rounded-md object-cover"
+            height={64}
+            src={`${property.imageUrl}`}
+            width={64}
+          />
+        ) : (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link href={`/properties/${property.id}`}>
+                <div className="bg-gray-100 h-16 w-16 rounded-md text-center">
+                  <HousePlus className="h-16 w-16 p-5 rounded-md text-center opacity-50" />
+                </div>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="right">Add an image</TooltipContent>
+          </Tooltip>
+        )}
       </TableCell>
       <TableCell className="font-medium">{property.address}</TableCell>
       <TableCell className="hidden md:table-cell">{`$${property.price.toLocaleString()}`}</TableCell>

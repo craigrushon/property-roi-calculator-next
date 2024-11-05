@@ -42,18 +42,6 @@ export class Property {
     this.expenses = expenses;
   }
 
-  get imageUrlFromAddress(): string {
-    return (
-      '/' +
-      this.address
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
-        .replace(/\s+/g, '-') +
-      '.jpg'
-    );
-  }
-
   get returnOnInvestment(): number {
     return this.calculateROI();
   }
@@ -96,7 +84,7 @@ export class Property {
       price: this.price,
       returnOnInvestment: this.returnOnInvestment,
       cashflow: this.cashflow,
-      imageUrl: this.imageUrl || this.imageUrlFromAddress,
+      imageUrl: this.imageUrl,
       incomes: this.incomes,
       expenses: this.expenses
     };
