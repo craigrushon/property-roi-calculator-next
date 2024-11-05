@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import prisma from '@/lib/prisma';
+import { revalidatePath } from 'next/cache';
 
 export async function POST(req: NextRequest) {
   const propertyId = req.headers.get('property-id');
@@ -45,6 +46,8 @@ export async function POST(req: NextRequest) {
       where: { id: Number(propertyId) },
       data: { imageUrl }
     });
+
+    revalidatePath('/properties/[id]', 'page');
 
     return NextResponse.json({ filePath: imageUrl });
   } catch (error) {

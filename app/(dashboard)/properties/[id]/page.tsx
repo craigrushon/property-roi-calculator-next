@@ -1,8 +1,9 @@
-// /properties/[id]/page.tsx
 import { notFound } from 'next/navigation';
-import PropertyDisplay from './property-display';
 import prisma from 'lib/prisma'; // Ensure the Prisma client is imported correctly
 import { ExpenseType } from '../new/property-onboarding';
+import PropertyInfoCard from './property-info-card';
+import ExpensesCard from './expenses-card';
+import IncomesCard from './incomes-card';
 
 export default async function PropertyPage({
   params
@@ -49,7 +50,11 @@ export default async function PropertyPage({
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">Property Details</h1>
-      <PropertyDisplay property={propertyData} />
+      <div className="space-y-6">
+        <PropertyInfoCard propertyData={propertyData} />
+        <ExpensesCard expenses={propertyData.expenses} />
+        <IncomesCard incomes={propertyData.incomes} />
+      </div>
     </div>
   );
 }
