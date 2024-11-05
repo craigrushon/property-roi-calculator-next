@@ -67,6 +67,7 @@ model Property {
   price     Int
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  imageUrl  String?
   expenses  Expense[]
   incomes   Income[]
 }
