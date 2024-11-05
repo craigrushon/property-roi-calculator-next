@@ -3,12 +3,6 @@ import fs from 'fs';
 import path from 'path';
 import prisma from '@/lib/prisma';
 
-export const config = {
-  api: {
-    bodyParser: false // Disable Next.js's default body parser
-  }
-};
-
 export async function POST(req: NextRequest) {
   const propertyId = req.headers.get('property-id');
 

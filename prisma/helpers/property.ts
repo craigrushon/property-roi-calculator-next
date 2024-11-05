@@ -4,15 +4,17 @@ import {
   SimplifiedExpense,
   SimplifiedIncome
 } from 'prisma/models/property';
+import config from '../config';
 
 export async function getProperties(
   search: string,
   offset: number
 ): Promise<{
   properties: ReturnType<Property['toObject']>[];
-  newOffset: number | null;
+  itemsPerPage: number;
   totalProperties: number;
 }> {
+  const itemsPerPage = config.itemsPerPage;
   const propertiesData = await prisma.property.findMany({
     where: search
       ? {
@@ -22,7 +24,7 @@ export async function getProperties(
           }
         }
       : undefined,
-    take: 5, // Adjust as needed for pagination
+    take: itemsPerPage, // Equivalent to limit
     skip: offset || 0, // Skip based on offset
     include: {
       incomes: true,
@@ -30,8 +32,7 @@ export async function getProperties(
     }
   });
 
-  const totalProperties = await prisma.property.count(); // count total properties
-  const newOffset = propertiesData.length >= 5 ? offset + 5 : null; // Adjust pagination as needed
+  const totalProperties = await prisma.property.count();
 
   // Map data to instances of the Property class
   const properties = propertiesData.map((data) => {
@@ -59,7 +60,7 @@ export async function getProperties(
 
   return {
     properties,
-    newOffset,
+    itemsPerPage,
     totalProperties
   };
 }

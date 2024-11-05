@@ -1,14 +1,17 @@
 import prisma from 'lib/prisma';
 import { SelectProduct } from 'prisma/types';
+import config from 'prisma/config';
 
 export async function getProducts(
   search: string,
   offset: number
 ): Promise<{
   products: SelectProduct[];
-  newOffset: number | null;
+  itemsPerPage: number;
   totalProducts: number;
 }> {
+  const itemsPerPage = config.itemsPerPage;
+
   // Always search the full table, not per page
   if (search) {
     const products = await prisma.product.findMany({
@@ -23,13 +26,13 @@ export async function getProducts(
 
     return {
       products: mapProducts(products),
-      newOffset: null,
+      itemsPerPage,
       totalProducts: 0
     };
   }
 
   if (offset === null) {
-    return { products: [], newOffset: null, totalProducts: 0 };
+    return { products: [], itemsPerPage, totalProducts: 0 };
   }
 
   const totalProducts = await prisma.product.count();
@@ -39,11 +42,9 @@ export async function getProducts(
     skip: offset
   });
 
-  const newOffset = moreProducts.length >= 5 ? offset + 5 : null;
-
   return {
     products: mapProducts(moreProducts),
-    newOffset,
+    itemsPerPage,
     totalProducts
   };
 }

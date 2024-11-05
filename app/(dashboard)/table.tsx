@@ -20,7 +20,7 @@ interface GenericTableProps<T> {
   title: string;
   description: string;
   items: T[];
-  offset: number | null;
+  offset: number;
   totalItems: number;
   columns: ReactNode;
   rowComponent: React.ComponentType<{ item: T }>;

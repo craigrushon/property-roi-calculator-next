@@ -19,7 +19,7 @@ export function PropertiesTable({
   totalProperties
 }: {
   properties: Property[];
-  offset: number | null;
+  offset: number;
   totalProperties: number;
 }) {
   return (

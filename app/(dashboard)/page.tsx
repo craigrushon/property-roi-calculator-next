@@ -11,11 +11,8 @@ export default async function PropertiesPage({
   searchParams: { q: string; offset: string };
 }) {
   const search = searchParams.q ?? '';
-  const offset = searchParams.offset ?? 0;
-  const { properties, newOffset, totalProperties } = await getProperties(
-    search,
-    Number(offset)
-  );
+  const offset = searchParams.offset ? Number(searchParams.offset) : 0;
+  const { properties, totalProperties } = await getProperties(search, offset);
 
   return (
     <Tabs defaultValue="all">
@@ -48,7 +45,7 @@ export default async function PropertiesPage({
       <TabsContent value="all">
         <PropertiesTable
           properties={properties}
-          offset={newOffset}
+          offset={offset}
           totalProperties={totalProperties}
         />
       </TabsContent>

@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  TableHead,
-  TableRow,
-  TableHeader,
-  TableBody,
-  Table
-} from '@/components/ui/table';
+import { TableHead } from '@/components/ui/table';
 import { GenericTable } from '../table';
 import { Product } from './product';
 import { SelectProduct } from 'prisma/types';
@@ -17,7 +11,7 @@ export function ProductsTable({
   totalProducts
 }: {
   products: SelectProduct[];
-  offset: number | null;
+  offset: number;
   totalProducts: number;
 }) {
   return (
