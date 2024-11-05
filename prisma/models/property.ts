@@ -22,6 +22,7 @@ export class Property {
   id: number;
   address: string;
   price: number;
+  imageUrl: string | null;
   incomes: SimplifiedIncome[] = [];
   expenses: SimplifiedExpense[] = [];
 
@@ -29,23 +30,27 @@ export class Property {
     id: number,
     address: string,
     price: number,
+    imageUrl: string | null,
     incomes: SimplifiedIncome[] = [],
     expenses: SimplifiedExpense[] = []
   ) {
     this.id = id;
     this.address = address;
     this.price = price;
+    this.imageUrl = imageUrl;
     this.incomes = incomes;
     this.expenses = expenses;
   }
 
-  get imageUrl(): string {
+  get imageUrlFromAddress(): string {
     return (
+      '/' +
       this.address
         .trim()
         .toLowerCase()
         .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
-        .replace(/\s+/g, '-') + '.jpg'
+        .replace(/\s+/g, '-') +
+      '.jpg'
     );
   }
 
@@ -91,7 +96,7 @@ export class Property {
       price: this.price,
       returnOnInvestment: this.returnOnInvestment,
       cashflow: this.cashflow,
-      imageUrl: this.imageUrl,
+      imageUrl: this.imageUrl || this.imageUrlFromAddress,
       incomes: this.incomes,
       expenses: this.expenses
     };

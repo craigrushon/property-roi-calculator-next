@@ -49,6 +49,7 @@ export async function getProperties(
       data.id,
       data.address,
       Number(data.price),
+      data.imageUrl,
       incomes,
       expenses
     );

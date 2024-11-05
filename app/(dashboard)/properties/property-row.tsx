@@ -28,7 +28,7 @@ export function PropertyRow({ item: property }: { item: Property }) {
           alt={`Image of ${property.address}`}
           className="aspect-square rounded-md object-cover"
           height={64}
-          src={`/${property.imageUrl}`}
+          src={`${property.imageUrl}`}
           width={64}
         />
       </TableCell>

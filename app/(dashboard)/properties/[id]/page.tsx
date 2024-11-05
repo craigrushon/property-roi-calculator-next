@@ -32,6 +32,7 @@ export default async function PropertyPage({
     id: property.id,
     address: property.address,
     price: Number(property.price),
+    imageUrl: property.imageUrl,
     incomes: property.incomes.map((income) => ({
       id: income.id,
       amount: Number(income.amount),
