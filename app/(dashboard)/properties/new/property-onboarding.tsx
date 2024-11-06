@@ -1,32 +1,15 @@
 'use client';
 import { useState } from 'react';
-import prisma from '@/lib/prisma';
-import { Prisma } from '@prisma/client';
 import PropertyInfo from './property-info';
 import IncomeInfo from './income-info';
 import ExpenseInfo from './expense-info';
-import { addPropertyWithDetails } from './actions';
+import { addPropertyWithDetails, Expense, Income } from './actions';
 
-export interface Income {
-  amount: number;
-  type: 'monthly' | 'yearly';
-}
-
-export enum ExpenseType {
-  Monthly = 'monthly',
-  Yearly = 'yearly'
-}
-
-export type ExpenseCreateInput = Omit<
-  Prisma.Args<typeof prisma.expense, 'create'>['data'],
-  'propertyId'
->;
-
-interface PropertyData {
+export interface PropertyData {
   address: string;
   price: string;
   incomes: Income[];
-  expenses: ExpenseCreateInput[];
+  expenses: Expense[];
 }
 
 function AddPropertyOnboarding() {

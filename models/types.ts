@@ -1,3 +1,5 @@
+import { Frequency } from '@prisma/client';
+
 export interface Property {
   id: number;
   address: string;
@@ -10,7 +12,7 @@ export interface Property {
 export interface Income {
   id: number;
   amount: number;
-  type: 'monthly' | 'yearly';
+  frequency: Frequency;
 }
 
 export enum ExpenseType {
@@ -21,14 +23,14 @@ export enum ExpenseType {
 export interface Expense {
   id: number;
   amount: number;
-  type: ExpenseType;
+  frequency: Frequency;
   name: string;
 }
 
 export interface NormalizedIncome {
   id: number;
   amount: number;
-  type: 'monthly' | 'yearly' | string;
+  frequency: Frequency;
   propertyId: number;
   createdAt: Date;
   updatedAt: Date;
@@ -37,7 +39,7 @@ export interface NormalizedIncome {
 export interface NormalizedExpense {
   id: number;
   amount: number;
-  type: 'monthly' | 'yearly' | string;
+  frequency: Frequency;
   propertyId: number;
   createdAt: Date;
   updatedAt: Date;

@@ -36,7 +36,7 @@ export class Property {
     return this.incomes.reduce((total, income) => {
       return (
         total +
-        (income.type === 'yearly'
+        (income.frequency === 'yearly'
           ? Number(income.amount) / 12
           : Number(income.amount))
       );
@@ -46,7 +46,7 @@ export class Property {
   calculateMonthlyExpenses(): number {
     return this.expenses.reduce((total, expense) => {
       const amount = Number(expense.amount);
-      return total + (expense.type === 'yearly' ? amount / 12 : amount);
+      return total + (expense.frequency === 'yearly' ? amount / 12 : amount);
     }, 0);
   }
 

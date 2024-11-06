@@ -1,13 +1,24 @@
 'use server';
 
 import prisma from 'lib/prisma';
-import { ExpenseCreateInput, Income } from './property-onboarding';
+import { Frequency } from '@prisma/client';
+
+export interface Income {
+  amount: number;
+  frequency: Frequency;
+}
+
+export interface Expense {
+  amount: number;
+  frequency: Frequency;
+  name: string;
+}
 
 export async function addPropertyWithDetails(propertyData: {
   address: string;
   price: number;
   incomes: Income[];
-  expenses: ExpenseCreateInput[];
+  expenses: Expense[];
 }) {
   const { address, price, incomes, expenses } = propertyData;
 

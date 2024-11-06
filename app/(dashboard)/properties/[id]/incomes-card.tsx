@@ -6,12 +6,7 @@ import {
   CardFooter
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-
-interface Income {
-  id: number;
-  amount: number;
-  type: 'monthly' | 'yearly';
-}
+import { Income } from 'models/types';
 
 interface Props {
   incomes: Income[];
@@ -44,7 +39,7 @@ function IncomesCard({ incomes }: Props) {
                     <strong>Amount:</strong> ${income.amount.toLocaleString()}
                   </p>
                   <p>
-                    <strong>Type:</strong> {income.type}
+                    <strong>Type:</strong> {income.frequency}
                   </p>
                 </div>
                 <Button

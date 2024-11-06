@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation';
 import prisma from 'lib/prisma'; // Ensure the Prisma client is imported correctly
-import { ExpenseType } from '../new/property-onboarding';
 import PropertyInfoCard from './property-info-card';
 import ExpensesCard from './expenses-card';
 import IncomesCard from './incomes-card';
@@ -37,12 +36,12 @@ export default async function PropertyPage({
     incomes: property.incomes.map((income) => ({
       id: income.id,
       amount: Number(income.amount),
-      type: income.type as 'monthly' | 'yearly'
+      frequency: income.frequency
     })),
     expenses: property.expenses.map((expense) => ({
       id: expense.id,
       amount: Number(expense.amount),
-      type: expense.type as ExpenseType,
+      frequency: expense.frequency,
       name: expense.name
     }))
   };

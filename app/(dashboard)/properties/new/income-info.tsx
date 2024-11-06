@@ -8,6 +8,14 @@ import {
   CardFooter,
   CardHeader
 } from '@/components/ui/card';
+import { PropertyData } from './property-onboarding';
+import { Frequency } from '@prisma/client';
+import { Income } from './actions';
+
+const defaultIncome = {
+  amount: '',
+  frequency: 'monthly' as Frequency
+};
 
 function IncomeInfo({
   propertyData,
@@ -15,12 +23,12 @@ function IncomeInfo({
   onNext,
   onPrev
 }: {
-  propertyData: { incomes: { amount: number; type: string }[] };
-  onChange: (updatedData: any) => void;
+  propertyData: PropertyData;
+  onChange: (updatedData: { incomes: Income[] }) => void;
   onNext: () => void;
   onPrev: () => void;
 }) {
-  const [income, setIncome] = useState({ amount: '', type: 'monthly' });
+  const [income, setIncome] = useState({ ...defaultIncome });
 
   const addIncome = () => {
     const newIncomes = [
@@ -28,7 +36,15 @@ function IncomeInfo({
       { ...income, amount: Number(income.amount) }
     ];
     onChange({ incomes: newIncomes });
-    setIncome({ amount: '', type: 'monthly' });
+    setIncome({ ...defaultIncome });
+  };
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIncome({ ...income, amount: e.target.value });
+  };
+
+  const handleFrequencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setIncome({ ...income, frequency: e.target.value as Frequency });
   };
 
   return (
@@ -45,34 +61,39 @@ function IncomeInfo({
             type="number"
             id="amount"
             value={income.amount}
-            onChange={(e) => setIncome({ ...income, amount: e.target.value })}
+            onChange={handleAmountChange}
             placeholder="Enter income amount"
             required
           />
         </div>
         <div className="mb-4">
           <label htmlFor="type" className="block text-sm font-medium">
-            Type
+            Frequency
           </label>
           <select
-            id="type"
-            value={income.type}
-            onChange={(e) => setIncome({ ...income, type: e.target.value })}
+            id="frequency"
+            value={income.frequency}
+            onChange={handleFrequencyChange}
             className="w-full border rounded p-2"
           >
-            <option value="monthly">Monthly</option>
-            <option value="yearly">Yearly</option>
+            <option value={'monthly'}>Monthly</option>
+            <option value={'yearly'}>Yearly</option>
           </select>
         </div>
-        <Button onClick={addIncome} size="sm">
+        <Button onClick={addIncome} size="sm" aria-label="Add Income">
           Add Income
         </Button>
       </CardContent>
       <CardFooter className="justify-between">
-        <Button onClick={onPrev} size="sm" variant="outline">
+        <Button
+          onClick={onPrev}
+          size="sm"
+          variant="outline"
+          aria-label="Go to Previous Step"
+        >
           Previous
         </Button>
-        <Button onClick={onNext} size="sm">
+        <Button onClick={onNext} size="sm" aria-label="Go to Next Step">
           Next
         </Button>
       </CardFooter>

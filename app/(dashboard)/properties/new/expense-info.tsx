@@ -8,10 +8,14 @@ import {
   CardFooter,
   CardHeader
 } from '@/components/ui/card';
-import {
-  ExpenseCreateInput as Expense,
-  ExpenseType
-} from './property-onboarding';
+import { Expense } from './actions';
+import { Frequency } from '@prisma/client';
+
+const defaultExpense = {
+  amount: '',
+  frequency: 'monthly' as Frequency,
+  name: ''
+};
 
 function ExpenseInfo({
   propertyData,
@@ -24,11 +28,7 @@ function ExpenseInfo({
   onSubmit: () => void;
   onPrev: () => void;
 }) {
-  const [expense, setExpense] = useState({
-    amount: '',
-    type: ExpenseType.Monthly,
-    name: ''
-  });
+  const [expense, setExpense] = useState({ ...defaultExpense });
 
   const addExpense = () => {
     const newExpenses = [
@@ -36,7 +36,19 @@ function ExpenseInfo({
       { ...expense, amount: Number(expense.amount) }
     ];
     onChange({ expenses: newExpenses });
-    setExpense({ amount: '', type: ExpenseType.Monthly, name: '' });
+    setExpense({ ...defaultExpense });
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setExpense({ ...expense, name: e.target.value });
+  };
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setExpense({ ...expense, amount: e.target.value });
+  };
+
+  const handleFrequencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setExpense({ ...expense, frequency: e.target.value as Frequency });
   };
 
   return (
@@ -53,7 +65,7 @@ function ExpenseInfo({
             type="text"
             id="name"
             value={expense.name}
-            onChange={(e) => setExpense({ ...expense, name: e.target.value })}
+            onChange={handleNameChange}
             placeholder="Enter expense name"
             required
           />
@@ -66,25 +78,23 @@ function ExpenseInfo({
             type="number"
             id="amount"
             value={expense.amount}
-            onChange={(e) => setExpense({ ...expense, amount: e.target.value })}
+            onChange={handleAmountChange}
             placeholder="Enter expense amount"
             required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="type" className="block text-sm font-medium">
-            Type
+          <label htmlFor="frequency" className="block text-sm font-medium">
+            Frequency
           </label>
           <select
-            id="type"
-            value={expense.type}
-            onChange={(e) =>
-              setExpense({ ...expense, type: e.target.value as ExpenseType })
-            }
+            id="frequency"
+            value={expense.frequency}
+            onChange={handleFrequencyChange}
             className="w-full border rounded p-2"
           >
-            <option value={ExpenseType.Monthly}>Monthly</option>
-            <option value={ExpenseType.Yearly}>Yearly</option>
+            <option value={'monthly'}>Monthly</option>
+            <option value={'yearly'}>Yearly</option>
           </select>
         </div>
         <Button onClick={addExpense} size="sm" className="mt-2">
@@ -92,10 +102,19 @@ function ExpenseInfo({
         </Button>
       </CardContent>
       <CardFooter className="justify-between">
-        <Button onClick={onPrev} size="sm" variant="outline">
+        <Button
+          onClick={onPrev}
+          size="sm"
+          variant="outline"
+          aria-label="Go to Previous Step"
+        >
           Previous
         </Button>
-        <Button onClick={onSubmit} size="sm">
+        <Button
+          onClick={onSubmit}
+          size="sm"
+          aria-label="Submit Expense Information"
+        >
           Submit
         </Button>
       </CardFooter>
