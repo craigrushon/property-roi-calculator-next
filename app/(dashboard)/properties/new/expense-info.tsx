@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -10,6 +9,7 @@ import {
 } from '@/components/ui/card';
 import { Expense } from './actions';
 import { Frequency } from '@prisma/client';
+import ExpenseInfoForm from '../expense-form';
 
 const defaultExpense = {
   amount: '',
@@ -17,7 +17,7 @@ const defaultExpense = {
   name: ''
 };
 
-function ExpenseInfo({
+function ExpensesCard({
   propertyData,
   onChange,
   onSubmit,
@@ -39,16 +39,11 @@ function ExpenseInfo({
     setExpense({ ...defaultExpense });
   };
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setExpense({ ...expense, name: e.target.value });
-  };
-
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setExpense({ ...expense, amount: e.target.value });
-  };
-
-  const handleFrequencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setExpense({ ...expense, frequency: e.target.value as Frequency });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { id, value } = e.target;
+    setExpense((prev) => ({ ...prev, [id]: value }));
   };
 
   return (
@@ -57,49 +52,11 @@ function ExpenseInfo({
         <h2 className="text-xl font-bold">Step 3: Expense Details</h2>
       </CardHeader>
       <CardContent>
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-medium">
-            Expense Name
-          </label>
-          <Input
-            type="text"
-            id="name"
-            value={expense.name}
-            onChange={handleNameChange}
-            placeholder="Enter expense name"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="amount" className="block text-sm font-medium">
-            Amount
-          </label>
-          <Input
-            type="number"
-            id="amount"
-            value={expense.amount}
-            onChange={handleAmountChange}
-            placeholder="Enter expense amount"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="frequency" className="block text-sm font-medium">
-            Frequency
-          </label>
-          <select
-            id="frequency"
-            value={expense.frequency}
-            onChange={handleFrequencyChange}
-            className="w-full border rounded p-2"
-          >
-            <option value={'monthly'}>Monthly</option>
-            <option value={'yearly'}>Yearly</option>
-          </select>
-        </div>
-        <Button onClick={addExpense} size="sm" className="mt-2">
-          Add Expense
-        </Button>
+        <ExpenseInfoForm
+          expense={expense}
+          onChange={handleChange}
+          onAddExpense={addExpense}
+        />
       </CardContent>
       <CardFooter className="justify-between">
         <Button
@@ -122,4 +79,4 @@ function ExpenseInfo({
   );
 }
 
-export default ExpenseInfo;
+export default ExpensesCard;

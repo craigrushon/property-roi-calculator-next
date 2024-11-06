@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -11,13 +10,14 @@ import {
 import { PropertyData } from './property-onboarding';
 import { Frequency } from '@prisma/client';
 import { Income } from './actions';
+import IncomeInfoForm from '../income-form';
 
 const defaultIncome = {
   amount: '',
   frequency: 'monthly' as Frequency
 };
 
-function IncomeInfo({
+function IncomesCard({
   propertyData,
   onChange,
   onNext,
@@ -39,12 +39,11 @@ function IncomeInfo({
     setIncome({ ...defaultIncome });
   };
 
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIncome({ ...income, amount: e.target.value });
-  };
-
-  const handleFrequencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setIncome({ ...income, frequency: e.target.value as Frequency });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { id, value } = e.target;
+    setIncome((prev) => ({ ...prev, [id]: value }));
   };
 
   return (
@@ -53,36 +52,11 @@ function IncomeInfo({
         <h2 className="text-xl font-bold">Step 2: Income Details</h2>
       </CardHeader>
       <CardContent>
-        <div className="mb-4">
-          <label htmlFor="amount" className="block text-sm font-medium">
-            Amount
-          </label>
-          <Input
-            type="number"
-            id="amount"
-            value={income.amount}
-            onChange={handleAmountChange}
-            placeholder="Enter income amount"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="type" className="block text-sm font-medium">
-            Frequency
-          </label>
-          <select
-            id="frequency"
-            value={income.frequency}
-            onChange={handleFrequencyChange}
-            className="w-full border rounded p-2"
-          >
-            <option value={'monthly'}>Monthly</option>
-            <option value={'yearly'}>Yearly</option>
-          </select>
-        </div>
-        <Button onClick={addIncome} size="sm" aria-label="Add Income">
-          Add Income
-        </Button>
+        <IncomeInfoForm
+          income={income}
+          onChange={handleChange}
+          onAddIncome={addIncome}
+        />
       </CardContent>
       <CardFooter className="justify-between">
         <Button
@@ -101,4 +75,4 @@ function IncomeInfo({
   );
 }
 
-export default IncomeInfo;
+export default IncomesCard;

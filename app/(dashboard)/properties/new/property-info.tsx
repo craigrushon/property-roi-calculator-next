@@ -6,9 +6,9 @@ import {
   CardFooter,
   CardHeader
 } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import PropertyInfoForm from '../property-form';
 
-function PropertyInfo({
+function PropertyCard({
   propertyData,
   onChange,
   onNext
@@ -23,32 +23,7 @@ function PropertyInfo({
         <h2 className="text-xl font-bold">Step 1: Property Information</h2>
       </CardHeader>
       <CardContent>
-        <div>
-          <label htmlFor="address" className="block text-sm font-medium">
-            Address
-          </label>
-          <Input
-            type="text"
-            id="address"
-            value={propertyData.address}
-            onChange={(e) => onChange({ address: e.target.value })}
-            placeholder="Enter property address"
-            required
-          />
-        </div>
-        <div className="mt-4">
-          <label htmlFor="price" className="block text-sm font-medium">
-            Price ($)
-          </label>
-          <Input
-            type="number"
-            id="price"
-            value={propertyData.price}
-            onChange={(e) => onChange({ price: e.target.value })}
-            placeholder="Enter property price"
-            required
-          />
-        </div>
+        <PropertyInfoForm propertyData={propertyData} onChange={onChange} />
       </CardContent>
       <CardFooter>
         <Button onClick={onNext} size="sm">
@@ -59,4 +34,4 @@ function PropertyInfo({
   );
 }
 
-export default PropertyInfo;
+export default PropertyCard;

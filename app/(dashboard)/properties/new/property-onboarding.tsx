@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
-import PropertyInfo from './property-info';
-import IncomeInfo from './income-info';
-import ExpenseInfo from './expense-info';
+import PropertyCard from './property-info';
+import IncomesCard from './income-info';
+import ExpensesCard from './expense-info';
 import { addPropertyWithDetails, Expense, Income } from './actions';
 
 export interface PropertyData {
@@ -54,14 +54,14 @@ function AddPropertyOnboarding() {
   return (
     <div>
       {currentStep === 1 && (
-        <PropertyInfo
+        <PropertyCard
           propertyData={propertyData}
           onChange={handlePropertyDataChange}
           onNext={nextStep}
         />
       )}
       {currentStep === 2 && (
-        <IncomeInfo
+        <IncomesCard
           propertyData={propertyData}
           onChange={handlePropertyDataChange}
           onNext={nextStep}
@@ -69,7 +69,7 @@ function AddPropertyOnboarding() {
         />
       )}
       {currentStep === 3 && (
-        <ExpenseInfo
+        <ExpensesCard
           propertyData={propertyData}
           onChange={handlePropertyDataChange}
           onSubmit={handleSubmit}
