@@ -3,7 +3,6 @@ import { useState } from 'react';
 import PropertyInfo from './property-info';
 import IncomeInfo from './income-info';
 import ExpenseInfo from './expense-info';
-import { Button } from '@/components/ui/button';
 import { addPropertyWithDetails } from './actions';
 
 export interface Income {
@@ -74,37 +73,25 @@ function AddPropertyOnboarding() {
         <PropertyInfo
           propertyData={propertyData}
           onChange={handlePropertyDataChange}
+          onNext={nextStep}
         />
       )}
       {currentStep === 2 && (
         <IncomeInfo
           propertyData={propertyData}
           onChange={handlePropertyDataChange}
+          onNext={nextStep}
+          onPrev={prevStep}
         />
       )}
       {currentStep === 3 && (
         <ExpenseInfo
           propertyData={propertyData}
           onChange={handlePropertyDataChange}
+          onSubmit={handleSubmit}
+          onPrev={prevStep}
         />
       )}
-
-      <div className="mt-4 flex justify-between">
-        {currentStep > 1 && (
-          <Button onClick={prevStep} size="sm" variant="outline">
-            Previous
-          </Button>
-        )}
-        {currentStep < 3 ? (
-          <Button onClick={nextStep} size="sm">
-            Next
-          </Button>
-        ) : (
-          <Button onClick={handleSubmit} size="sm">
-            Submit
-          </Button>
-        )}
-      </div>
     </div>
   );
 }
