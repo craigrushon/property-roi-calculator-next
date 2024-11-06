@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
-import PropertyCard from './property-info';
-import IncomesCard from './income-info';
-import ExpensesCard from './expense-info';
+import PropertyCard from './property-card';
+import IncomesCard from './incomes-card';
+import ExpensesCard from './expenses-card';
 import { addPropertyWithDetails, Expense, Income } from './actions';
 
 export interface PropertyData {
