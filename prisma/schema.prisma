@@ -45,7 +45,6 @@ model Expense {
   id          Int      @id @default(autoincrement())
   name        String
   amount      Decimal
-  type        String?  @ignore
   frequency   Frequency @default(monthly)
   propertyId  Int
   createdAt   DateTime @default(now())
@@ -58,7 +57,6 @@ model Expense {
 model Income {
   id          Int      @id @default(autoincrement())
   amount      Decimal
-  type        String?  @ignore
   frequency   Frequency @default(monthly)
   propertyId  Int
   createdAt   DateTime @default(now())
