@@ -6,13 +6,7 @@ import {
   CardFooter
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-
-interface Expense {
-  id: number;
-  amount: number;
-  type: 'monthly' | 'yearly';
-  name: string;
-}
+import { Expense } from 'models/types';
 
 interface Props {
   expenses: Expense[];

@@ -3,15 +3,7 @@
 import { TableHead } from '@/components/ui/table';
 import { GenericTable } from '../table';
 import { PropertyRow } from './property-row';
-
-interface Property {
-  id: number;
-  address: string;
-  price: number;
-  returnOnInvestment: number;
-  cashflow: number;
-  imageUrl: string | null;
-}
+import { Property } from 'models/types';
 
 export function PropertiesTable({
   properties,

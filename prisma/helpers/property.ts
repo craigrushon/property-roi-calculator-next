@@ -1,9 +1,6 @@
 import prisma from 'lib/prisma';
-import {
-  Property,
-  SimplifiedExpense,
-  SimplifiedIncome
-} from 'prisma/models/property';
+import { Property } from 'models/property';
+import { NormalizedExpense, NormalizedIncome } from 'models/types';
 import config from '../config';
 
 export async function getProperties(
@@ -36,12 +33,12 @@ export async function getProperties(
 
   // Map data to instances of the Property class
   const properties = propertiesData.map((data) => {
-    const incomes: SimplifiedIncome[] = data.incomes.map((income) => ({
+    const incomes: NormalizedIncome[] = data.incomes.map((income) => ({
       ...income,
       amount: Number(income.amount) // Convert Decimal to number
     }));
 
-    const expenses: SimplifiedExpense[] = data.expenses.map((expense) => ({
+    const expenses: NormalizedExpense[] = data.expenses.map((expense) => ({
       ...expense,
       amount: Number(expense.amount) // Convert Decimal to number
     }));

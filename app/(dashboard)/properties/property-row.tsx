@@ -15,15 +15,7 @@ import {
   TooltipContent,
   TooltipTrigger
 } from '@/components/ui/tooltip';
-
-interface Property {
-  id: number;
-  address: string;
-  price: number;
-  returnOnInvestment: number;
-  cashflow: number;
-  imageUrl: string | null;
-}
+import { Property } from 'models/types';
 
 export function PropertyRow({ item: property }: { item: Property }) {
   return (

@@ -1,38 +1,20 @@
-import { Expense, Income } from '@prisma/client';
-
-export interface SimplifiedIncome {
-  id: number;
-  amount: number;
-  type: 'monthly' | 'yearly' | string;
-  propertyId: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface SimplifiedExpense {
-  id: number;
-  amount: number;
-  type: 'monthly' | 'yearly' | string;
-  propertyId: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { NormalizedExpense, NormalizedIncome } from './types';
 
 export class Property {
   id: number;
   address: string;
   price: number;
   imageUrl: string | null;
-  incomes: SimplifiedIncome[] = [];
-  expenses: SimplifiedExpense[] = [];
+  incomes: NormalizedIncome[] = [];
+  expenses: NormalizedExpense[] = [];
 
   constructor(
     id: number,
     address: string,
     price: number,
     imageUrl: string | null,
-    incomes: SimplifiedIncome[] = [],
-    expenses: SimplifiedExpense[] = []
+    incomes: NormalizedIncome[] = [],
+    expenses: NormalizedExpense[] = []
   ) {
     this.id = id;
     this.address = address;

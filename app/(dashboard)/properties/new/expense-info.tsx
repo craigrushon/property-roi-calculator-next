@@ -8,7 +8,10 @@ import {
   CardFooter,
   CardHeader
 } from '@/components/ui/card';
-import { Expense, ExpenseType } from './property-onboarding';
+import {
+  ExpenseCreateInput as Expense,
+  ExpenseType
+} from './property-onboarding';
 
 function ExpenseInfo({
   propertyData,
