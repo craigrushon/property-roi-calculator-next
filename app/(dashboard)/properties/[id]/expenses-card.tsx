@@ -42,7 +42,7 @@ function ExpensesCard({ expenses }: Props) {
                     <strong>Amount:</strong> ${expense.amount.toLocaleString()}
                   </p>
                   <p>
-                    <strong>Type:</strong> {expense.frequency}
+                    <strong>Frequency:</strong> {expense.frequency}
                   </p>
                 </div>
                 <Button
