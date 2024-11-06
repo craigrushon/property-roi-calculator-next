@@ -36,11 +36,17 @@ enum status {
   archived
 }
 
+enum Frequency {
+  monthly
+  yearly
+}
+
 model Expense {
   id          Int      @id @default(autoincrement())
   name        String
   amount      Decimal
   type        String
+  frequency   Frequency @default(monthly)
   propertyId  Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -53,6 +59,7 @@ model Income {
   id          Int      @id @default(autoincrement())
   amount      Decimal
   type        String
+  frequency   Frequency @default(monthly)
   propertyId  Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
