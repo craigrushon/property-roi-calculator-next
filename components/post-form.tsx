@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, FormEvent, useCallback, useEffect, useRef } from 'react';
 
 interface User {
