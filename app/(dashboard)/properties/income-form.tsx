@@ -4,13 +4,18 @@ import { Frequency } from '@prisma/client';
 
 interface Props {
   income: { amount: string; frequency: Frequency };
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
+  onChange: (id: string, value: string) => void;
   onAddIncome: () => void;
 }
 
 function IncomeForm({ income, onChange, onAddIncome }: Props) {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { id, value } = e.target;
+    onChange(id, value);
+  };
+
   return (
     <div>
       <div className="mb-4">
@@ -21,7 +26,7 @@ function IncomeForm({ income, onChange, onAddIncome }: Props) {
           type="number"
           id="amount"
           value={income.amount}
-          onChange={onChange}
+          onChange={handleChange}
           placeholder="Enter income amount"
           required
         />
@@ -33,11 +38,11 @@ function IncomeForm({ income, onChange, onAddIncome }: Props) {
         <select
           id="frequency"
           value={income.frequency}
-          onChange={onChange}
+          onChange={handleChange}
           className="w-full border rounded p-2"
         >
-          <option value="monthly">Monthly</option>
-          <option value="yearly">Yearly</option>
+          <option value={Frequency['monthly']}>Monthly</option>
+          <option value={Frequency['yearly']}>Yearly</option>
         </select>
       </div>
       <Button onClick={onAddIncome} size="sm" aria-label="Add Income">

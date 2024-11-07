@@ -18,12 +18,12 @@ const defaultIncome = {
 };
 
 function IncomesCard({
-  propertyData,
+  incomes,
   onChange,
   onNext,
   onPrev
 }: {
-  propertyData: PropertyData;
+  incomes: PropertyData['incomes'];
   onChange: (updatedData: { incomes: Income[] }) => void;
   onNext: () => void;
   onPrev: () => void;
@@ -32,17 +32,14 @@ function IncomesCard({
 
   const addIncome = () => {
     const newIncomes = [
-      ...propertyData.incomes,
+      ...incomes,
       { ...income, amount: Number(income.amount) }
     ];
     onChange({ incomes: newIncomes });
     setIncome({ ...defaultIncome });
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { id, value } = e.target;
+  const handleChange = (id: string, value: string) => {
     setIncome((prev) => ({ ...prev, [id]: value }));
   };
 

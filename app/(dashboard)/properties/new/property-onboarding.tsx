@@ -62,7 +62,7 @@ function AddPropertyOnboarding() {
       )}
       {currentStep === 2 && (
         <IncomesCard
-          propertyData={propertyData}
+          incomes={propertyData.incomes}
           onChange={handlePropertyDataChange}
           onNext={nextStep}
           onPrev={prevStep}
