@@ -1,7 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { PostForm } from '../components/post-form';
+import { PostForm } from 'components/post-form';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import '@testing-library/jest-dom';
 
 describe('PostForm', () => {
   const mockUser = { id: 1, name: 'John Doe' };
