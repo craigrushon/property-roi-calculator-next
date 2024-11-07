@@ -46,7 +46,12 @@ function ExpensesCard({
   return (
     <Card>
       <CardHeader>
-        <h2 className="text-xl font-bold">Step 3: Expense Details</h2>
+        <h2 className="text-xl font-bold text-center">
+          Step 3: Expense Details
+        </h2>
+        <p className="text-l text-center">
+          List the property's recurring expenses.
+        </p>
       </CardHeader>
       <CardContent>
         <ExpenseForm
@@ -55,7 +60,7 @@ function ExpensesCard({
           onAddExpense={addExpense}
         />
       </CardContent>
-      <CardFooter className="justify-between">
+      <CardFooter className="justify-between border-t border-t-gray-200 pt-6">
         <Button
           onClick={onPrev}
           size="sm"

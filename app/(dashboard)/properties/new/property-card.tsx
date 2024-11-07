@@ -20,12 +20,17 @@ function PropertyCard({
   return (
     <Card>
       <CardHeader>
-        <h2 className="text-xl font-bold">Step 1: Property Information</h2>
+        <h2 className="text-xl font-bold text-center">
+          Step 1: Property Information
+        </h2>
+        <p className="text-l text-center">
+          Enter the property's basic information, such as the address and price.
+        </p>
       </CardHeader>
       <CardContent>
         <PropertyInfoForm propertyData={propertyData} onChange={onChange} />
       </CardContent>
-      <CardFooter>
+      <CardFooter className="justify-between border-t border-t-gray-200 pt-6">
         <Button onClick={onNext} size="sm">
           Next
         </Button>

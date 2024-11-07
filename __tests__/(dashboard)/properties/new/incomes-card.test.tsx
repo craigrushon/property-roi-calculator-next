@@ -17,7 +17,7 @@ describe('IncomesCard', () => {
     mockOnPrev.mockClear();
   });
 
-  it('renders IncomeInfoForm and navigation buttons', () => {
+  it('renders IncomeInfoForm with text and navigation buttons', () => {
     render(
       <IncomesCard
         incomes={initialIncomes}
@@ -26,6 +26,11 @@ describe('IncomesCard', () => {
         onPrev={mockOnPrev}
       />
     );
+
+    expect(screen.getByText(/step 2: income details/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/provide details about the property's income sources/i)
+    ).toBeInTheDocument();
 
     // Verify IncomeInfoForm renders
     expect(

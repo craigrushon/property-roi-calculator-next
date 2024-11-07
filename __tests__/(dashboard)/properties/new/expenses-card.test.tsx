@@ -28,6 +28,11 @@ describe('ExpensesCard', () => {
       />
     );
 
+    expect(screen.getByText(/step 3: expense details/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/list the property's recurring expenses/i)
+    ).toBeInTheDocument();
+
     expect(
       screen.getByRole('textbox', { name: /expense name/i })
     ).toBeInTheDocument();
