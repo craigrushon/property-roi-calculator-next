@@ -70,7 +70,7 @@ function AddPropertyOnboarding() {
       )}
       {currentStep === 3 && (
         <ExpensesCard
-          propertyData={propertyData}
+          expenses={propertyData.expenses}
           onChange={handlePropertyDataChange}
           onSubmit={handleSubmit}
           onPrev={prevStep}

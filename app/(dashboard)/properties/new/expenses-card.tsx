@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/card';
 import { Expense } from './actions';
 import { Frequency } from '@prisma/client';
-import ExpenseInfoForm from '../expense-form';
+import ExpenseForm from '../expense-form';
 
 const defaultExpense = {
   amount: '',
@@ -18,12 +18,12 @@ const defaultExpense = {
 };
 
 function ExpensesCard({
-  propertyData,
+  expenses,
   onChange,
   onSubmit,
   onPrev
 }: {
-  propertyData: { expenses: Expense[] };
+  expenses: Expense[];
   onChange: (updatedData: { expenses: Expense[] }) => void;
   onSubmit: () => void;
   onPrev: () => void;
@@ -32,17 +32,14 @@ function ExpensesCard({
 
   const addExpense = () => {
     const newExpenses = [
-      ...propertyData.expenses,
+      ...expenses,
       { ...expense, amount: Number(expense.amount) }
     ];
     onChange({ expenses: newExpenses });
     setExpense({ ...defaultExpense });
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { id, value } = e.target;
+  const handleChange = (id: string, value: string) => {
     setExpense((prev) => ({ ...prev, [id]: value }));
   };
 
@@ -52,7 +49,7 @@ function ExpensesCard({
         <h2 className="text-xl font-bold">Step 3: Expense Details</h2>
       </CardHeader>
       <CardContent>
-        <ExpenseInfoForm
+        <ExpenseForm
           expense={expense}
           onChange={handleChange}
           onAddExpense={addExpense}
