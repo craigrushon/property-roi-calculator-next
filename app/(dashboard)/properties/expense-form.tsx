@@ -4,13 +4,18 @@ import { Frequency } from '@prisma/client';
 
 interface Props {
   expense: { amount: string; frequency: Frequency; name: string };
-  onChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
+  onChange: (id: string, value: string) => void;
   onAddExpense: () => void;
 }
 
 function ExpenseForm({ expense, onChange, onAddExpense }: Props) {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { id, value } = e.target;
+    onChange(id, value);
+  };
+
   return (
     <div>
       <div className="mb-4">
@@ -21,7 +26,7 @@ function ExpenseForm({ expense, onChange, onAddExpense }: Props) {
           type="text"
           id="name"
           value={expense.name}
-          onChange={onChange}
+          onChange={handleChange}
           placeholder="Enter expense name"
           required
         />
@@ -34,7 +39,7 @@ function ExpenseForm({ expense, onChange, onAddExpense }: Props) {
           type="number"
           id="amount"
           value={expense.amount}
-          onChange={onChange}
+          onChange={handleChange}
           placeholder="Enter expense amount"
           required
         />
@@ -46,7 +51,7 @@ function ExpenseForm({ expense, onChange, onAddExpense }: Props) {
         <select
           id="frequency"
           value={expense.frequency}
-          onChange={onChange}
+          onChange={handleChange}
           className="w-full border rounded p-2"
         >
           <option value="monthly">Monthly</option>
