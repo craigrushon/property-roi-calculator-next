@@ -20,6 +20,8 @@ function AddPropertyOnboarding() {
     incomes: [],
     expenses: []
   });
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const nextStep = () => {
     setCurrentStep((prev) => Math.min(prev + 1, 3));
@@ -37,6 +39,8 @@ function AddPropertyOnboarding() {
   };
 
   const handleSubmit = async () => {
+    setErrorMessages([]);
+    setSuccessMessage('');
     try {
       await addPropertyWithDetails({
         address: propertyData.address,
@@ -44,15 +48,36 @@ function AddPropertyOnboarding() {
         incomes: propertyData.incomes,
         expenses: propertyData.expenses
       });
-      alert('Property added successfully!');
+      setSuccessMessage('Property added successfully!');
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred while adding the property.');
+      setErrorMessages(['An error occurred while adding the property.']);
     }
   };
 
   return (
     <div>
+      {errorMessages.length > 0 && (
+        <div className="bg-red-100 text-red-700 p-4 rounded-md">
+          <ul>
+            {errorMessages.map((error, index) => (
+              <li key={index} role="alert">
+                {error}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {successMessage && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="bg-green-100 text-green-700 p-4 rounded-md"
+        >
+          {successMessage}
+        </div>
+      )}
+
       {currentStep === 1 && (
         <PropertyCard
           propertyData={propertyData}
