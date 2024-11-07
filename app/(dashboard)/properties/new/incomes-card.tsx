@@ -46,7 +46,12 @@ function IncomesCard({
   return (
     <Card>
       <CardHeader>
-        <h2 className="text-xl font-bold">Step 2: Income Details</h2>
+        <h2 className="text-xl font-bold text-center">
+          Step 2: Income Details
+        </h2>
+        <p className="text-l text-center">
+          Provide details about the property's income sources.
+        </p>
       </CardHeader>
       <CardContent>
         <IncomeInfoForm
@@ -55,7 +60,7 @@ function IncomesCard({
           onAddIncome={addIncome}
         />
       </CardContent>
-      <CardFooter className="justify-between">
+      <CardFooter className="justify-between border-t border-t-gray-200 pt-6">
         <Button
           onClick={onPrev}
           size="sm"

@@ -56,51 +56,67 @@ function AddPropertyOnboarding() {
   };
 
   return (
-    <div>
-      {errorMessages.length > 0 && (
-        <div className="bg-red-100 text-red-700 p-4 rounded-md">
-          <ul>
-            {errorMessages.map((error, index) => (
-              <li key={index} role="alert">
-                {error}
-              </li>
-            ))}
-          </ul>
+    <div className="flex items-center justify-center">
+      <div className="w-full max-w-lg">
+        {/* Step Indicators */}
+        <div className="flex justify-center mb-4">
+          {[1, 2, 3].map((step) => (
+            <button
+              onClick={() => setCurrentStep(step)}
+              key={step}
+              className={`h-4 w-4 rounded-full mx-2 ${
+                currentStep === step ? 'bg-primary' : 'bg-gray-300'
+              }`}
+            />
+          ))}
         </div>
-      )}
-      {successMessage && (
-        <div
-          role="status"
-          aria-live="polite"
-          className="bg-green-100 text-green-700 p-4 rounded-md"
-        >
-          {successMessage}
-        </div>
-      )}
 
-      {currentStep === 1 && (
-        <PropertyCard
-          propertyData={propertyData}
-          onChange={handlePropertyDataChange}
-          onNext={nextStep}
-        />
-      )}
-      {currentStep === 2 && (
-        <IncomesCard
-          incomes={propertyData.incomes}
-          onChange={handlePropertyDataChange}
-          onNext={nextStep}
-          onPrev={prevStep}
-        />
-      )}
-      {currentStep === 3 && (
-        <ExpensesCard
-          expenses={propertyData.expenses}
-          onChange={handlePropertyDataChange}
-          onSubmit={handleSubmit}
-          onPrev={prevStep}
-        />
-      )}
+        {/* Error and Success Messages */}
+        {errorMessages.length > 0 && (
+          <div className="bg-red-100 text-red-700 p-4 rounded-md">
+            <ul>
+              {errorMessages.map((error, index) => (
+                <li key={index} role="alert">
+                  {error}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {successMessage && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="bg-green-100 text-green-700 p-4 rounded-md"
+          >
+            {successMessage}
+          </div>
+        )}
+
+        {currentStep === 1 && (
+          <PropertyCard
+            propertyData={propertyData}
+            onChange={handlePropertyDataChange}
+            onNext={nextStep}
+          />
+        )}
+        {currentStep === 2 && (
+          <IncomesCard
+            incomes={propertyData.incomes}
+            onChange={handlePropertyDataChange}
+            onNext={nextStep}
+            onPrev={prevStep}
+          />
+        )}
+        {currentStep === 3 && (
+          <ExpensesCard
+            expenses={propertyData.expenses}
+            onChange={handlePropertyDataChange}
+            onSubmit={handleSubmit}
+            onPrev={prevStep}
+          />
+        )}
+      </div>
     </div>
   );
 }
