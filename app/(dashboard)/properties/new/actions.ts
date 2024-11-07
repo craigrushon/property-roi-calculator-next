@@ -2,6 +2,8 @@
 
 import prisma from 'lib/prisma';
 import { Frequency } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
+import { permanentRedirect } from 'next/navigation';
 
 export interface Income {
   amount: number;
@@ -39,8 +41,14 @@ export async function addPropertyWithDetails(propertyData: {
         }
       }
     });
-    return newProperty;
-  } catch (error) {
+
+    revalidatePath('/');
+    permanentRedirect(`/properties/${newProperty.id}`);
+  } catch (error: any) {
+    if (error.message == 'NEXT_REDIRECT') {
+      throw error;
+    }
+
     console.error('Error creating property:', error);
     throw new Error('Failed to create property');
   }
