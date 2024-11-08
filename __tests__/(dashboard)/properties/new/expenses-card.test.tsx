@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import ExpensesCard from 'app/(dashboard)/properties/new/expenses-card';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
 import { Frequency } from '@prisma/client';
-import { Expense } from 'app/(dashboard)/properties/new/actions';
+import { Expense } from 'app/(dashboard)/properties/actions';
 import '@testing-library/jest-dom';
 
 describe('ExpensesCard', () => {

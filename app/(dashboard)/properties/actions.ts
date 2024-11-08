@@ -77,3 +77,15 @@ export async function addProperty(propertyData: {
     throw new Error('Failed to create property');
   }
 }
+
+export async function deleteProperty(propertyId: number) {
+  try {
+    await prisma.property.delete({
+      where: { id: propertyId }
+    });
+    revalidatePath('/');
+  } catch (error) {
+    console.error('Error deleting property:', error);
+    throw new Error('Failed to delete property');
+  }
+}

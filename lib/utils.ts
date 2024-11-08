@@ -16,3 +16,9 @@ export function pluralize(word: string, count: number): string {
     }
   }
 }
+
+export function logError(error: unknown) {
+  if (process.env.NODE_ENV !== 'test') {
+    console.error('Error:', error);
+  }
+}

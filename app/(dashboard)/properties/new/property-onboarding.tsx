@@ -3,7 +3,8 @@ import { useState } from 'react';
 import PropertyCard from './property-card';
 import IncomesCard from './incomes-card';
 import ExpensesCard from './expenses-card';
-import { addPropertyWithDetails, Expense, Income } from './actions';
+import { addPropertyWithDetails, Expense, Income } from '../actions';
+import { logError } from '@/lib/utils';
 
 export interface PropertyData {
   address: string;
@@ -50,7 +51,7 @@ function AddPropertyOnboarding() {
       });
       setSuccessMessage('Property added successfully!');
     } catch (error) {
-      console.error('Error:', error);
+      logError(error);
       setErrorMessages(['An error occurred while adding the property.']);
     }
   };

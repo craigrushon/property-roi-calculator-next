@@ -16,6 +16,7 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip';
 import { Property } from 'models/types';
+import { deleteProperty } from './actions';
 
 export function PropertyRow({ item: property }: { item: Property }) {
   return (
@@ -60,7 +61,9 @@ export function PropertyRow({ item: property }: { item: Property }) {
               <Link href={`/properties/${property.id}`}>Edit</Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <button type="submit">Delete</button>
+              <button type="submit" onClick={() => deleteProperty(property.id)}>
+                Delete
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

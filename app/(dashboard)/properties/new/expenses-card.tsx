@@ -7,7 +7,7 @@ import {
   CardFooter,
   CardHeader
 } from '@/components/ui/card';
-import { Expense } from './actions';
+import { Expense } from '../actions';
 import { Frequency } from '@prisma/client';
 import ExpenseForm from '../expense-form';
 

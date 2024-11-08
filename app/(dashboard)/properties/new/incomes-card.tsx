@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/card';
 import { PropertyData } from './property-onboarding';
 import { Frequency } from '@prisma/client';
-import { Income } from './actions';
+import { Income } from '../actions';
 import IncomeInfoForm from '../income-form';
 
 const defaultIncome = {

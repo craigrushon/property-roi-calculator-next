@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import AddPropertyOnboarding from 'app/(dashboard)/properties/new/property-onboarding';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
-import { addPropertyWithDetails } from 'app/(dashboard)/properties/new/actions';
+import { addPropertyWithDetails } from 'app/(dashboard)/properties/actions';
 
-vi.mock('app/(dashboard)/properties/new/actions', () => ({
+vi.mock('app/(dashboard)/properties/actions', () => ({
   addPropertyWithDetails: vi.fn()
 }));
 
