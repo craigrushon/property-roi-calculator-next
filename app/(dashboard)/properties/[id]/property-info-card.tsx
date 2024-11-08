@@ -17,11 +17,9 @@ interface Props {
     price: number;
     imageUrl: string | null;
   };
-  onImageChange?: (file: File) => void;
-  onSaveImage?: () => void;
 }
 
-function PropertyInfoCard({ propertyData, onImageChange, onSaveImage }: Props) {
+function PropertyInfoCard({ propertyData }: Props) {
   const [newImage, setNewImage] = useState<File | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,19 +67,21 @@ function PropertyInfoCard({ propertyData, onImageChange, onSaveImage }: Props) {
       </CardHeader>
       <CardContent>
         <p>
-          <strong>Address:</strong> {propertyData.address}
+          <span className="font-bold">Address:</span> {propertyData.address}
         </p>
         <p>
-          <strong>Price:</strong> ${propertyData.price.toLocaleString()}
+          <span className="font-bold">Price:</span> $
+          {propertyData.price.toLocaleString()}
         </p>
         {propertyData.imageUrl && (
           <div className="mt-4">
+            <p className="font-bold">Image</p>
             <Image
               alt={`Image for ${propertyData.address}`}
               className="aspect-square rounded-md object-cover"
-              height={400}
+              height={200}
               src={`${propertyData.imageUrl}`}
-              width={400}
+              width={200}
             />
           </div>
         )}

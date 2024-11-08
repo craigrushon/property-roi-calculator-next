@@ -89,3 +89,36 @@ export async function deleteProperty(propertyId: number) {
     throw new Error('Failed to delete property');
   }
 }
+
+export async function updateProperty(
+  propertyId: number,
+  propertyData: {
+    address?: string;
+    price?: string;
+    imageUrl?: string | null;
+  }
+) {
+  if (!propertyId) {
+    throw new Error('Property ID is required for updating');
+  }
+
+  try {
+    // Update the property with the new data
+    const updatedProperty = await prisma.property.update({
+      where: { id: propertyId },
+      data: {
+        address: propertyData.address,
+        price: propertyData.price ? Number(propertyData.price) : undefined,
+        imageUrl: propertyData.imageUrl ?? undefined
+      }
+    });
+
+    // Revalidate cache to ensure fresh data on the frontend
+    revalidatePath(`/properties/${propertyId}`);
+
+    return updatedProperty;
+  } catch (error) {
+    console.error('Error updating property:', error);
+    throw new Error('Failed to update property');
+  }
+}
