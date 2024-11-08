@@ -43,7 +43,11 @@ export function PropertyRow({ item: property }: { item: Property }) {
           </Tooltip>
         )}
       </TableCell>
-      <TableCell className="font-medium">{property.address}</TableCell>
+      <TableCell className="font-medium">
+        <Link className="hover:underline" href={`/properties/${property.id}`}>
+          {property.address}
+        </Link>
+      </TableCell>
       <TableCell className="hidden md:table-cell">{`$${property.price.toLocaleString()}`}</TableCell>
       <TableCell>{`${property.returnOnInvestment.toFixed(2)}%`}</TableCell>
       <TableCell className="hidden md:table-cell">{`$${property.cashflow.toFixed(2)}`}</TableCell>
