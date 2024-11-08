@@ -17,8 +17,12 @@ import {
 } from '@/components/ui/tooltip';
 import { Property } from 'models/types';
 import { deleteProperty } from './actions';
+import { useModal } from '@/components/modal';
+import DeleteModal from '../delete-modal';
 
 export function PropertyRow({ item: property }: { item: Property }) {
+  const { showModal, hideModal } = useModal();
+
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
@@ -65,7 +69,20 @@ export function PropertyRow({ item: property }: { item: Property }) {
               <Link href={`/properties/${property.id}`}>Edit</Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <button type="submit" onClick={() => deleteProperty(property.id)}>
+              <button
+                type="submit"
+                onClick={() =>
+                  showModal(
+                    <DeleteModal
+                      onConfirm={() => {
+                        deleteProperty(property.id);
+                        hideModal(); // Close modal after deleting
+                      }}
+                      onCancel={hideModal} // Close modal if cancelled
+                    />
+                  )
+                }
+              >
                 Delete
               </button>
             </DropdownMenuItem>
