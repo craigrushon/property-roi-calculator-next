@@ -1,6 +1,5 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import {
   Card,
   CardHeader,
@@ -28,6 +27,8 @@ function PropertyEditCard({ currentData }: Props) {
   const [isSaving, setIsSaving] = useState(false);
   const [hasAddressOrPriceChanges, setHasAddressOrPriceChanges] =
     useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     // Check for changes in address or price only
@@ -48,6 +49,8 @@ function PropertyEditCard({ currentData }: Props) {
 
   const handleSaveProperty = async () => {
     setIsSaving(true);
+    setSuccessMessage(null);
+    setErrorMessage(null);
     try {
       await updateProperty(propertyData.id, {
         address: propertyData.address,
@@ -58,10 +61,10 @@ function PropertyEditCard({ currentData }: Props) {
         address: propertyData.address,
         price: propertyData.price
       }));
-      alert('Property updated successfully!');
+      setSuccessMessage('Property updated successfully!');
     } catch (error) {
       console.error('Error saving property:', error);
-      alert('Failed to save property.');
+      setErrorMessage('Failed to save property. Please try again later.');
     } finally {
       setIsSaving(false);
     }
@@ -81,6 +84,26 @@ function PropertyEditCard({ currentData }: Props) {
           propertyId={propertyData.id}
           imageUrl={propertyData.imageUrl}
         />
+
+        {/* Success and Error Messages */}
+        {successMessage && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="bg-green-100 text-green-700 p-3 mt-4 rounded-md"
+          >
+            {successMessage}
+          </div>
+        )}
+        {errorMessage && (
+          <div
+            role="alert"
+            aria-live="assertive"
+            className="bg-red-100 text-red-700 p-4 rounded-md"
+          >
+            {errorMessage}
+          </div>
+        )}
       </CardContent>
       <CardFooter className="flex justify-between">
         <div className="flex space-x-2">

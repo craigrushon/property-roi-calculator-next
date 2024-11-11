@@ -130,12 +130,7 @@ function PropertyImageUploader({ propertyId, imageUrl }: Props) {
         accept="image/*"
       />
 
-      {errorMessage && (
-        <div className="bg-red-100 text-red-700 p-4 rounded-md">
-          {errorMessage}
-        </div>
-      )}
-
+      {/* Success and Error Messages */}
       {successMessage && (
         <div
           role="status"
@@ -143,6 +138,15 @@ function PropertyImageUploader({ propertyId, imageUrl }: Props) {
           className="bg-green-100 text-green-700 p-3 mt-4 rounded-md inline-block"
         >
           {successMessage}
+        </div>
+      )}
+      {errorMessage && (
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="bg-red-100 text-red-700 p-4 rounded-md inline-block"
+        >
+          {errorMessage}
         </div>
       )}
     </div>
