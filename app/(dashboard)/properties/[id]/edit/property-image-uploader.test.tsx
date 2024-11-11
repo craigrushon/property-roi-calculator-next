@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import PropertyImageUploader from './property-image-uploader';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
@@ -46,7 +46,7 @@ describe('PropertyImageUploader', () => {
     );
 
     // Click "Change Image" to reveal the hidden file input
-    fireEvent.click(screen.getByRole('button', { name: /change image/i }));
+    await user.click(screen.getByRole('button', { name: /change image/i }));
 
     // Select a new image file
     const file = new File(['dummy content'], 'test-image.png', {
@@ -74,7 +74,7 @@ describe('PropertyImageUploader', () => {
     );
 
     // Click "Change Image" to reveal the hidden file input
-    fireEvent.click(screen.getByRole('button', { name: /change image/i }));
+    await user.click(screen.getByRole('button', { name: /change image/i }));
 
     // Select a new image file
     const file = new File(['dummy content'], 'test-image.png', {
@@ -84,7 +84,7 @@ describe('PropertyImageUploader', () => {
     await user.upload(fileInput, file);
 
     // Click "Discard" and verify that "Discard" and "Save" buttons are hidden again
-    fireEvent.click(screen.getByRole('button', { name: /discard/i }));
+    await user.click(screen.getByRole('button', { name: /discard/i }));
     expect(
       screen.queryByRole('button', { name: /discard/i })
     ).not.toBeInTheDocument();
@@ -108,7 +108,7 @@ describe('PropertyImageUploader', () => {
     );
 
     // Click "Change Image" to reveal the hidden file input
-    fireEvent.click(screen.getByRole('button', { name: /change image/i }));
+    await user.click(screen.getByRole('button', { name: /change image/i }));
 
     // Select a new image file
     const file = new File(['dummy content'], 'test-image.png', {
@@ -118,7 +118,7 @@ describe('PropertyImageUploader', () => {
     await user.upload(fileInput, file);
 
     // Click "Save Image" and verify the API call
-    fireEvent.click(screen.getByRole('button', { name: /save image/i }));
+    await user.click(screen.getByRole('button', { name: /save image/i }));
     await waitFor(() => {
       expect(mockFetch).toHaveBeenCalledWith(
         '/api/upload',
@@ -138,9 +138,9 @@ describe('PropertyImageUploader', () => {
 
   it('displays a success message if the image upload succeeds', async () => {
     const user = userEvent.setup();
-    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+    const mockFetch = vi.spyOn(global, 'fetch').mockResolvedValueOnce({
       ok: true,
-      json: async () => ({ success: true })
+      json: async () => ({ filePath: '/uploads/test-image.png' })
     } as Response);
 
     render(
@@ -151,7 +151,7 @@ describe('PropertyImageUploader', () => {
     );
 
     // Click "Change Image" to reveal the hidden file input
-    fireEvent.click(screen.getByRole('button', { name: /change image/i }));
+    await user.click(screen.getByRole('button', { name: /change image/i }));
 
     // Select a new image file
     const file = new File(['dummy content'], 'test-image.png', {
@@ -161,12 +161,16 @@ describe('PropertyImageUploader', () => {
     await user.upload(fileInput, file);
 
     // Click "Save Image" and check for success message
-    fireEvent.click(screen.getByRole('button', { name: /save image/i }));
+    await user.click(screen.getByRole('button', { name: /save image/i }));
     await waitFor(() => {
       expect(
         screen.getByText(/image uploaded successfully/i)
       ).toBeInTheDocument();
     });
+
+    // Ensure fetch was called only once
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    mockFetch.mockRestore();
   });
 
   it('displays an error message if the image upload fails', async () => {
@@ -183,7 +187,7 @@ describe('PropertyImageUploader', () => {
     );
 
     // Click "Change Image" to reveal the hidden file input
-    fireEvent.click(screen.getByRole('button', { name: /change image/i }));
+    await user.click(screen.getByRole('button', { name: /change image/i }));
 
     // Select a new image file
     const file = new File(['dummy content'], 'test-image.png', {
@@ -193,7 +197,7 @@ describe('PropertyImageUploader', () => {
     await user.upload(fileInput, file);
 
     // Click "Save Image" and wait for error message
-    fireEvent.click(screen.getByRole('button', { name: /save image/i }));
+    await user.click(screen.getByRole('button', { name: /save image/i }));
     await waitFor(() => {
       expect(
         screen.getByText(/we're unable to upload the image/i)
