@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
-import { ModalProvider, useModal } from 'components/modal';
-import { describe, it, vi, expect, afterEach } from 'vitest';
+import { ModalProvider, useModal } from './modal';
+import { describe, it, vi, expect } from 'vitest';
 import React, { ReactNode } from 'react';
 
 describe('ModalProvider', () => {

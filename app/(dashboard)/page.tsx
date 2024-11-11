@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { File, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { PropertiesTable } from './properties/properties-table';
+import { PropertiesTable } from './components/properties-table';
 import { getProperties } from 'prisma/helpers/property';
 import Link from 'next/link';
 
@@ -43,11 +43,7 @@ export default async function PropertiesPage({
         </div>
       </div>
       <TabsContent value="all">
-        <PropertiesTable
-          properties={properties}
-          offset={offset}
-          totalProperties={totalProperties}
-        />
+        <PropertiesTable properties={properties} offset={offset} />
       </TabsContent>
     </Tabs>
   );

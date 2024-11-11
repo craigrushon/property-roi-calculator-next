@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import AddPropertyOnboarding from 'app/(dashboard)/properties/new/property-onboarding';
+import PropertyOnboarding from 'app/(dashboard)/properties/new/components/property-onboarding';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
 import { addPropertyWithDetails } from 'app/(dashboard)/properties/actions';
 
@@ -7,13 +7,13 @@ vi.mock('app/(dashboard)/properties/actions', () => ({
   addPropertyWithDetails: vi.fn()
 }));
 
-describe('AddPropertyOnboarding', () => {
+describe('PropertyOnboarding', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   it('renders the first step (PropertyCard) initially', () => {
-    render(<AddPropertyOnboarding />);
+    render(<PropertyOnboarding />);
 
     expect(
       screen.getByRole('textbox', { name: /address/i })
@@ -24,7 +24,7 @@ describe('AddPropertyOnboarding', () => {
   });
 
   it('navigates through the steps and collects data correctly', async () => {
-    render(<AddPropertyOnboarding />);
+    render(<PropertyOnboarding />);
 
     // Step 1: Fill in PropertyCard and proceed
     fireEvent.change(screen.getByRole('textbox', { name: /address/i }), {
@@ -82,7 +82,7 @@ describe('AddPropertyOnboarding', () => {
   });
 
   it('displays a success message after successful submission', async () => {
-    render(<AddPropertyOnboarding />);
+    render(<PropertyOnboarding />);
 
     // Mock API response to simulate successful submission
     vi.mocked(addPropertyWithDetails).mockResolvedValueOnce({} as any);
@@ -128,7 +128,7 @@ describe('AddPropertyOnboarding', () => {
   });
 
   it('displays an error message when submission fails', async () => {
-    render(<AddPropertyOnboarding />);
+    render(<PropertyOnboarding />);
 
     vi.mocked(addPropertyWithDetails).mockRejectedValueOnce(
       new Error('Submission failed')

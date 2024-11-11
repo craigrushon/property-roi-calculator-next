@@ -1,7 +1,7 @@
 'use client';
 
 import { TableHead } from '@/components/ui/table';
-import { GenericTable } from '../table';
+import { PaginatedTable } from 'app/(dashboard)/components/paginated-table';
 import { Product } from './product';
 import { SelectProduct } from 'prisma/types';
 
@@ -15,12 +15,11 @@ export function ProductsTable({
   totalProducts: number;
 }) {
   return (
-    <GenericTable
+    <PaginatedTable
       title="Products"
       description="Manage your products and view their sales performance."
       items={products}
       offset={offset}
-      totalItems={totalProducts}
       itemType="product"
       columns={
         <>

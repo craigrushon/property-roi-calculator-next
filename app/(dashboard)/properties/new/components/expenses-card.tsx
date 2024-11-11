@@ -7,9 +7,9 @@ import {
   CardFooter,
   CardHeader
 } from '@/components/ui/card';
-import { Expense } from '../actions';
+import { Expense } from 'app/(dashboard)/properties/actions';
 import { Frequency } from '@prisma/client';
-import ExpenseForm from '../expense-form';
+import ExpenseForm from './expense-form';
 
 const defaultExpense = {
   amount: '',

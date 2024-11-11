@@ -27,7 +27,7 @@ import { VercelLogo } from '@/components/icons';
 import Providers from './providers';
 import { NavItem } from './nav-item';
 import { SearchInput } from './search';
-import DashboardBreadcrumb from '@/components/breadcrumb';
+import DashboardBreadcrumb from './components/breadcrumb';
 
 export default function DashboardLayout({
   children

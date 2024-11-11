@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import PropertyImageUploader from './property-image-uploader';
+import PropertyImageUploader from './image-uploader';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
 

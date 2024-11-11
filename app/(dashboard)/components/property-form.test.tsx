@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import PropertyForm from 'app/(dashboard)/properties/property-form';
+import PropertyForm from './property-form';
 import { beforeEach, describe, it, vi, expect } from 'vitest';
 
 describe('PropertyForm', () => {

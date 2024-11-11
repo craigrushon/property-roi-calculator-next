@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation';
 import prisma from 'lib/prisma'; // Ensure the Prisma client is imported correctly
-import PropertyEditCard from './property-edit-card';
-import ExpensesCard from '../expenses-card';
-import IncomesCard from '../incomes-card';
+import GeneralInfoSection from '../components/info-section';
+import ExpensesSection from '../components/expenses-section';
+import IncomesSection from '../components/incomes-section';
 
 export default async function PropertyEditPage({
   params
@@ -50,9 +50,9 @@ export default async function PropertyEditPage({
     <div>
       <h1 className="text-2xl font-bold mb-4">Property Details</h1>
       <div className="space-y-6">
-        <PropertyEditCard currentData={propertyData} />
-        <ExpensesCard expenses={propertyData.expenses} />
-        <IncomesCard incomes={propertyData.incomes} />
+        <GeneralInfoSection currentData={propertyData} />
+        <ExpensesSection expenses={propertyData.expenses} />
+        <IncomesSection incomes={propertyData.incomes} />
       </div>
     </div>
   );

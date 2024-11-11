@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader
 } from '@/components/ui/card';
-import PropertyInfoForm from '../property-form';
+import PropertyForm from 'app/(dashboard)/components/property-form';
 
 function PropertyCard({
   propertyData,
@@ -28,7 +28,7 @@ function PropertyCard({
         </p>
       </CardHeader>
       <CardContent>
-        <PropertyInfoForm propertyData={propertyData} onChange={onChange} />
+        <PropertyForm propertyData={propertyData} onChange={onChange} />
       </CardContent>
       <CardFooter className="justify-between border-t border-t-gray-200 pt-6">
         <Button onClick={onNext} size="sm">

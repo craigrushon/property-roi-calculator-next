@@ -16,9 +16,9 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip';
 import { Property } from 'models/types';
-import { deleteProperty } from './actions';
-import { useModal } from '@/components/modal';
-import DeleteModal from '../delete-modal';
+import { deleteProperty } from 'app/(dashboard)/properties/actions';
+import { useModal } from 'app/components/modal';
+import DeleteModal from './delete-modal';
 
 export function PropertyRow({ item: property }: { item: Property }) {
   const { showModal, hideModal } = useModal();
