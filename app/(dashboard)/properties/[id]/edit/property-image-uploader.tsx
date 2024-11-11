@@ -89,6 +89,7 @@ function PropertyImageUploader({ propertyId, imageUrl }: Props) {
             src={newImageUrl ? newImageUrl : savedImageUrl!}
             width={200}
             priority
+            onError={() => setSavedImageUrl(null)}
           />
           {!newImage ? (
             <Button
