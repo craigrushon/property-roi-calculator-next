@@ -162,11 +162,9 @@ describe('PropertyImageUploader', () => {
 
     // Click "Save Image" and check for success message
     await user.click(screen.getByRole('button', { name: /save image/i }));
-    await waitFor(() => {
-      expect(
-        screen.getByText(/image uploaded successfully/i)
-      ).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByText(/image uploaded successfully/i)
+    ).toBeInTheDocument();
 
     // Ensure fetch was called only once
     expect(mockFetch).toHaveBeenCalledTimes(1);
@@ -198,10 +196,8 @@ describe('PropertyImageUploader', () => {
 
     // Click "Save Image" and wait for error message
     await user.click(screen.getByRole('button', { name: /save image/i }));
-    await waitFor(() => {
-      expect(
-        screen.getByText(/we're unable to upload the image/i)
-      ).toBeInTheDocument();
-    });
+    expect(
+      await screen.findByText(/we're unable to upload the image/i)
+    ).toBeInTheDocument();
   });
 });

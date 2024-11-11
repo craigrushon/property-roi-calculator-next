@@ -36,11 +36,9 @@ describe('AddPropertyOnboarding', () => {
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
     // Verify that IncomesCard appears
-    await waitFor(() =>
-      expect(
-        screen.getByRole('spinbutton', { name: /amount/i })
-      ).toBeInTheDocument()
-    );
+    expect(
+      await screen.findByRole('spinbutton', { name: /amount/i })
+    ).toBeInTheDocument();
 
     // Step 2: Fill in IncomesCard and proceed
     fireEvent.change(screen.getByRole('spinbutton', { name: /amount/i }), {
@@ -53,11 +51,9 @@ describe('AddPropertyOnboarding', () => {
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
 
     // Verify that ExpensesCard appears
-    await waitFor(() =>
-      expect(
-        screen.getByRole('textbox', { name: /expense name/i })
-      ).toBeInTheDocument()
-    );
+    expect(
+      await screen.findByRole('textbox', { name: /expense name/i })
+    ).toBeInTheDocument();
 
     // Step 3: Fill in ExpensesCard
     fireEvent.change(screen.getByRole('textbox', { name: /expense name/i }), {
@@ -75,7 +71,6 @@ describe('AddPropertyOnboarding', () => {
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
     await waitFor(() => {
-      expect(addPropertyWithDetails).toHaveBeenCalledTimes(1);
       expect(addPropertyWithDetails).toHaveBeenCalledWith({
         address: '123 Main St',
         price: 500000,
@@ -83,6 +78,7 @@ describe('AddPropertyOnboarding', () => {
         expenses: [{ name: 'Utilities', amount: 150, frequency: 'monthly' }]
       });
     });
+    expect(addPropertyWithDetails).toHaveBeenCalledTimes(1);
   });
 
   it('displays a success message after successful submission', async () => {
@@ -99,11 +95,9 @@ describe('AddPropertyOnboarding', () => {
       target: { value: '500000' }
     });
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
-    await waitFor(() =>
-      expect(
-        screen.getByRole('spinbutton', { name: /amount/i })
-      ).toBeInTheDocument()
-    );
+    expect(
+      await screen.findByRole('spinbutton', { name: /amount/i })
+    ).toBeInTheDocument();
 
     fireEvent.change(screen.getByRole('spinbutton', { name: /amount/i }), {
       target: { value: '2000' }
@@ -112,11 +106,9 @@ describe('AddPropertyOnboarding', () => {
       target: { value: 'monthly' }
     });
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
-    await waitFor(() =>
-      expect(
-        screen.getByRole('textbox', { name: /expense name/i })
-      ).toBeInTheDocument()
-    );
+    expect(
+      await screen.findByRole('textbox', { name: /expense name/i })
+    ).toBeInTheDocument();
 
     fireEvent.change(screen.getByRole('textbox', { name: /expense name/i }), {
       target: { value: 'Utilities' }
@@ -130,11 +122,9 @@ describe('AddPropertyOnboarding', () => {
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
     // Check for success alert
-    await waitFor(() =>
-      expect(
-        screen.getByText(/property added successfully!/i)
-      ).toBeInTheDocument()
-    );
+    expect(
+      await screen.findByText(/property added successfully!/i)
+    ).toBeInTheDocument();
   });
 
   it('displays an error message when submission fails', async () => {
@@ -152,11 +142,9 @@ describe('AddPropertyOnboarding', () => {
       target: { value: '500000' }
     });
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
-    await waitFor(() =>
-      expect(
-        screen.getByRole('spinbutton', { name: /amount/i })
-      ).toBeInTheDocument()
-    );
+    expect(
+      await screen.findByRole('spinbutton', { name: /amount/i })
+    ).toBeInTheDocument();
 
     fireEvent.change(screen.getByRole('spinbutton', { name: /amount/i }), {
       target: { value: '2000' }
@@ -165,11 +153,9 @@ describe('AddPropertyOnboarding', () => {
       target: { value: 'monthly' }
     });
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
-    await waitFor(() =>
-      expect(
-        screen.getByRole('textbox', { name: /expense name/i })
-      ).toBeInTheDocument()
-    );
+    expect(
+      await screen.findByRole('textbox', { name: /expense name/i })
+    ).toBeInTheDocument();
 
     fireEvent.change(screen.getByRole('textbox', { name: /expense name/i }), {
       target: { value: 'Utilities' }
@@ -183,10 +169,8 @@ describe('AddPropertyOnboarding', () => {
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
 
     // Check for error alert
-    await waitFor(() =>
-      expect(
-        screen.getByText(/an error occurred while adding the property/i)
-      ).toBeInTheDocument()
-    );
+    expect(
+      await screen.findByText(/an error occurred while adding the property/i)
+    ).toBeInTheDocument();
   });
 });
