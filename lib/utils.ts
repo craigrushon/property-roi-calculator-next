@@ -17,8 +17,8 @@ export function pluralize(word: string, count: number): string {
   }
 }
 
-export function logError(error: unknown) {
+export function logError(error: Error | unknown, message?: string) {
   if (process.env.NODE_ENV !== 'test') {
-    console.error('Error:', error);
+    console.error(message || 'Error:', error);
   }
 }

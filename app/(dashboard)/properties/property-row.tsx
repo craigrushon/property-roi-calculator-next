@@ -37,7 +37,7 @@ export function PropertyRow({ item: property }: { item: Property }) {
         ) : (
           <Tooltip>
             <TooltipTrigger asChild>
-              <Link href={`/properties/${property.id}`}>
+              <Link href={`/properties/${property.id}/edit`}>
                 <div className="bg-gray-100 h-16 w-16 rounded-md text-center">
                   <HousePlus className="h-16 w-16 p-5 rounded-md text-center opacity-50" />
                 </div>
@@ -48,7 +48,10 @@ export function PropertyRow({ item: property }: { item: Property }) {
         )}
       </TableCell>
       <TableCell className="font-medium">
-        <Link className="hover:underline" href={`/properties/${property.id}`}>
+        <Link
+          className="hover:underline"
+          href={`/properties/${property.id}/edit`}
+        >
           {property.address}
         </Link>
       </TableCell>
@@ -66,7 +69,7 @@ export function PropertyRow({ item: property }: { item: Property }) {
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem>
-              <Link href={`/properties/${property.id}`}>Edit</Link>
+              <Link href={`/properties/${property.id}/edit`}>Edit</Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <button
@@ -75,8 +78,8 @@ export function PropertyRow({ item: property }: { item: Property }) {
                   showModal(
                     <DeleteModal
                       onConfirm={() => {
-                        deleteProperty(property.id);
-                        hideModal(); // Close modal after deleting
+                        deleteProperty(property.id); // Should we await this?
+                        hideModal();
                       }}
                       onCancel={hideModal} // Close modal if cancelled
                     />
