@@ -12,7 +12,7 @@ interface Props {
   incomes: Income[];
 }
 
-function IncomesCard({ incomes }: Props) {
+function IncomesSection({ incomes }: Props) {
   const handleAddIncome = () => {
     console.log('Add income clicked');
   };
@@ -65,4 +65,4 @@ function IncomesCard({ incomes }: Props) {
   );
 }
 
-export default IncomesCard;
+export default IncomesSection;

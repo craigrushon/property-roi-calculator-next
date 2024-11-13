@@ -1,26 +1,23 @@
 'use client';
 
 import { TableHead } from '@/components/ui/table';
-import { GenericTable } from '../table';
+import { PaginatedTable } from './paginated-table';
 import { PropertyRow } from './property-row';
 import { Property } from 'models/types';
 
 export function PropertiesTable({
   properties,
-  offset,
-  totalProperties
+  offset
 }: {
   properties: Property[];
   offset: number;
-  totalProperties: number;
 }) {
   return (
-    <GenericTable
+    <PaginatedTable
       title="Properties"
       description="View and manage your real estate properties and their ROI."
       items={properties}
       offset={offset}
-      totalItems={totalProperties}
       itemType="property"
       columns={
         <>

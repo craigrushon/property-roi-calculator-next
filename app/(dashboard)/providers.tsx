@@ -1,7 +1,7 @@
 'use client';
 
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { ModalProvider } from '@/components/modal';
+import { ModalProvider } from 'app/components/modal';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (

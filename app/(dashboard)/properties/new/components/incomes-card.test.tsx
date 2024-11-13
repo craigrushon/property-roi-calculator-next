@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import IncomesCard from 'app/(dashboard)/properties/new/incomes-card';
+import IncomesCard from 'app/(dashboard)/properties/new/components/incomes-card';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
 import { Frequency } from '@prisma/client';
-import { PropertyData } from 'app/(dashboard)/properties/new/property-onboarding';
+import { PropertyData } from 'app/(dashboard)/properties/new/components/property-onboarding';
 
 describe('IncomesCard', () => {
   const mockOnChange = vi.fn();

@@ -7,9 +7,9 @@ import {
   CardFooter
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import PropertyForm from '../../property-form';
-import { updateProperty } from '../../actions';
-import PropertyImageUploader from './property-image-uploader';
+import PropertyForm from 'app/(dashboard)/components/property-form';
+import { updateProperty } from 'app/(dashboard)/properties/actions';
+import PropertyImageUploader from './image-uploader';
 
 interface Props {
   currentData: {
@@ -20,7 +20,7 @@ interface Props {
   };
 }
 
-function PropertyEditCard({ currentData }: Props) {
+function InfoSection({ currentData }: Props) {
   const [propertyData, setPropertyData] =
     useState<Props['currentData']>(currentData);
   const [originalData, setOriginalData] = useState(currentData);
@@ -129,4 +129,4 @@ function PropertyEditCard({ currentData }: Props) {
   );
 }
 
-export default PropertyEditCard;
+export default InfoSection;

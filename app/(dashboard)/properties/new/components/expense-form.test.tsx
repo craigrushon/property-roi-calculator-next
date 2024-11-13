@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import ExpenseForm from 'app/(dashboard)/properties/expense-form';
+import ExpenseForm from './expense-form';
 import { Frequency } from '@prisma/client';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
 

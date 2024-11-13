@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import PropertyCard from 'app/(dashboard)/properties/new/property-card';
+import PropertyCard from 'app/(dashboard)/properties/new/components/property-card';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
 
 describe('PropertyCard', () => {

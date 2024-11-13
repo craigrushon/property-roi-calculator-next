@@ -3,7 +3,11 @@ import { useState } from 'react';
 import PropertyCard from './property-card';
 import IncomesCard from './incomes-card';
 import ExpensesCard from './expenses-card';
-import { addPropertyWithDetails, Expense, Income } from '../actions';
+import {
+  addPropertyWithDetails,
+  Expense,
+  Income
+} from 'app/(dashboard)/properties/actions';
 import { logError } from '@/lib/utils';
 
 export interface PropertyData {
@@ -13,7 +17,7 @@ export interface PropertyData {
   expenses: Expense[];
 }
 
-function AddPropertyOnboarding() {
+function PropertyOnboarding() {
   const [currentStep, setCurrentStep] = useState(1);
   const [propertyData, setPropertyData] = useState<PropertyData>({
     address: '',
@@ -122,4 +126,4 @@ function AddPropertyOnboarding() {
   );
 }
 
-export default AddPropertyOnboarding;
+export default PropertyOnboarding;

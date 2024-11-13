@@ -11,7 +11,7 @@ import {
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { SelectProduct } from 'prisma/types';
-import { deleteProduct } from './actions';
+import { deleteProduct } from '../actions';
 
 export function Product({ item: product }: { item: SelectProduct }) {
   return (

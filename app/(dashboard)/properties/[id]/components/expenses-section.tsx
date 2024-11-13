@@ -12,7 +12,7 @@ interface Props {
   expenses: Expense[];
 }
 
-function ExpensesCard({ expenses }: Props) {
+function ExpensesSection({ expenses }: Props) {
   const handleAddExpense = () => {
     console.log('Add expense clicked');
   };
@@ -68,4 +68,4 @@ function ExpensesCard({ expenses }: Props) {
   );
 }
 
-export default ExpensesCard;
+export default ExpensesSection;

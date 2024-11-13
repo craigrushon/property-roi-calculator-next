@@ -16,30 +16,29 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { pluralize } from '@/lib/utils';
 import { usePagination } from 'hooks/usePagination';
 
-interface GenericTableProps<T> {
+interface PaginatedTableProps<T> {
   title: string;
   description: string;
   items: T[];
   offset: number;
-  totalItems: number;
   columns: ReactNode;
   rowComponent: React.ComponentType<{ item: T }>;
   itemType: string; // e.g., 'product' or 'property'
   itemsPerPage?: number;
 }
 
-export function GenericTable<T>({
+export function PaginatedTable<T>({
   title,
   description,
   items,
   offset,
-  totalItems,
   columns,
   rowComponent: RowComponent,
   itemType,
   itemsPerPage = 5
-}: GenericTableProps<T>) {
+}: PaginatedTableProps<T>) {
   const path = usePathname();
+  const totalItems = items.length;
 
   const { nextPage, prevPage, start, end } = usePagination(
     path,
@@ -76,9 +75,9 @@ export function GenericTable<T>({
             <form className="flex items-center w-full justify-between">
               <div className="text-xs text-muted-foreground">
                 Showing{' '}
-                <strong>
+                <span className="font-bold">
                   {start}-{end}
-                </strong>{' '}
+                </span>{' '}
                 of <strong>{totalItems}</strong>{' '}
                 {pluralize(itemType, totalItems)}
               </div>
