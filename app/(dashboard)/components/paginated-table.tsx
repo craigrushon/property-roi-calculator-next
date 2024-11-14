@@ -21,6 +21,7 @@ interface PaginatedTableProps<T> {
   description: string;
   items: T[];
   offset: number;
+  totalItems: number;
   columns: ReactNode;
   rowComponent: React.ComponentType<{ item: T }>;
   itemType: string; // e.g., 'product' or 'property'
@@ -31,6 +32,7 @@ export function PaginatedTable<T>({
   title,
   description,
   items,
+  totalItems,
   offset,
   columns,
   rowComponent: RowComponent,
@@ -38,7 +40,6 @@ export function PaginatedTable<T>({
   itemsPerPage = 5
 }: PaginatedTableProps<T>) {
   const path = usePathname();
-  const totalItems = items.length;
 
   const { nextPage, prevPage, start, end } = usePagination(
     path,

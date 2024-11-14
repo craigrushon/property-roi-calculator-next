@@ -7,16 +7,19 @@ import { Property } from 'models/types';
 
 export function PropertiesTable({
   properties,
-  offset
+  offset,
+  totalItems
 }: {
   properties: Property[];
   offset: number;
+  totalItems: number;
 }) {
   return (
     <PaginatedTable
       title="Properties"
       description="View and manage your real estate properties and their ROI."
       items={properties}
+      totalItems={totalItems}
       offset={offset}
       itemType="property"
       columns={

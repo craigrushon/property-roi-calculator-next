@@ -19,6 +19,7 @@ export function ProductsTable({
       title="Products"
       description="Manage your products and view their sales performance."
       items={products}
+      totalItems={totalProducts}
       offset={offset}
       itemType="product"
       columns={

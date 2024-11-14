@@ -43,7 +43,11 @@ export default async function PropertiesPage({
         </div>
       </div>
       <TabsContent value="all">
-        <PropertiesTable properties={properties} offset={offset} />
+        <PropertiesTable
+          properties={properties}
+          offset={offset}
+          totalItems={totalProperties}
+        />
       </TabsContent>
     </Tabs>
   );
