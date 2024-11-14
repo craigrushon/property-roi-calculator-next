@@ -1,21 +1,16 @@
 import { Input } from '@/components/ui/input';
 
-interface PropertyData {
+export interface PropertyFormFieldsProps {
   address: string;
   price: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-function PropertyForm({
-  propertyData,
+function PropertyFormFields({
+  address,
+  price,
   onChange
-}: {
-  propertyData: { address: string; price: string };
-  onChange: (updatedData: Partial<PropertyData>) => void;
-}) {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange({ [e.target.id]: e.target.value });
-  };
-
+}: PropertyFormFieldsProps) {
   return (
     <div>
       <div>
@@ -25,10 +20,10 @@ function PropertyForm({
         <Input
           type="text"
           id="address"
-          value={propertyData.address}
-          onChange={handleChange}
+          name="address"
+          value={address}
+          onChange={onChange}
           placeholder="Enter property address"
-          required
         />
       </div>
       <div className="mt-4">
@@ -38,14 +33,14 @@ function PropertyForm({
         <Input
           type="number"
           id="price"
-          value={propertyData.price}
-          onChange={handleChange}
+          name="price"
+          value={price}
+          onChange={onChange}
           placeholder="Enter property price"
-          required
         />
       </div>
     </div>
   );
 }
 
-export default PropertyForm;
+export default PropertyFormFields;

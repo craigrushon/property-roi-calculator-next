@@ -7,9 +7,9 @@ import {
   CardFooter
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import PropertyForm from 'app/(dashboard)/components/property-form';
 import { updateProperty } from 'app/(dashboard)/properties/actions';
 import PropertyImageUploader from './image-uploader';
+import PropertyFormFields from 'app/(dashboard)/components/property-fields';
 
 interface Props {
   currentData: {
@@ -38,9 +38,10 @@ function InfoSection({ currentData }: Props) {
     );
   }, [propertyData, originalData]);
 
-  const handlePropertyInfoChange = (
-    updatedData: Partial<{ address: string; price: string }>
-  ) => {
+  const handlePropertyInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    const updatedData = { [id]: value };
+
     setPropertyData((prevData) => ({
       ...prevData,
       ...updatedData
@@ -76,8 +77,9 @@ function InfoSection({ currentData }: Props) {
         <h2 className="text-lg font-bold">Property Information</h2>
       </CardHeader>
       <CardContent>
-        <PropertyForm
-          propertyData={propertyData}
+        <PropertyFormFields
+          address={propertyData.address}
+          price={propertyData.price}
           onChange={handlePropertyInfoChange}
         />
         <PropertyImageUploader

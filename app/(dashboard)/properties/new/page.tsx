@@ -1,5 +1,4 @@
-import PropertyOnboarding from './components/property-onboarding';
-
+import PropertyOnboarding from './components/onboarding-flow';
 export default function AddPropertyPage() {
   return (
     <div>
