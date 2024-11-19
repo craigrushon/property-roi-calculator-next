@@ -4,20 +4,14 @@ import PropertyForm from './controlled-property-fields';
 import { describe, it, expect } from 'vitest';
 
 describe('ControlledPropertyFields', () => {
-  it('renders address and price input fields with correct initial values', () => {
-    render(
-      <PropertyForm
-        propertyData={{ address: '123 Main St', price: '500000' }}
-      />
-    );
+  it('renders address and price input fields', () => {
+    render(<PropertyForm />);
 
     const addressInput = screen.getByRole('textbox', { name: /address/i });
     expect(addressInput).toBeInTheDocument();
-    expect(addressInput).toHaveValue('123 Main St');
 
     const priceInput = screen.getByRole('spinbutton', { name: /price/i });
     expect(priceInput).toBeInTheDocument();
-    expect(priceInput).toHaveValue(500000);
   });
 
   it('renders address and price input fields with empty values if no initial data is provided', () => {

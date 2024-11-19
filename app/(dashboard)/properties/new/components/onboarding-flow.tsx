@@ -2,9 +2,6 @@
 
 import { useState } from 'react';
 import OnboardingStepCard from './onboarding-step-card';
-import PropertyForm from './controlled-property-fields';
-import IncomeForm from './controlled-income-fields';
-import ExpenseForm from './controlled-expense-fields';
 import {
   addPropertyWithDetails,
   Expense,
@@ -68,7 +65,7 @@ function PropertyOnboardingFlow() {
   };
 
   const handleClearError = () => {
-    setErrorMessages([]); // Clear error messages on form interaction
+    setErrorMessages([]);
   };
 
   const stepContent = [

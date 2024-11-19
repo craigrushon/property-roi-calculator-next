@@ -7,14 +7,10 @@ interface PropertyData {
   price: string;
 }
 
-function ControlledPropertyFields({
-  propertyData
-}: {
-  propertyData?: Partial<PropertyData>;
-}) {
+function ControlledPropertyFields() {
   const [property, setProperty] = useState<PropertyData>({
-    address: propertyData?.address || '',
-    price: propertyData?.price || ''
+    address: '',
+    price: ''
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
