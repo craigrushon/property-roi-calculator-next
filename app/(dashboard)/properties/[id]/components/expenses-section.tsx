@@ -7,6 +7,8 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Expense } from 'models/types';
+import ExpenseRow from './expense-row';
+import { deleteExpense, editExpense } from '../actions';
 
 interface Props {
   expenses: Expense[];
@@ -17,8 +19,12 @@ function ExpensesSection({ expenses }: Props) {
     console.log('Add expense clicked');
   };
 
-  const handleDeleteExpense = (id: number) => {
-    console.log('Delete expense clicked', id);
+  const onSave = async (formData: FormData) => {
+    await editExpense(formData);
+  };
+
+  const onDelete = async (id: number) => {
+    await deleteExpense(id);
   };
 
   return (
@@ -30,29 +36,12 @@ function ExpensesSection({ expenses }: Props) {
         {expenses.length > 0 ? (
           <ul className="space-y-4">
             {expenses.map((expense) => (
-              <li
+              <ExpenseRow
                 key={expense.id}
-                className="flex justify-between items-center border-b pb-2"
-              >
-                <div>
-                  <p>
-                    <strong>Name:</strong> {expense.name}
-                  </p>
-                  <p>
-                    <strong>Amount:</strong> ${expense.amount.toLocaleString()}
-                  </p>
-                  <p>
-                    <strong>Frequency:</strong> {expense.frequency}
-                  </p>
-                </div>
-                <Button
-                  onClick={() => handleDeleteExpense(expense.id)}
-                  size="sm"
-                  variant="destructive"
-                >
-                  Delete
-                </Button>
-              </li>
+                expense={expense}
+                onDelete={onDelete}
+                onSave={onSave}
+              />
             ))}
           </ul>
         ) : (
