@@ -94,7 +94,7 @@ export async function updateProperty(
   propertyId: number,
   propertyData: {
     address?: string;
-    price?: string;
+    price?: number;
     imageUrl?: string | null;
   }
 ) {
@@ -108,7 +108,7 @@ export async function updateProperty(
       where: { id: propertyId },
       data: {
         address: propertyData.address,
-        price: propertyData.price ? Number(propertyData.price) : undefined,
+        price: propertyData.price,
         imageUrl: propertyData.imageUrl ?? undefined
       }
     });

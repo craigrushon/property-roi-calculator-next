@@ -55,7 +55,7 @@ function InfoSection({ currentData }: Props) {
     try {
       await updateProperty(propertyData.id, {
         address: propertyData.address,
-        price: propertyData.price
+        price: Number(propertyData.price)
       });
       setOriginalData((prevData) => ({
         ...prevData,

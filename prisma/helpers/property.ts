@@ -3,6 +3,40 @@ import { Property } from 'models/property';
 import { NormalizedExpense, NormalizedIncome } from 'models/types';
 import config from '../config';
 
+// Create getProperty function
+export async function getPropertyById(id: number) {
+  const property = await prisma.property.findUnique({
+    where: { id },
+    include: {
+      incomes: true,
+      expenses: true
+    }
+  });
+
+  if (!property) {
+    return null;
+  }
+
+  const incomes: NormalizedIncome[] = property.incomes.map((income) => ({
+    ...income,
+    amount: Number(income.amount) // Convert Decimal to number
+  }));
+
+  const expenses: NormalizedExpense[] = property.expenses.map((expense) => ({
+    ...expense,
+    amount: Number(expense.amount) // Convert Decimal to number
+  }));
+
+  return new Property(
+    property.id,
+    property.address,
+    Number(property.price),
+    property.imageUrl,
+    incomes,
+    expenses
+  ).toObject();
+}
+
 export async function getProperties(
   search: string,
   offset: number

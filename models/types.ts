@@ -38,6 +38,7 @@ export interface NormalizedIncome {
 
 export interface NormalizedExpense {
   id: number;
+  name: string;
   amount: number;
   frequency: Frequency;
   propertyId: number;
