@@ -1,16 +1,19 @@
 'use client';
 import { Button } from '@/components/ui/button';
+import DeleteModal from 'app/(dashboard)/components/delete-modal';
+import { useModal } from 'app/components/modal';
 import { Expense } from 'models/types';
 import { useState } from 'react';
 
 interface Props {
   expense: Expense;
-  onDelete: (id: number) => void;
+  onDelete: (id: number) => Promise<void>;
   onSave: (formData: FormData) => Promise<void>;
+  isOpen?: boolean;
 }
 
-function ExpenseRow({ expense, onDelete, onSave }: Props) {
-  const [isEditing, setIsEditing] = useState(false);
+function ExpenseRow({ expense, onDelete, onSave, isOpen = false }: Props) {
+  const [isEditing, setIsEditing] = useState(isOpen);
   const [formState, setFormState] = useState({
     name: expense.name,
     amount: expense.amount.toString(),
@@ -18,6 +21,7 @@ function ExpenseRow({ expense, onDelete, onSave }: Props) {
   });
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { showModal, hideModal } = useModal();
 
   const handleInputChange = (field: keyof typeof formState, value: string) => {
     setFormState((prev) => ({ ...prev, [field]: value }));
@@ -54,7 +58,16 @@ function ExpenseRow({ expense, onDelete, onSave }: Props) {
   };
 
   return (
-    <li className="flex justify-between items-center border-b pb-2">
+    <li
+      className="flex cursor-pointer justify-between items-center rounded-md border-b p-6 hover:bg-slate-100"
+      onClick={() => {
+        if (isEditing) {
+          return;
+        } else {
+          setIsEditing(true);
+        }
+      }}
+    >
       {error && (
         <p className="text-red-500 text-sm" aria-live="polite">
           {error}
@@ -62,15 +75,14 @@ function ExpenseRow({ expense, onDelete, onSave }: Props) {
       )}
       {!isEditing ? (
         <>
-          <div>
-            <p>
-              <strong>Name:</strong> {expense.name}
-            </p>
-            <p>
-              <strong>Amount:</strong> ${expense.amount.toLocaleString()}
-            </p>
-            <p>
-              <strong>Frequency:</strong> {expense.frequency}
+          <div className="text-[14px]">
+            <p className="font-bold">{expense.name}</p>
+            <p className="text-sm">
+              {' '}
+              <span className="font-light">
+                ${expense.amount.toLocaleString()}
+              </span>{' '}
+              <span className="font-medium">{expense.frequency}</span>
             </p>
           </div>
           <div className="flex space-x-2">
@@ -82,7 +94,18 @@ function ExpenseRow({ expense, onDelete, onSave }: Props) {
               Edit
             </Button>
             <Button
-              onClick={() => onDelete(expense.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                showModal(
+                  <DeleteModal
+                    onConfirm={async () => {
+                      if (onDelete) await onDelete(expense.id);
+                      hideModal();
+                    }}
+                    onCancel={hideModal}
+                  />
+                );
+              }}
               size="sm"
               variant="destructive"
             >
@@ -91,50 +114,44 @@ function ExpenseRow({ expense, onDelete, onSave }: Props) {
           </div>
         </>
       ) : (
-        <form className="space-y-2 w-full" onSubmit={handleSubmit}>
+        <form className="space-y-5 w-full" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-sm font-medium">
-              Name
-              <input
-                type="text"
-                name="name"
-                value={formState.name}
-                onChange={(e) => handleInputChange('name', e.target.value)}
-                className="border p-1 w-full"
-                required
-              />
-            </label>
+            <label className="block text-sm mb-1 font-medium">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formState.name}
+              onChange={(e) => handleInputChange('name', e.target.value)}
+              className="border p-1 w-full text-sm"
+              required
+            />
           </div>
           <div>
-            <label className="block text-sm font-medium">
-              Amount
-              <input
-                type="number"
-                name="amount"
-                value={formState.amount}
-                onChange={(e) => handleInputChange('amount', e.target.value)}
-                className="border p-1 w-full"
-                step="0.01"
-                required
-              />
-            </label>
+            <label className="block text-sm mb-1 font-medium">Amount</label>
+            <input
+              type="number"
+              name="amount"
+              value={formState.amount}
+              onChange={(e) => handleInputChange('amount', e.target.value)}
+              className="border p-1 w-full text-sm"
+              step="0.01"
+              required
+            />
           </div>
           <div>
-            <label className="block text-sm font-medium">
-              Frequency
-              <select
-                name="frequency"
-                value={formState.frequency}
-                onChange={(e) => handleInputChange('frequency', e.target.value)}
-                className="border p-1 w-full"
-                required
-              >
-                <option value="monthly">Monthly</option>
-                <option value="yearly">Yearly</option>
-              </select>
-            </label>
+            <label className="block text-sm mb-1 font-medium">Frequency</label>
+            <select
+              name="frequency"
+              value={formState.frequency}
+              onChange={(e) => handleInputChange('frequency', e.target.value)}
+              className="border p-1 w-full text-sm"
+              required
+            >
+              <option value="monthly">Monthly</option>
+              <option value="yearly">Yearly</option>
+            </select>
           </div>
-          <div className="flex space-x-2 mt-2">
+          <div className="flex space-x-2 pb-4">
             <Button
               type="submit"
               size="sm"
@@ -145,7 +162,7 @@ function ExpenseRow({ expense, onDelete, onSave }: Props) {
             </Button>
             <Button
               type="button"
-              onClick={handleCancel}
+              onClick={() => handleCancel()}
               size="sm"
               variant="outline"
               disabled={isLoading}

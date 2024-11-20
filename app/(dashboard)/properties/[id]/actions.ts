@@ -2,7 +2,45 @@
 
 import prisma from '@/lib/prisma';
 import { Frequency } from '@prisma/client';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
+
+export async function addExpense(formData: FormData) {
+  const propertyId = Number(formData.get('propertyId'));
+  const name = formData.get('name') as string;
+  const amount = parseFloat(formData.get('amount') as string);
+  const frequency = formData.get('frequency') as Frequency;
+
+  if (!propertyId || !name || !frequency) {
+    throw new Error('All fields are required.');
+  }
+
+  if (!['monthly', 'yearly'].includes(frequency)) {
+    throw new Error('Frequency must be "monthly" or "yearly".');
+  }
+
+  try {
+    const newExpense = await prisma.expense.create({
+      data: {
+        propertyId,
+        name,
+        amount,
+        frequency
+      }
+    });
+
+    revalidatePath('/properties/[id]', 'page');
+
+    return {
+      id: newExpense.id,
+      name: newExpense.name,
+      amount: Number(newExpense.amount),
+      frequency: newExpense.frequency
+    };
+  } catch (error) {
+    console.error('Database error:', error);
+    throw new Error('Failed to add the expense. Please try again.');
+  }
+}
 
 export async function editExpense(formData: FormData) {
   const id = Number(formData.get('id'));
@@ -30,7 +68,7 @@ export async function editExpense(formData: FormData) {
       data: { name, amount, frequency }
     });
 
-    revalidatePath(`/properties/${updatedExpense.propertyId}`);
+    revalidatePath('/properties/[id]', 'page');
 
     return {
       id: updatedExpense.id,
@@ -53,6 +91,10 @@ export async function deleteExpense(id: number) {
     await prisma.expense.delete({
       where: { id }
     });
+
+    revalidatePath('/properties/[id]/edit', 'page');
+
+    return { message: 'Expense deleted successfully.', status: 200 };
   } catch (error) {
     console.error('Error deleting expense:', error);
     throw new Error('Failed to delete the expense. Please try again.');

@@ -8,15 +8,30 @@ import {
 import { Button } from '@/components/ui/button';
 import { Expense } from 'models/types';
 import ExpenseRow from './expense-row';
-import { deleteExpense, editExpense } from '../actions';
+import { addExpense, deleteExpense, editExpense } from '../actions';
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 
 interface Props {
   expenses: Expense[];
 }
 
 function ExpensesSection({ expenses }: Props) {
-  const handleAddExpense = () => {
-    console.log('Add expense clicked');
+  const params = useParams();
+  const propertyId = Number(params.id);
+
+  const handleAddExpense = async () => {
+    const formData = new FormData();
+    formData.set('propertyId', propertyId.toString());
+    formData.set('name', 'New Expense'); // Example default values
+    formData.set('amount', '0');
+    formData.set('frequency', 'monthly');
+
+    try {
+      await addExpense(formData);
+    } catch (error) {
+      console.error('Error adding expense:', error);
+    }
   };
 
   const onSave = async (formData: FormData) => {
@@ -24,7 +39,11 @@ function ExpensesSection({ expenses }: Props) {
   };
 
   const onDelete = async (id: number) => {
-    await deleteExpense(id);
+    try {
+      await deleteExpense(id);
+    } catch (error) {
+      console.error('Error deleting expense:', error);
+    }
   };
 
   return (
@@ -34,7 +53,7 @@ function ExpensesSection({ expenses }: Props) {
       </CardHeader>
       <CardContent>
         {expenses.length > 0 ? (
-          <ul className="space-y-4">
+          <ul>
             {expenses.map((expense) => (
               <ExpenseRow
                 key={expense.id}
