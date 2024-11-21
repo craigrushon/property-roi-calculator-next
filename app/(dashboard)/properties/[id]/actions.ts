@@ -2,9 +2,9 @@
 
 import prisma from '@/lib/prisma';
 import { Frequency } from '@prisma/client';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 
-export async function addExpense(formData: FormData) {
+export async function createExpense(formData: FormData) {
   const propertyId = Number(formData.get('propertyId'));
   const name = formData.get('name') as string;
   const amount = parseFloat(formData.get('amount') as string);
@@ -37,12 +37,12 @@ export async function addExpense(formData: FormData) {
       frequency: newExpense.frequency
     };
   } catch (error) {
-    console.error('Database error:', error);
-    throw new Error('Failed to add the expense. Please try again.');
+    console.error(error);
+    throw new Error('Failed to create the expense. Please try again.');
   }
 }
 
-export async function editExpense(formData: FormData) {
+export async function updateExpense(formData: FormData) {
   const id = Number(formData.get('id'));
   const name = formData.get('name') as string;
   const amount = parseFloat(formData.get('amount') as string);
@@ -93,8 +93,6 @@ export async function deleteExpense(id: number) {
     });
 
     revalidatePath('/properties/[id]/edit', 'page');
-
-    return { message: 'Expense deleted successfully.', status: 200 };
   } catch (error) {
     console.error('Error deleting expense:', error);
     throw new Error('Failed to delete the expense. Please try again.');
