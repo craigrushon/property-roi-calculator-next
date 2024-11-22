@@ -2,6 +2,7 @@
 
 import prisma from '@/lib/prisma';
 import { Frequency } from '@prisma/client';
+import { ValidationError } from 'models/validation-error';
 import { revalidatePath } from 'next/cache';
 
 export async function createExpense(formData: FormData) {
@@ -11,7 +12,7 @@ export async function createExpense(formData: FormData) {
   const frequency = formData.get('frequency') as Frequency;
 
   if (!propertyId || !name || !frequency) {
-    throw new Error('All fields are required.');
+    throw new ValidationError('All fields are required.');
   }
 
   if (!['monthly', 'yearly'].includes(frequency)) {
@@ -36,8 +37,11 @@ export async function createExpense(formData: FormData) {
       amount: Number(newExpense.amount),
       frequency: newExpense.frequency
     };
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
+    if (e instanceof ValidationError) {
+      throw e;
+    }
+    console.error('Error creating expense:', e);
     throw new Error('Failed to create the expense. Please try again.');
   }
 }
@@ -54,11 +58,11 @@ export async function updateExpense(formData: FormData) {
   }
 
   if (amount <= 0) {
-    throw new Error('Amount must be greater than 0.');
+    throw new ValidationError('Amount must be greater than 0.');
   }
 
   if (!['monthly', 'yearly'].includes(frequency)) {
-    throw new Error('Frequency must be "monthly" or "yearly".');
+    throw new ValidationError('Frequency must be "monthly" or "yearly".');
   }
 
   // Update the expense in the database
@@ -76,8 +80,11 @@ export async function updateExpense(formData: FormData) {
       amount: Number(updatedExpense.amount),
       frequency: updatedExpense.frequency
     };
-  } catch (error) {
-    console.error('Database error:', error);
+  } catch (e) {
+    if (e instanceof ValidationError) {
+      throw e;
+    }
+    console.error('Error updating expense:', e);
     throw new Error('Failed to update the expense. Please try again.');
   }
 }

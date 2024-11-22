@@ -14,7 +14,7 @@ function ExpenseListItem({ children, onClick, className }: Props) {
 
   return (
     <li
-      className={`flex justify-between items-center rounded-md border-b p-6 hover:bg-slate-100${classString}`}
+      className={`flex justify-between items-center border-b p-6 hover:bg-slate-100${classString}`}
       onClick={onClick}
     >
       {children}

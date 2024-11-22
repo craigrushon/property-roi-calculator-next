@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button';
 
 interface Props {
   initialData: {
-    name: string;
-    amount: number;
+    name?: string;
+    amount?: number;
     frequency: string;
   };
   onCancel: () => void;
@@ -30,8 +30,8 @@ function ExpenseForm({ initialData, onCancel, primaryAction }: Props) {
     setIsLoading(true);
 
     const formData = new FormData();
-    formData.set('name', formState.name);
-    formData.set('amount', formState.amount.toString());
+    formData.set('name', formState?.name ?? '');
+    formData.set('amount', formState?.amount?.toString() ?? '');
     formData.set('frequency', formState.frequency);
 
     try {
@@ -58,6 +58,7 @@ function ExpenseForm({ initialData, onCancel, primaryAction }: Props) {
           name="name"
           value={formState.name}
           onChange={(e) => handleInputChange('name', e.target.value)}
+          placeholder="Enter expense name"
           className="border p-1 w-full text-sm"
         />
       </div>
@@ -74,6 +75,7 @@ function ExpenseForm({ initialData, onCancel, primaryAction }: Props) {
           name="amount"
           value={formState.amount}
           onChange={(e) => handleInputChange('amount', e.target.value)}
+          placeholder="Enter expense amount"
           className="border p-1 w-full text-sm"
           step="0.01"
         />

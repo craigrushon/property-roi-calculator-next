@@ -20,12 +20,8 @@ function ExpenseRow({ expense, editingByDefault = false }: Props) {
   };
 
   const handleSave = async (formData: FormData) => {
-    try {
-      await updateExpense(formData);
-      setIsEditing(false);
-    } catch {
-      throw new Error('Failed to update the expense. Please try again.');
-    }
+    await updateExpense(formData);
+    setIsEditing(false);
   };
 
   const handleDelete = async () => {

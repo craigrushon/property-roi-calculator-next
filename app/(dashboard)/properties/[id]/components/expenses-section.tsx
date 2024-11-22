@@ -29,13 +29,9 @@ function ExpensesSection({ expenses }: Props) {
 
   const handleCreateExpense = async (formData: FormData) => {
     formData.set('propertyId', propertyId.toString());
-    try {
-      await createExpense(formData);
-      setIsAdding(false);
-      return;
-    } catch {
-      throw new Error('Failed to create the expense. Please try again.');
-    }
+
+    await createExpense(formData);
+    setIsAdding(false);
   };
 
   const handleCancelCreate = () => {
@@ -56,7 +52,7 @@ function ExpensesSection({ expenses }: Props) {
             <ExpenseListItem>
               <ExpenseForm
                 key="new-expense"
-                initialData={{ name: '', amount: 0, frequency: 'monthly' }}
+                initialData={{ frequency: 'monthly' }}
                 onCancel={handleCancelCreate}
                 primaryAction={{
                   label: 'Create',
