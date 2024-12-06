@@ -8,23 +8,34 @@ import {
 import { Button } from '@/components/ui/button';
 import { Expense } from 'models/types';
 import ExpenseRow from './expense-row';
-import { deleteExpense, editExpense } from '../actions';
+import { createExpense } from '../actions';
+import { useState } from 'react';
+import { useParams } from 'next/navigation';
+import ExpenseForm from './expense-form';
+import ExpenseListItem from './expense-list-item';
 
 interface Props {
   expenses: Expense[];
 }
 
 function ExpensesSection({ expenses }: Props) {
+  const [isAdding, setIsAdding] = useState(false);
+  const params = useParams();
+  const propertyId = Number(params.id);
+
   const handleAddExpense = () => {
-    console.log('Add expense clicked');
+    setIsAdding(true);
   };
 
-  const onSave = async (formData: FormData) => {
-    await editExpense(formData);
+  const handleCreateExpense = async (formData: FormData) => {
+    formData.set('propertyId', propertyId.toString());
+
+    await createExpense(formData);
+    setIsAdding(false);
   };
 
-  const onDelete = async (id: number) => {
-    await deleteExpense(id);
+  const handleCancelCreate = () => {
+    setIsAdding(false);
   };
 
   return (
@@ -33,25 +44,31 @@ function ExpensesSection({ expenses }: Props) {
         <h2 className="text-lg font-bold">Expenses</h2>
       </CardHeader>
       <CardContent>
-        {expenses.length > 0 ? (
-          <ul className="space-y-4">
-            {expenses.map((expense) => (
-              <ExpenseRow
-                key={expense.id}
-                expense={expense}
-                onDelete={onDelete}
-                onSave={onSave}
+        <ul>
+          {expenses.map((expense) => (
+            <ExpenseRow key={expense.id} expense={expense} />
+          ))}
+          {isAdding && (
+            <ExpenseListItem>
+              <ExpenseForm
+                key="new-expense"
+                initialData={{ frequency: 'monthly' }}
+                onCancel={handleCancelCreate}
+                primaryAction={{
+                  label: 'Create',
+                  action: handleCreateExpense
+                }}
               />
-            ))}
-          </ul>
-        ) : (
-          <p>No expenses added.</p>
-        )}
+            </ExpenseListItem>
+          )}
+        </ul>
       </CardContent>
       <CardFooter>
-        <Button onClick={handleAddExpense} size="sm" variant="outline">
-          Add Expense
-        </Button>
+        {!isAdding && (
+          <Button onClick={handleAddExpense} size="sm" variant="outline">
+            Add Expense
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
