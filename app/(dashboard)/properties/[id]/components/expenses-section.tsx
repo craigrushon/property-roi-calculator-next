@@ -2,6 +2,7 @@
 import {
   Card,
   CardHeader,
+  CardTitle,
   CardContent,
   CardFooter
 } from '@/components/ui/card';
@@ -41,7 +42,7 @@ function ExpensesSection({ expenses }: Props) {
   return (
     <Card>
       <CardHeader>
-        <h2 className="text-lg font-bold">Expenses</h2>
+        <CardTitle>Expenses</CardTitle>
       </CardHeader>
       <CardContent>
         <ul>

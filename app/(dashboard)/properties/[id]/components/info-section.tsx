@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import {
   Card,
   CardHeader,
+  CardTitle,
   CardContent,
   CardFooter
 } from '@/components/ui/card';
@@ -74,7 +75,7 @@ function InfoSection({ currentData }: Props) {
   return (
     <Card>
       <CardHeader>
-        <h2 className="text-lg font-bold">Property Information</h2>
+        <CardTitle>Property Information</CardTitle>
       </CardHeader>
       <CardContent>
         <PropertyFormFields

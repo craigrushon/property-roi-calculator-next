@@ -3,6 +3,7 @@
 import {
   Card,
   CardHeader,
+  CardTitle,
   CardContent,
   CardFooter
 } from '@/components/ui/card';
@@ -43,7 +44,7 @@ function IncomesSection({ incomes }: Props) {
   return (
     <Card>
       <CardHeader>
-        <h2 className="text-lg font-bold">Income Streams</h2>
+        <CardTitle>Income Streams</CardTitle>
       </CardHeader>
       <CardContent>
         <ul>
