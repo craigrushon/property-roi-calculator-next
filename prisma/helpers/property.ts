@@ -35,8 +35,8 @@ export async function getPropertyById(id: number) {
     const parameters: FinancingParameters = {
       propertyPrice: Number(property.price),
       downPayment: property.financing.downPayment || 0,
-      interestRate: property.financing.interestRate 
-        ? Number(property.financing.interestRate) 
+      interestRate: property.financing.interestRate
+        ? Number(property.financing.interestRate)
         : 0,
       loanTermYears: property.financing.loanTermYears || 0,
       additionalFees: property.financing.additionalFees || 0,
@@ -115,8 +115,8 @@ export async function getProperties(
       const parameters: FinancingParameters = {
         propertyPrice: Number(data.price),
         downPayment: data.financing.downPayment || 0,
-        interestRate: data.financing.interestRate 
-          ? Number(data.financing.interestRate) 
+        interestRate: data.financing.interestRate
+          ? Number(data.financing.interestRate)
           : 0,
         loanTermYears: data.financing.loanTermYears || 0,
         additionalFees: data.financing.additionalFees || 0,
@@ -217,6 +217,6 @@ export async function clearPropertyFinancing(id: number) {
   const deletedFinancing = await prisma.financing.deleteMany({
     where: { propertyId: id }
   });
-  
+
   return deletedFinancing;
 }
