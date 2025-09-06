@@ -8,8 +8,6 @@ import {
   CardFooter
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Edit } from 'lucide-react';
-import Link from 'next/link';
 import { Income } from 'models/types';
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
@@ -46,15 +44,7 @@ function IncomesEdit({ incomes }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span>Income Streams</span>
-          <Link href={`/properties/${propertyId}/edit?focus=incomes`}>
-            <Button variant="outline" size="sm">
-              <Edit className="h-4 w-4 mr-1" />
-              Edit
-            </Button>
-          </Link>
-        </CardTitle>
+        <CardTitle>Income Streams</CardTitle>
       </CardHeader>
       <CardContent>
         <ul>

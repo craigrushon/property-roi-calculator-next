@@ -7,8 +7,6 @@ import {
   CardFooter
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Edit } from 'lucide-react';
-import Link from 'next/link';
 import { Expense } from 'models/types';
 import ExpenseRow from './expense-row';
 import { createExpense } from '../../actions';
@@ -44,15 +42,7 @@ function ExpensesEdit({ expenses }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span>Expenses</span>
-          <Link href={`/properties/${propertyId}/edit?focus=expenses`}>
-            <Button variant="outline" size="sm">
-              <Edit className="h-4 w-4 mr-1" />
-              Edit
-            </Button>
-          </Link>
-        </CardTitle>
+        <CardTitle>Expenses</CardTitle>
       </CardHeader>
       <CardContent>
         <ul>
