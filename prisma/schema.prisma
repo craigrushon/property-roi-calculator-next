@@ -67,12 +67,18 @@ model Income {
 }
 
 model Property {
-  id        Int       @id @default(autoincrement())
-  address   String
-  price     Int
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  imageUrl  String?
-  expenses  Expense[]
-  incomes   Income[]
+  id              Int       @id @default(autoincrement())
+  address         String
+  price           Int
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  imageUrl        String?
+  financingType   String?   // 'mortgage', 'heloc', 'cash'
+  downPayment     Int?      // in cents
+  interestRate    Decimal?  // percentage
+  loanTermYears   Int?      // loan term
+  additionalFees  Int?      // in cents
+  currentBalance  Int?      // for HELOC, in cents
+  expenses        Expense[]
+  incomes         Income[]
 }
