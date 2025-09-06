@@ -4,6 +4,7 @@ import prisma from '@/lib/prisma';
 import { Frequency } from '@prisma/client';
 import { ValidationError } from 'models/validation-error';
 import { revalidatePath } from 'next/cache';
+import { updatePropertyFinancing } from 'prisma/helpers/property';
 
 export async function createExpense(formData: FormData) {
   const propertyId = Number(formData.get('propertyId'));
@@ -204,5 +205,84 @@ export async function deleteIncome(id: number) {
   } catch (error) {
     console.error('Error deleting income:', error);
     throw new Error('Failed to delete the income. Please try again.');
+  }
+}
+
+export async function updatePropertyFinancingAction(formData: FormData) {
+  const propertyId = Number(formData.get('propertyId'));
+  const financingType = formData.get('financingType') as string;
+  const downPayment = formData.get('downPayment') ? Number(formData.get('downPayment')) : null;
+  const interestRate = formData.get('interestRate') ? Number(formData.get('interestRate')) : null;
+  const loanTermYears = formData.get('loanTermYears') ? Number(formData.get('loanTermYears')) : null;
+  const additionalFees = formData.get('additionalFees') ? Number(formData.get('additionalFees')) : null;
+  const currentBalance = formData.get('currentBalance') ? Number(formData.get('currentBalance')) : null;
+
+  if (!propertyId) {
+    throw new ValidationError('Property ID is required.');
+  }
+
+  // Validate financing type
+  if (financingType && !['mortgage', 'heloc', 'cash'].includes(financingType)) {
+    throw new ValidationError('Invalid financing type.');
+  }
+
+  // Validate required fields based on financing type
+  if (financingType === 'mortgage' || financingType === 'heloc') {
+    if (!downPayment || downPayment < 0) {
+      throw new ValidationError('Down payment must be greater than or equal to 0.');
+    }
+    if (!interestRate || interestRate < 0) {
+      throw new ValidationError('Interest rate must be greater than or equal to 0.');
+    }
+    if (!loanTermYears || loanTermYears <= 0) {
+      throw new ValidationError('Loan term must be greater than 0 years.');
+    }
+  }
+
+  try {
+    await updatePropertyFinancing(propertyId, {
+      financingType: financingType || null,
+      downPayment,
+      interestRate,
+      loanTermYears,
+      additionalFees,
+      currentBalance
+    });
+
+    revalidatePath('/properties/[id]', 'page');
+    revalidatePath('/properties/[id]/edit', 'page');
+
+    return { success: true };
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      throw error;
+    }
+    console.error('Error updating property financing:', error);
+    throw new Error('Failed to update property financing. Please try again.');
+  }
+}
+
+export async function clearPropertyFinancingAction(propertyId: number) {
+  if (!propertyId) {
+    throw new ValidationError('Property ID is required.');
+  }
+
+  try {
+    await updatePropertyFinancing(propertyId, {
+      financingType: null,
+      downPayment: null,
+      interestRate: null,
+      loanTermYears: null,
+      additionalFees: null,
+      currentBalance: null
+    });
+
+    revalidatePath('/properties/[id]', 'page');
+    revalidatePath('/properties/[id]/edit', 'page');
+
+    return { success: true };
+  } catch (error) {
+    console.error('Error clearing property financing:', error);
+    throw new Error('Failed to clear property financing. Please try again.');
   }
 }
