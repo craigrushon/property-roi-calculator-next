@@ -3,7 +3,7 @@ import IncomeRow from './income-row';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { Income } from 'models/types';
-import * as actions from '../../../actions';
+import * as actions from '../../actions';
 
 describe('IncomeRow', () => {
   const mockIncome: Income = {

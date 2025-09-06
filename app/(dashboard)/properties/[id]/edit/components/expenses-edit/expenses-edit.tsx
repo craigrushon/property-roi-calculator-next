@@ -11,7 +11,7 @@ import { Edit } from 'lucide-react';
 import Link from 'next/link';
 import { Expense } from 'models/types';
 import ExpenseRow from './expense-row';
-import { createExpense } from '../../../actions';
+import { createExpense } from '../../actions';
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import ExpenseForm from './expense-form';

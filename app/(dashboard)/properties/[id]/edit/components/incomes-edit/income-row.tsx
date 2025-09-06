@@ -5,7 +5,7 @@ import { Income } from 'models/types';
 import { useState } from 'react';
 import IncomeForm from './income-form';
 import ListItem from '../list-item';
-import { deleteIncome, updateIncome } from '../../../actions';
+import { deleteIncome, updateIncome } from '../../actions';
 
 interface Props {
   unitIdentifier: string;

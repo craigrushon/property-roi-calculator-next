@@ -5,7 +5,7 @@ import { Expense } from 'models/types';
 import { useState } from 'react';
 import ExpenseForm from './expense-form';
 import ListItem from '../list-item';
-import { deleteExpense, updateExpense } from '../../../actions';
+import { deleteExpense, updateExpense } from '../../actions';
 
 interface Props {
   expense: Expense;

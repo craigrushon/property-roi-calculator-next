@@ -16,7 +16,7 @@ import { useParams } from 'next/navigation';
 import IncomeRow from './income-row';
 import IncomeForm from './income-form';
 import ListItem from '../list-item';
-import { createIncome } from '../../../actions';
+import { createIncome } from '../../actions';
 
 interface Props {
   incomes: Income[];

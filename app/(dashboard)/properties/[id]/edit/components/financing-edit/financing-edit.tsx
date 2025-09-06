@@ -14,7 +14,7 @@ import { FinancingType } from 'models/financing/types';
 import {
   updatePropertyFinancingAction,
   clearPropertyFinancingAction
-} from '../../../actions';
+} from '../../actions';
 import FinancingTypeSelector from './financing-type-selector';
 import FinancingForm from './financing-form';
 import FinancingResults from './financing-results';

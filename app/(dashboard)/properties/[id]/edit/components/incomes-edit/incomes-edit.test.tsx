@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import IncomesEdit from './incomes-edit';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import * as actions from '../../../actions';
+import * as actions from '../../actions';
 import { Income } from 'models/types';
 
 vi.mock('next/navigation', () => ({
