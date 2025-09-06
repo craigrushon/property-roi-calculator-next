@@ -10,7 +10,8 @@ export async function getPropertyById(id: number) {
     where: { id },
     include: {
       incomes: true,
-      expenses: true
+      expenses: true,
+      financing: true
     }
   });
 
@@ -30,27 +31,20 @@ export async function getPropertyById(id: number) {
 
   // Create financing option if financing data exists
   let financingOption = undefined;
-  if (
-    property.financingType &&
-    property.downPayment !== null &&
-    property.interestRate !== null &&
-    property.loanTermYears !== null
-  ) {
+  if (property.financing) {
     const parameters: FinancingParameters = {
       propertyPrice: Number(property.price),
-      downPayment: Number(property.downPayment),
-      interestRate: Number(property.interestRate),
-      loanTermYears: Number(property.loanTermYears),
-      additionalFees: property.additionalFees
-        ? Number(property.additionalFees)
+      downPayment: property.financing.downPayment || 0,
+      interestRate: property.financing.interestRate 
+        ? Number(property.financing.interestRate) 
         : 0,
-      currentBalance: property.currentBalance
-        ? Number(property.currentBalance)
-        : undefined
+      loanTermYears: property.financing.loanTermYears || 0,
+      additionalFees: property.financing.additionalFees || 0,
+      currentBalance: property.financing.currentBalance || undefined
     };
 
     financingOption = {
-      type: property.financingType as FinancingType,
+      type: property.financing.type as FinancingType,
       parameters,
       result: {
         monthlyPayment: 0,
@@ -96,7 +90,8 @@ export async function getProperties(
     skip: offset || 0, // Skip based on offset
     include: {
       incomes: true,
-      expenses: true
+      expenses: true,
+      financing: true
     }
   });
 
@@ -114,13 +109,42 @@ export async function getProperties(
       amount: Number(expense.amount) // Convert Decimal to number
     }));
 
+    // Create financing option if financing data exists
+    let financingOption = undefined;
+    if (data.financing) {
+      const parameters: FinancingParameters = {
+        propertyPrice: Number(data.price),
+        downPayment: data.financing.downPayment || 0,
+        interestRate: data.financing.interestRate 
+          ? Number(data.financing.interestRate) 
+          : 0,
+        loanTermYears: data.financing.loanTermYears || 0,
+        additionalFees: data.financing.additionalFees || 0,
+        currentBalance: data.financing.currentBalance || undefined
+      };
+
+      financingOption = {
+        type: data.financing.type as FinancingType,
+        parameters,
+        result: {
+          monthlyPayment: 0,
+          totalInterest: 0,
+          totalCost: 0,
+          principalAmount: 0,
+          downPayment: 0,
+          additionalFees: 0
+        } // Will be calculated by Property model
+      };
+    }
+
     const property = new Property(
       data.id,
       data.address,
       Number(data.price),
       data.imageUrl,
       incomes,
-      expenses
+      expenses,
+      financingOption
     );
 
     return property.toObject();
@@ -150,17 +174,49 @@ export async function updatePropertyFinancing(
     currentBalance: number | null;
   }
 ) {
-  const updatedProperty = await prisma.property.update({
-    where: { id },
-    data: {
-      financingType: financingData.financingType,
-      downPayment: financingData.downPayment,
-      interestRate: financingData.interestRate,
-      loanTermYears: financingData.loanTermYears,
-      additionalFees: financingData.additionalFees,
-      currentBalance: financingData.currentBalance
-    }
+  // Check if financing already exists for this property
+  const existingFinancing = await prisma.financing.findUnique({
+    where: { propertyId: id }
   });
 
-  return updatedProperty;
+  if (existingFinancing) {
+    // Update existing financing
+    const updatedFinancing = await prisma.financing.update({
+      where: { propertyId: id },
+      data: {
+        type: financingData.financingType as any, // Cast to FinancingType enum
+        downPayment: financingData.downPayment,
+        interestRate: financingData.interestRate,
+        loanTermYears: financingData.loanTermYears,
+        additionalFees: financingData.additionalFees,
+        currentBalance: financingData.currentBalance
+      }
+    });
+    return updatedFinancing;
+  } else if (financingData.financingType) {
+    // Create new financing
+    const newFinancing = await prisma.financing.create({
+      data: {
+        type: financingData.financingType as any, // Cast to FinancingType enum
+        downPayment: financingData.downPayment,
+        interestRate: financingData.interestRate,
+        loanTermYears: financingData.loanTermYears,
+        additionalFees: financingData.additionalFees,
+        currentBalance: financingData.currentBalance,
+        propertyId: id
+      }
+    });
+    return newFinancing;
+  }
+
+  return null;
+}
+
+export async function clearPropertyFinancing(id: number) {
+  // Delete financing if it exists
+  const deletedFinancing = await prisma.financing.deleteMany({
+    where: { propertyId: id }
+  });
+  
+  return deletedFinancing;
 }

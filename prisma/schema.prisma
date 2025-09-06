@@ -41,6 +41,12 @@ enum Frequency {
   yearly
 }
 
+enum FinancingType {
+  MORTGAGE
+  HELOC
+  CASH
+}
+
 model Expense {
   id          Int      @id @default(autoincrement())
   name        String
@@ -67,18 +73,27 @@ model Income {
 }
 
 model Property {
-  id              Int       @id @default(autoincrement())
-  address         String
-  price           Int
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  imageUrl        String?
-  financingType   String?   // 'mortgage', 'heloc', 'cash'
-  downPayment     Int?      // in cents
-  interestRate    Decimal?  // percentage
-  loanTermYears   Int?      // loan term
-  additionalFees  Int?      // in cents
-  currentBalance  Int?      // for HELOC, in cents
-  expenses        Expense[]
-  incomes         Income[]
+  id        Int       @id @default(autoincrement())
+  address   String
+  price     Int       // in subunits (e.g., cents for USD)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  imageUrl  String?
+  expenses  Expense[]
+  incomes   Income[]
+  financing Financing?
+}
+
+model Financing {
+  id              Int            @id @default(autoincrement())
+  type            FinancingType
+  downPayment     Int?           // in subunits (e.g., cents for USD)
+  interestRate    Decimal?       // percentage
+  loanTermYears   Int?           // loan term
+  additionalFees  Int?           // in subunits (e.g., cents for USD)
+  currentBalance  Int?           // for HELOC, in subunits (e.g., cents for USD)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  propertyId      Int            @unique
+  property        Property       @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 }
