@@ -1,6 +1,7 @@
 import prisma from 'lib/prisma';
 import { Property } from 'models/property';
 import { NormalizedExpense, NormalizedIncome } from 'models/types';
+import { FinancingType, FinancingParameters } from 'models/financing/types';
 import config from '../config';
 
 // Create getProperty function
@@ -27,13 +28,49 @@ export async function getPropertyById(id: number) {
     amount: Number(expense.amount) // Convert Decimal to number
   }));
 
+  // Create financing option if financing data exists
+  let financingOption = undefined;
+  if (
+    property.financingType &&
+    property.downPayment !== null &&
+    property.interestRate !== null &&
+    property.loanTermYears !== null
+  ) {
+    const parameters: FinancingParameters = {
+      propertyPrice: Number(property.price),
+      downPayment: Number(property.downPayment),
+      interestRate: Number(property.interestRate),
+      loanTermYears: Number(property.loanTermYears),
+      additionalFees: property.additionalFees
+        ? Number(property.additionalFees)
+        : 0,
+      currentBalance: property.currentBalance
+        ? Number(property.currentBalance)
+        : undefined
+    };
+
+    financingOption = {
+      type: property.financingType as FinancingType,
+      parameters,
+      result: {
+        monthlyPayment: 0,
+        totalInterest: 0,
+        totalCost: 0,
+        principalAmount: 0,
+        downPayment: 0,
+        additionalFees: 0
+      } // Will be calculated by Property model
+    };
+  }
+
   return new Property(
     property.id,
     property.address,
     Number(property.price),
     property.imageUrl,
     incomes,
-    expenses
+    expenses,
+    financingOption
   ).toObject();
 }
 
@@ -100,4 +137,30 @@ export async function deletePropertyById(id: number) {
   await prisma.property.delete({
     where: { id }
   });
+}
+
+export async function updatePropertyFinancing(
+  id: number,
+  financingData: {
+    financingType: string | null;
+    downPayment: number | null;
+    interestRate: number | null;
+    loanTermYears: number | null;
+    additionalFees: number | null;
+    currentBalance: number | null;
+  }
+) {
+  const updatedProperty = await prisma.property.update({
+    where: { id },
+    data: {
+      financingType: financingData.financingType,
+      downPayment: financingData.downPayment,
+      interestRate: financingData.interestRate,
+      loanTermYears: financingData.loanTermYears,
+      additionalFees: financingData.additionalFees,
+      currentBalance: financingData.currentBalance
+    }
+  });
+
+  return updatedProperty;
 }
