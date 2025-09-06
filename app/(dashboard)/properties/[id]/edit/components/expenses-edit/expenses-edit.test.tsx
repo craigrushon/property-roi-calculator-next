@@ -1,15 +1,15 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import ExpensesSection from './expenses-section';
+import ExpensesEdit from './expenses-edit';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import * as actions from '../actions';
+import * as actions from '../../../actions';
 import { Expense } from 'models/types';
 
 vi.mock('next/navigation', () => ({
   useParams: () => ({ id: '1' })
 }));
 
-describe('ExpensesSection', () => {
+describe('ExpensesEdit', () => {
   const mockExpenses: Expense[] = [
     { id: 1, name: 'Utilities', amount: 150, frequency: 'monthly' },
     { id: 2, name: 'Insurance', amount: 100, frequency: 'yearly' }
@@ -20,7 +20,7 @@ describe('ExpensesSection', () => {
   });
 
   it('renders expenses list', () => {
-    render(<ExpensesSection expenses={mockExpenses} />);
+    render(<ExpensesEdit expenses={mockExpenses} />);
 
     expect(screen.getByText(/utilities/i)).toBeInTheDocument();
     expect(screen.getByText(/insurance/i)).toBeInTheDocument();
@@ -29,7 +29,7 @@ describe('ExpensesSection', () => {
   it('displays add expense form when Add Expense is clicked', async () => {
     const user = userEvent.setup();
 
-    render(<ExpensesSection expenses={mockExpenses} />);
+    render(<ExpensesEdit expenses={mockExpenses} />);
 
     await user.click(screen.getByRole('button', { name: /add expense/i }));
 
@@ -40,7 +40,7 @@ describe('ExpensesSection', () => {
     const user = userEvent.setup();
     vi.spyOn(actions, 'createExpense').mockResolvedValue({} as Expense);
 
-    render(<ExpensesSection expenses={mockExpenses} />);
+    render(<ExpensesEdit expenses={mockExpenses} />);
 
     await user.click(screen.getByRole('button', { name: /add expense/i }));
 
@@ -56,7 +56,7 @@ describe('ExpensesSection', () => {
   it('hides add expense form on cancel', async () => {
     const user = userEvent.setup();
 
-    render(<ExpensesSection expenses={mockExpenses} />);
+    render(<ExpensesEdit expenses={mockExpenses} />);
 
     await user.click(screen.getByRole('button', { name: /add expense/i }));
     await user.click(screen.getByRole('button', { name: /cancel/i }));

@@ -15,14 +15,14 @@ import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import IncomeRow from './income-row';
 import IncomeForm from './income-form';
-import ListItem from './list-item';
-import { createIncome } from '../actions';
+import ListItem from '../list-item';
+import { createIncome } from '../../../actions';
 
 interface Props {
   incomes: Income[];
 }
 
-function IncomesSection({ incomes }: Props) {
+function IncomesEdit({ incomes }: Props) {
   const [isAdding, setIsAdding] = useState(false);
   const params = useParams();
   const propertyId = Number(params.id);
@@ -90,4 +90,4 @@ function IncomesSection({ incomes }: Props) {
   );
 }
 
-export default IncomesSection;
+export default IncomesEdit;

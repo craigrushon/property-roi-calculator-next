@@ -11,17 +11,17 @@ import { Edit } from 'lucide-react';
 import Link from 'next/link';
 import { Expense } from 'models/types';
 import ExpenseRow from './expense-row';
-import { createExpense } from '../actions';
+import { createExpense } from '../../../actions';
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import ExpenseForm from './expense-form';
-import ListItem from './list-item';
+import ListItem from '../list-item';
 
 interface Props {
   expenses: Expense[];
 }
 
-function ExpensesSection({ expenses }: Props) {
+function ExpensesEdit({ expenses }: Props) {
   const [isAdding, setIsAdding] = useState(false);
   const params = useParams();
   const propertyId = Number(params.id);
@@ -85,4 +85,4 @@ function ExpensesSection({ expenses }: Props) {
   );
 }
 
-export default ExpensesSection;
+export default ExpensesEdit;

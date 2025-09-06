@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { updateProperty } from 'app/(dashboard)/properties/actions';
-import PropertyImageUploader from '../../../components/image-uploader';
+import PropertyImageUploader from './image-uploader';
 import PropertyFormFields from 'app/(dashboard)/components/property-fields';
 
 interface Props {

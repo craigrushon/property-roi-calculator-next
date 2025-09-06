@@ -1,9 +1,13 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from 'components/ui/button';
-import { GeneralInfoEdit, FinancingEdit, FocusHandler } from './components';
-import ExpensesSection from '../components/expenses-section';
-import IncomesSection from '../components/incomes-section';
+import {
+  GeneralInfoEdit,
+  FinancingEdit,
+  IncomesEdit,
+  ExpensesEdit,
+  FocusHandler
+} from './components';
 import { getPropertyById } from 'prisma/helpers/property';
 
 export default async function PropertyEditPage({
@@ -52,10 +56,10 @@ export default async function PropertyEditPage({
           />
         </div>
         <div id="expenses-section">
-          <ExpensesSection expenses={property.expenses} />
+          <ExpensesEdit expenses={property.expenses} />
         </div>
         <div id="incomes-section">
-          <IncomesSection incomes={property.incomes} />
+          <IncomesEdit incomes={property.incomes} />
         </div>
       </form>
     </div>

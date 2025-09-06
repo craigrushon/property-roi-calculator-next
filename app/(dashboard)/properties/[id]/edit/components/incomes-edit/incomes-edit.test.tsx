@@ -1,15 +1,15 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import IncomesSection from './incomes-section';
+import IncomesEdit from './incomes-edit';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import * as actions from '../actions';
+import * as actions from '../../../actions';
 import { Income } from 'models/types';
 
 vi.mock('next/navigation', () => ({
   useParams: () => ({ id: '1' })
 }));
 
-describe('IncomesSection', () => {
+describe('IncomesEdit', () => {
   const mockIncomes: Income[] = [
     { id: 1, amount: 2000, frequency: 'monthly' },
     { id: 2, amount: 24000, frequency: 'yearly' }
@@ -20,7 +20,7 @@ describe('IncomesSection', () => {
   });
 
   it('renders the incomes list', () => {
-    render(<IncomesSection incomes={mockIncomes} />);
+    render(<IncomesEdit incomes={mockIncomes} />);
 
     expect(screen.getByText(/\$2,000/i)).toBeInTheDocument();
     expect(screen.getByText(/monthly/i)).toBeInTheDocument();
@@ -31,7 +31,7 @@ describe('IncomesSection', () => {
   it('displays the add income form when "Add Income" is clicked', async () => {
     const user = userEvent.setup();
 
-    render(<IncomesSection incomes={mockIncomes} />);
+    render(<IncomesEdit incomes={mockIncomes} />);
 
     await user.click(screen.getByRole('button', { name: /add income/i }));
 
@@ -43,7 +43,7 @@ describe('IncomesSection', () => {
     const user = userEvent.setup();
     vi.spyOn(actions, 'createIncome').mockResolvedValue({} as Income);
 
-    render(<IncomesSection incomes={mockIncomes} />);
+    render(<IncomesEdit incomes={mockIncomes} />);
 
     await user.click(screen.getByRole('button', { name: /add income/i }));
 
@@ -62,7 +62,7 @@ describe('IncomesSection', () => {
   it('hides the add income form on cancel', async () => {
     const user = userEvent.setup();
 
-    render(<IncomesSection incomes={mockIncomes} />);
+    render(<IncomesEdit incomes={mockIncomes} />);
 
     await user.click(screen.getByRole('button', { name: /add income/i }));
     await user.click(screen.getByRole('button', { name: /cancel/i }));
