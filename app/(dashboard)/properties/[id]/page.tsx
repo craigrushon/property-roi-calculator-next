@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from 'components/ui/button';
 import { GeneralInfoDisplay } from './components/general-info-display';
-import ExpensesSection from './components/expenses-section';
-import IncomesSection from './components/incomes-section';
+import { ExpensesDisplay } from './components/expenses-display';
+import { IncomesDisplay } from './components/incomes-display';
 import { FinancingDisplay } from './components/financing-display';
 import { getPropertyById } from 'prisma/helpers/property';
 
@@ -39,8 +39,11 @@ export default async function PropertyPage({
           propertyPrice={property.price}
           currentFinancing={property.financing}
         />
-        <ExpensesSection expenses={property.expenses} />
-        <IncomesSection incomes={property.incomes} />
+        <ExpensesDisplay
+          propertyId={property.id}
+          expenses={property.expenses}
+        />
+        <IncomesDisplay propertyId={property.id} incomes={property.incomes} />
       </div>
     </div>
   );
