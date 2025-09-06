@@ -58,9 +58,9 @@ describe('FinancingDisplay', () => {
 
     expect(screen.getByText('Financing')).toBeInTheDocument();
     expect(screen.getByText('Cash')).toBeInTheDocument();
-    expect(screen.getByText('$500,000.00')).toBeInTheDocument(); // Down payment
-    expect(screen.getByText('$5,000.00')).toBeInTheDocument(); // Additional fees
+    // Cash financing shows summary cards and detailed breakdown
     expect(screen.getByText('$505,000.00')).toBeInTheDocument(); // Total cost
+    expect(screen.getByText('$500,000.00')).toBeInTheDocument(); // Down payment
   });
 
   it('renders mortgage financing correctly', () => {
@@ -74,10 +74,11 @@ describe('FinancingDisplay', () => {
 
     expect(screen.getByText('Financing')).toBeInTheDocument();
     expect(screen.getByText('Mortgage')).toBeInTheDocument();
-    expect(screen.getByText('$100,000.00')).toBeInTheDocument(); // Down payment
-    expect(screen.getByText('6.50%')).toBeInTheDocument(); // Interest rate
-    expect(screen.getByText('30 years')).toBeInTheDocument(); // Loan term
+    // Mortgage financing shows summary cards and detailed breakdown
     expect(screen.getByText('$2,527.00')).toBeInTheDocument(); // Monthly payment
+    expect(screen.getAllByText('$509,720.00')).toHaveLength(2); // Total interest appears in both summary and breakdown
+    expect(screen.getByText('$1,014,720.00')).toBeInTheDocument(); // Total cost
+    expect(screen.getAllByText('$400,000.00')).toHaveLength(2); // Principal amount appears in both summary and breakdown
   });
 
   it('renders empty state when no financing is provided', () => {
@@ -138,6 +139,12 @@ describe('FinancingDisplay', () => {
         ...mockMortgageFinancing.parameters,
         interestRate: 0,
         loanTermYears: 0
+      },
+      result: {
+        ...mockMortgageFinancing.result,
+        monthlyPayment: 0,
+        totalInterest: 0,
+        totalCost: 0
       }
     };
 
@@ -149,9 +156,7 @@ describe('FinancingDisplay', () => {
       />
     );
 
-    // With zero interest rate and loan term, we should see N/A for those parameters
-    // and N/A for calculated values when they are zero
-    const naElements = screen.getAllByText('N/A');
-    expect(naElements.length).toBeGreaterThanOrEqual(2); // For zero interest rate and loan term
+    // With zero calculated values, they should show N/A
+    expect(screen.getAllByText('N/A')).toHaveLength(4); // Monthly payment, total interest, total cost, principal amount
   });
 });

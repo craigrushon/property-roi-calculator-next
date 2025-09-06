@@ -17,7 +17,6 @@ import {
 } from '../../actions';
 import FinancingTypeSelector from './financing-type-selector';
 import FinancingForm from './financing-form';
-import FinancingResults from './financing-results';
 
 interface Props {
   propertyPrice: number;
@@ -153,14 +152,6 @@ function FinancingEdit({ propertyPrice, currentFinancing }: Props) {
           onFormChange={handleFormChange}
           disabled={!isEditing}
         />
-
-        {!isEditing && (
-          <FinancingResults
-            type={selectedType}
-            propertyPrice={propertyPrice}
-            formData={formData}
-          />
-        )}
       </CardContent>
       <CardFooter className="flex justify-between">
         {isEditing ? (

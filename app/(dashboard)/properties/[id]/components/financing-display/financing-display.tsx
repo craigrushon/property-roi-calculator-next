@@ -6,7 +6,7 @@ import { Edit } from 'lucide-react';
 import Link from 'next/link';
 import EmptyState from '../empty-state';
 import CashFinancingDisplay from './cash-financing-display';
-import LoanFinancingDisplay from './loan-financing-display';
+import FinancingSummary from './financing-summary';
 
 interface FinancingDisplayProps {
   propertyId: number;
@@ -73,16 +73,16 @@ function FinancingDisplay({
           </Link>
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-6">
         {type === FinancingType.CASH ? (
           <CashFinancingDisplay
             propertyPrice={propertyPrice}
             financing={currentFinancing}
           />
         ) : (
-          <LoanFinancingDisplay
-            propertyPrice={propertyPrice}
+          <FinancingSummary
             financing={currentFinancing}
+            propertyPrice={propertyPrice}
           />
         )}
       </CardContent>
