@@ -214,7 +214,15 @@ export async function deleteIncome(id: number) {
 
 export async function updatePropertyFinancingAction(formData: FormData) {
   const propertyId = Number(formData.get('propertyId'));
-  const financingType = formData.get('financingType') as string;
+  const financingType = formData.get('financingType') as FinancingType;
+
+  // Debug: Log what we're receiving
+  console.log(
+    'Received financingType:',
+    financingType,
+    'Type:',
+    typeof financingType
+  );
   const downPayment = formData.get('downPayment')
     ? Number(formData.get('downPayment'))
     : null;
@@ -265,7 +273,7 @@ export async function updatePropertyFinancingAction(formData: FormData) {
 
   try {
     await updatePropertyFinancing(propertyId, {
-      financingType: financingType || null,
+      financingType: financingType,
       downPayment,
       interestRate,
       loanTermYears,
