@@ -33,9 +33,9 @@ export interface FinancingCalculator {
 }
 
 export enum FinancingType {
-  MORTGAGE = 'mortgage',
-  HELOC = 'heloc',
-  CASH = 'cash'
+  MORTGAGE = 'MORTGAGE',
+  HELOC = 'HELOC',
+  CASH = 'CASH'
 }
 
 export interface FinancingOption {

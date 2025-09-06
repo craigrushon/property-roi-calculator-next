@@ -166,7 +166,7 @@ export async function deletePropertyById(id: number) {
 export async function updatePropertyFinancing(
   id: number,
   financingData: {
-    financingType: string | null;
+    financingType: FinancingType;
     downPayment: number | null;
     interestRate: number | null;
     loanTermYears: number | null;
@@ -184,7 +184,7 @@ export async function updatePropertyFinancing(
     const updatedFinancing = await prisma.financing.update({
       where: { propertyId: id },
       data: {
-        type: financingData.financingType as any, // Cast to FinancingType enum
+        type: financingData.financingType,
         downPayment: financingData.downPayment,
         interestRate: financingData.interestRate,
         loanTermYears: financingData.loanTermYears,
@@ -197,7 +197,7 @@ export async function updatePropertyFinancing(
     // Create new financing
     const newFinancing = await prisma.financing.create({
       data: {
-        type: financingData.financingType as any, // Cast to FinancingType enum
+        type: financingData.financingType,
         downPayment: financingData.downPayment,
         interestRate: financingData.interestRate,
         loanTermYears: financingData.loanTermYears,

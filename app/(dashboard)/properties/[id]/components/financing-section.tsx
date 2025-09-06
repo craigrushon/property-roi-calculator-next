@@ -21,7 +21,7 @@ import FinancingResults from './financing-results';
 interface Props {
   propertyPrice: number;
   currentFinancing?: {
-    type: string;
+    type: FinancingType;
     downPayment?: number;
     interestRate?: number;
     loanTermYears?: number;
@@ -32,7 +32,7 @@ interface Props {
 
 function FinancingSection({ propertyPrice, currentFinancing }: Props) {
   const [selectedType, setSelectedType] = useState<FinancingType>(
-    (currentFinancing?.type as FinancingType) || FinancingType.MORTGAGE
+    currentFinancing?.type || FinancingType.MORTGAGE
   );
   const [formData, setFormData] = useState({
     downPayment: currentFinancing?.downPayment || 0,

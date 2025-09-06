@@ -31,18 +31,7 @@ export default async function PropertyEditPage({
         />
         <FinancingSection
           propertyPrice={property.price}
-          currentFinancing={
-            property.financing
-              ? {
-                  type: property.financing.type,
-                  downPayment: property.financing.parameters.downPayment,
-                  interestRate: property.financing.parameters.interestRate,
-                  loanTermYears: property.financing.parameters.loanTermYears,
-                  additionalFees: property.financing.parameters.additionalFees,
-                  currentBalance: property.financing.parameters.currentBalance
-                }
-              : undefined
-          }
+          currentFinancing={property.financing}
         />
         <ExpensesSection expenses={property.expenses} />
         <IncomesSection incomes={property.incomes} />
