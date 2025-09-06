@@ -1,4 +1,5 @@
 import { FinancingOption, FinancingType } from 'models/financing/types';
+import { formatCurrency, formatPercentage } from 'lib/utils';
 
 interface LoanFinancingDisplayProps {
   propertyPrice: number;
@@ -10,19 +11,6 @@ function LoanFinancingDisplay({
   financing
 }: LoanFinancingDisplayProps) {
   const { type, parameters, result } = financing;
-
-  const formatCurrency = (amount: number | null | undefined) => {
-    if (!amount) return 'N/A';
-    return new Intl.NumberFormat('en-CA', {
-      style: 'currency',
-      currency: 'CAD'
-    }).format(amount);
-  };
-
-  const formatPercentage = (rate: number | null | undefined) => {
-    if (!rate) return 'N/A';
-    return `${rate.toFixed(2)}%`;
-  };
 
   return (
     <div className="space-y-4">

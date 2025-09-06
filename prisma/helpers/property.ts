@@ -1,8 +1,46 @@
 import prisma from 'lib/prisma';
 import { Property } from 'models/property';
 import { NormalizedExpense, NormalizedIncome } from 'models/types';
-import { FinancingType, FinancingParameters } from 'models/financing/types';
+import {
+  FinancingType,
+  FinancingParameters,
+  FinancingOption
+} from 'models/financing/types';
+import { FinancingFactory } from 'models/financing';
 import config from '../config';
+
+/**
+ * Helper function to create a financing option from database financing data
+ */
+function createFinancingOption(
+  financingData: any,
+  propertyPrice: number
+): FinancingOption | undefined {
+  if (!financingData) return undefined;
+
+  const parameters: FinancingParameters = {
+    propertyPrice,
+    downPayment: financingData.downPayment || 0,
+    interestRate: financingData.interestRate
+      ? Number(financingData.interestRate)
+      : 0,
+    loanTermYears: financingData.loanTermYears || 0,
+    additionalFees: financingData.additionalFees || 0,
+    currentBalance: financingData.currentBalance || undefined
+  };
+
+  // Calculate the actual financing result using the calculator
+  const calculator = FinancingFactory.createCalculator(
+    financingData.type as FinancingType
+  );
+  const result = calculator.calculate(parameters);
+
+  return {
+    type: financingData.type as FinancingType,
+    parameters,
+    result
+  };
+}
 
 // Create getProperty function
 export async function getPropertyById(id: number) {
@@ -30,32 +68,10 @@ export async function getPropertyById(id: number) {
   }));
 
   // Create financing option if financing data exists
-  let financingOption = undefined;
-  if (property.financing) {
-    const parameters: FinancingParameters = {
-      propertyPrice: Number(property.price),
-      downPayment: property.financing.downPayment || 0,
-      interestRate: property.financing.interestRate
-        ? Number(property.financing.interestRate)
-        : 0,
-      loanTermYears: property.financing.loanTermYears || 0,
-      additionalFees: property.financing.additionalFees || 0,
-      currentBalance: property.financing.currentBalance || undefined
-    };
-
-    financingOption = {
-      type: property.financing.type as FinancingType,
-      parameters,
-      result: {
-        monthlyPayment: 0,
-        totalInterest: 0,
-        totalCost: 0,
-        principalAmount: 0,
-        downPayment: 0,
-        additionalFees: 0
-      } // Will be calculated by Property model
-    };
-  }
+  const financingOption = createFinancingOption(
+    property.financing,
+    Number(property.price)
+  );
 
   return new Property(
     property.id,
@@ -110,32 +126,10 @@ export async function getProperties(
     }));
 
     // Create financing option if financing data exists
-    let financingOption = undefined;
-    if (data.financing) {
-      const parameters: FinancingParameters = {
-        propertyPrice: Number(data.price),
-        downPayment: data.financing.downPayment || 0,
-        interestRate: data.financing.interestRate
-          ? Number(data.financing.interestRate)
-          : 0,
-        loanTermYears: data.financing.loanTermYears || 0,
-        additionalFees: data.financing.additionalFees || 0,
-        currentBalance: data.financing.currentBalance || undefined
-      };
-
-      financingOption = {
-        type: data.financing.type as FinancingType,
-        parameters,
-        result: {
-          monthlyPayment: 0,
-          totalInterest: 0,
-          totalCost: 0,
-          principalAmount: 0,
-          downPayment: 0,
-          additionalFees: 0
-        } // Will be calculated by Property model
-      };
-    }
+    const financingOption = createFinancingOption(
+      data.financing,
+      Number(data.price)
+    );
 
     const property = new Property(
       data.id,

@@ -22,3 +22,26 @@ export function logError(error: Error | unknown, message?: string) {
     console.error(message || 'Error:', error);
   }
 }
+
+/**
+ * Format a number as currency in Canadian dollars
+ * @param amount - The amount to format
+ * @returns Formatted currency string or 'N/A' if amount is null/undefined
+ */
+export function formatCurrency(amount: number | null | undefined): string {
+  if (!amount) return 'N/A';
+  return new Intl.NumberFormat('en-CA', {
+    style: 'currency',
+    currency: 'CAD'
+  }).format(amount);
+}
+
+/**
+ * Format a number as a percentage
+ * @param rate - The rate to format
+ * @returns Formatted percentage string or 'N/A' if rate is null/undefined
+ */
+export function formatPercentage(rate: number | null | undefined): string {
+  if (!rate) return 'N/A';
+  return `${rate.toFixed(2)}%`;
+}

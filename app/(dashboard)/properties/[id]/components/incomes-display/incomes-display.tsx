@@ -4,6 +4,7 @@ import { Edit } from 'lucide-react';
 import Link from 'next/link';
 import { Income } from 'models/types';
 import EmptyState from '../empty-state';
+import { formatCurrency } from 'lib/utils';
 
 interface IncomesDisplayProps {
   propertyId: number;
@@ -11,13 +12,6 @@ interface IncomesDisplayProps {
 }
 
 function IncomesDisplay({ propertyId, incomes }: IncomesDisplayProps) {
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-CA', {
-      style: 'currency',
-      currency: 'CAD'
-    }).format(amount);
-  };
-
   const formatFrequency = (frequency: string) => {
     return frequency.charAt(0).toUpperCase() + frequency.slice(1);
   };

@@ -149,6 +149,8 @@ describe('FinancingDisplay', () => {
       />
     );
 
+    // With zero interest rate and loan term, we should see N/A for those parameters
+    // and N/A for calculated values when they are zero
     const naElements = screen.getAllByText('N/A');
     expect(naElements.length).toBeGreaterThanOrEqual(2); // For zero interest rate and loan term
   });

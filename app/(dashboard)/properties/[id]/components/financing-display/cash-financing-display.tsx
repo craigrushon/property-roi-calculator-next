@@ -1,4 +1,5 @@
 import { FinancingOption } from 'models/financing/types';
+import { formatCurrency } from 'lib/utils';
 
 interface CashFinancingDisplayProps {
   propertyPrice: number;
@@ -10,14 +11,6 @@ function CashFinancingDisplay({
   financing
 }: CashFinancingDisplayProps) {
   const { parameters, result } = financing;
-
-  const formatCurrency = (amount: number | null | undefined) => {
-    if (!amount) return 'N/A';
-    return new Intl.NumberFormat('en-CA', {
-      style: 'currency',
-      currency: 'CAD'
-    }).format(amount);
-  };
 
   return (
     <div className="space-y-4">

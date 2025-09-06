@@ -4,6 +4,7 @@ import { Edit } from 'lucide-react';
 import Link from 'next/link';
 import { Expense } from 'models/types';
 import EmptyState from '../empty-state';
+import { formatCurrency } from 'lib/utils';
 
 interface ExpensesDisplayProps {
   propertyId: number;
@@ -11,13 +12,6 @@ interface ExpensesDisplayProps {
 }
 
 function ExpensesDisplay({ propertyId, expenses }: ExpensesDisplayProps) {
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-CA', {
-      style: 'currency',
-      currency: 'CAD'
-    }).format(amount);
-  };
-
   const formatFrequency = (frequency: string) => {
     return frequency.charAt(0).toUpperCase() + frequency.slice(1);
   };

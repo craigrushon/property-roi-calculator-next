@@ -2,6 +2,7 @@ import { Card, CardHeader, CardTitle, CardContent } from 'components/ui/card';
 import { Button } from 'components/ui/button';
 import { Edit } from 'lucide-react';
 import Link from 'next/link';
+import { formatCurrency } from 'lib/utils';
 
 interface GeneralInfoDisplayProps {
   property: {
@@ -13,13 +14,6 @@ interface GeneralInfoDisplayProps {
 }
 
 function GeneralInfoDisplay({ property }: GeneralInfoDisplayProps) {
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-CA', {
-      style: 'currency',
-      currency: 'CAD'
-    }).format(amount);
-  };
-
   return (
     <Card>
       <CardHeader>
