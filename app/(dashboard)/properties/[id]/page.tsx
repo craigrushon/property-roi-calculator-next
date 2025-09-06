@@ -4,7 +4,7 @@ import { Button } from 'components/ui/button';
 import GeneralInfoSection from './components/info-section';
 import ExpensesSection from './components/expenses-section';
 import IncomesSection from './components/incomes-section';
-import { FinancingDisplay } from './components/financing';
+import { FinancingDisplay } from './components/financing-display';
 import { getPropertyById } from 'prisma/helpers/property';
 
 export default async function PropertyPage({
