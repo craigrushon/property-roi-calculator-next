@@ -32,7 +32,8 @@ function FinancingResults({ type, propertyPrice, formData }: Props) {
     interestRate: formData.interestRate,
     loanTermYears: formData.loanTermYears,
     additionalFees: formData.additionalFees,
-    currentBalance: type === FinancingType.HELOC ? formData.currentBalance : undefined
+    currentBalance:
+      type === FinancingType.HELOC ? formData.currentBalance : undefined
   };
 
   const calculator = FinancingFactory.createCalculator(type);
@@ -43,11 +44,13 @@ function FinancingResults({ type, propertyPrice, formData }: Props) {
   return (
     <div className="space-y-4">
       <h4 className="font-medium">Financing Summary</h4>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Monthly Payment */}
         <div className="bg-blue-50 p-4 rounded-lg">
-          <div className="text-sm text-blue-600 font-medium">Monthly Payment</div>
+          <div className="text-sm text-blue-600 font-medium">
+            Monthly Payment
+          </div>
           <div className="text-2xl font-bold text-blue-900">
             {formatCurrency(result.monthlyPayment)}
           </div>
@@ -55,7 +58,9 @@ function FinancingResults({ type, propertyPrice, formData }: Props) {
 
         {/* Total Interest */}
         <div className="bg-orange-50 p-4 rounded-lg">
-          <div className="text-sm text-orange-600 font-medium">Total Interest</div>
+          <div className="text-sm text-orange-600 font-medium">
+            Total Interest
+          </div>
           <div className="text-2xl font-bold text-orange-900">
             {formatCurrency(result.totalInterest)}
           </div>
@@ -71,7 +76,9 @@ function FinancingResults({ type, propertyPrice, formData }: Props) {
 
         {/* Principal Amount */}
         <div className="bg-purple-50 p-4 rounded-lg">
-          <div className="text-sm text-purple-600 font-medium">Principal Amount</div>
+          <div className="text-sm text-purple-600 font-medium">
+            Principal Amount
+          </div>
           <div className="text-2xl font-bold text-purple-900">
             {formatCurrency(principalAmount)}
           </div>
@@ -141,9 +148,15 @@ function FinancingResults({ type, propertyPrice, formData }: Props) {
                 {result.amortizationSchedule.slice(0, 12).map((payment) => (
                   <tr key={payment.paymentNumber} className="border-b">
                     <td className="py-1">{payment.paymentNumber}</td>
-                    <td className="text-right py-1">{formatCurrency(payment.principalPayment)}</td>
-                    <td className="text-right py-1">{formatCurrency(payment.interestPayment)}</td>
-                    <td className="text-right py-1">{formatCurrency(payment.remainingBalance)}</td>
+                    <td className="text-right py-1">
+                      {formatCurrency(payment.principalPayment)}
+                    </td>
+                    <td className="text-right py-1">
+                      {formatCurrency(payment.interestPayment)}
+                    </td>
+                    <td className="text-right py-1">
+                      {formatCurrency(payment.remainingBalance)}
+                    </td>
                   </tr>
                 ))}
               </tbody>

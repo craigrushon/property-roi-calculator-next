@@ -61,9 +61,13 @@ for (const [type, result] of comparison) {
 
 // Add mortgage financing to property
 property.addFinancing(FinancingType.MORTGAGE, parameters);
-console.log(`Property ROI with Mortgage: ${property.returnOnInvestment.toFixed(2)}%`);
+console.log(
+  `Property ROI with Mortgage: ${property.returnOnInvestment.toFixed(2)}%`
+);
 console.log(`Monthly Cash Flow: $${property.cashflow.toLocaleString()}`);
-console.log(`Total Investment: $${property.getTotalInvestment().toLocaleString()}`);
+console.log(
+  `Total Investment: $${property.getTotalInvestment().toLocaleString()}`
+);
 ```
 
 ### 2. Detailed Mortgage Analysis
@@ -77,7 +81,9 @@ const parameters: FinancingParameters = {
   additionalFees: 8000
 };
 
-const mortgageCalculator = FinancingFactory.createCalculator(FinancingType.MORTGAGE);
+const mortgageCalculator = FinancingFactory.createCalculator(
+  FinancingType.MORTGAGE
+);
 const result = mortgageCalculator.calculate(parameters);
 
 console.log('Mortgage Details:');
@@ -90,14 +96,14 @@ console.log(`Total Cost: $${result.totalCost.toLocaleString()}`);
 if (result.amortizationSchedule) {
   console.log('\nFirst 12 Months Amortization:');
   console.log('Month | Principal | Interest | Balance');
-  
+
   for (let i = 0; i < Math.min(12, result.amortizationSchedule.length); i++) {
     const payment = result.amortizationSchedule[i];
     console.log(
       `${payment.paymentNumber.toString().padStart(5)} | ` +
-      `$${payment.principalPayment.toLocaleString().padStart(9)} | ` +
-      `$${payment.interestPayment.toLocaleString().padStart(9)} | ` +
-      `$${payment.remainingBalance.toLocaleString()}`
+        `$${payment.principalPayment.toLocaleString().padStart(9)} | ` +
+        `$${payment.interestPayment.toLocaleString().padStart(9)} | ` +
+        `$${payment.remainingBalance.toLocaleString()}`
     );
   }
 }
@@ -120,7 +126,9 @@ const result = helocCalculator.calculate(parameters);
 
 console.log('HELOC Details:');
 console.log(`Current Balance: $${parameters.currentBalance?.toLocaleString()}`);
-console.log(`Interest-Only Payment: $${result.monthlyPayment.toLocaleString()}`);
+console.log(
+  `Interest-Only Payment: $${result.monthlyPayment.toLocaleString()}`
+);
 console.log(`Total Interest: $${result.totalInterest.toLocaleString()}`);
 console.log(`Total Cost: $${result.totalCost.toLocaleString()}`);
 ```
@@ -136,19 +144,27 @@ const parameters: FinancingParameters = {
   additionalFees: 4000
 };
 
-const cashCalculator = FinancingFactory.createCalculator(FinancingType.CASH) as CashPurchaseCalculator;
-const mortgageCalculator = FinancingFactory.createCalculator(FinancingType.MORTGAGE);
+const cashCalculator = FinancingFactory.createCalculator(
+  FinancingType.CASH
+) as CashPurchaseCalculator;
+const mortgageCalculator = FinancingFactory.createCalculator(
+  FinancingType.MORTGAGE
+);
 
 const cashResult = cashCalculator.calculate(parameters);
 const mortgageResult = mortgageCalculator.calculate(parameters);
 
 console.log('Cash Purchase:');
 console.log(`  Total Cost: $${cashResult.totalCost.toLocaleString()}`);
-console.log(`  Monthly Payment: $${cashResult.monthlyPayment.toLocaleString()}`);
+console.log(
+  `  Monthly Payment: $${cashResult.monthlyPayment.toLocaleString()}`
+);
 
 console.log('\nMortgage:');
 console.log(`  Total Cost: $${mortgageResult.totalCost.toLocaleString()}`);
-console.log(`  Monthly Payment: $${mortgageResult.monthlyPayment.toLocaleString()}`);
+console.log(
+  `  Monthly Payment: $${mortgageResult.monthlyPayment.toLocaleString()}`
+);
 console.log(`  Down Payment: $${mortgageResult.downPayment.toLocaleString()}`);
 
 const costDifference = mortgageResult.totalCost - cashResult.totalCost;
@@ -161,8 +177,12 @@ const opportunityCost = cashCalculator.calculateOpportunityCost(
   30 // 30 years
 );
 
-console.log(`\nOpportunity Cost (8% return for 30 years): $${opportunityCost.toLocaleString()}`);
-console.log(`Net Benefit of Cash: $${(opportunityCost - costDifference).toLocaleString()}`);
+console.log(
+  `\nOpportunity Cost (8% return for 30 years): $${opportunityCost.toLocaleString()}`
+);
+console.log(
+  `Net Benefit of Cash: $${(opportunityCost - costDifference).toLocaleString()}`
+);
 ```
 
 ## Property Integration
@@ -196,6 +216,7 @@ const comparison = property.compareFinancingOptions(parameters);
 ## Testing
 
 The system includes comprehensive unit tests covering:
+
 - All calculator types and their calculations
 - Amortization schedule accuracy
 - Property integration scenarios
@@ -203,6 +224,7 @@ The system includes comprehensive unit tests covering:
 - Edge cases and validation
 
 Run tests with:
+
 ```bash
 npm test models/financing/financing.test.ts
 ```

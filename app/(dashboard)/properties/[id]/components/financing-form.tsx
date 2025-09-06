@@ -16,7 +16,13 @@ interface Props {
   disabled?: boolean;
 }
 
-function FinancingForm({ type, propertyPrice, formData, onFormChange, disabled = false }: Props) {
+function FinancingForm({
+  type,
+  propertyPrice,
+  formData,
+  onFormChange,
+  disabled = false
+}: Props) {
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -30,7 +36,8 @@ function FinancingForm({ type, propertyPrice, formData, onFormChange, disabled =
     return `${value.toFixed(2)}%`;
   };
 
-  const downPaymentPercentage = propertyPrice > 0 ? (formData.downPayment / propertyPrice) * 100 : 0;
+  const downPaymentPercentage =
+    propertyPrice > 0 ? (formData.downPayment / propertyPrice) * 100 : 0;
 
   return (
     <div className="space-y-4">
@@ -38,7 +45,10 @@ function FinancingForm({ type, propertyPrice, formData, onFormChange, disabled =
         {/* Down Payment */}
         {(type === FinancingType.MORTGAGE || type === FinancingType.HELOC) && (
           <div>
-            <label htmlFor="downPayment" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="downPayment"
+              className="block text-sm font-medium mb-1"
+            >
               Down Payment
             </label>
             <div className="relative">
@@ -46,7 +56,9 @@ function FinancingForm({ type, propertyPrice, formData, onFormChange, disabled =
                 id="downPayment"
                 type="number"
                 value={formData.downPayment}
-                onChange={(e) => onFormChange('downPayment', Number(e.target.value))}
+                onChange={(e) =>
+                  onFormChange('downPayment', Number(e.target.value))
+                }
                 disabled={disabled}
                 className="w-full border p-2 pr-20 text-sm"
                 min="0"
@@ -65,7 +77,10 @@ function FinancingForm({ type, propertyPrice, formData, onFormChange, disabled =
         {/* Interest Rate */}
         {(type === FinancingType.MORTGAGE || type === FinancingType.HELOC) && (
           <div>
-            <label htmlFor="interestRate" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="interestRate"
+              className="block text-sm font-medium mb-1"
+            >
               Interest Rate
             </label>
             <div className="relative">
@@ -73,7 +88,9 @@ function FinancingForm({ type, propertyPrice, formData, onFormChange, disabled =
                 id="interestRate"
                 type="number"
                 value={formData.interestRate}
-                onChange={(e) => onFormChange('interestRate', Number(e.target.value))}
+                onChange={(e) =>
+                  onFormChange('interestRate', Number(e.target.value))
+                }
                 disabled={disabled}
                 className="w-full border p-2 pr-12 text-sm"
                 min="0"
@@ -90,13 +107,18 @@ function FinancingForm({ type, propertyPrice, formData, onFormChange, disabled =
         {/* Loan Term */}
         {(type === FinancingType.MORTGAGE || type === FinancingType.HELOC) && (
           <div>
-            <label htmlFor="loanTermYears" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="loanTermYears"
+              className="block text-sm font-medium mb-1"
+            >
               Loan Term
             </label>
             <select
               id="loanTermYears"
               value={formData.loanTermYears}
-              onChange={(e) => onFormChange('loanTermYears', Number(e.target.value))}
+              onChange={(e) =>
+                onFormChange('loanTermYears', Number(e.target.value))
+              }
               disabled={disabled}
               className="w-full border p-2 text-sm"
             >
@@ -111,14 +133,19 @@ function FinancingForm({ type, propertyPrice, formData, onFormChange, disabled =
         {/* Current Balance (HELOC only) */}
         {type === FinancingType.HELOC && (
           <div>
-            <label htmlFor="currentBalance" className="block text-sm font-medium mb-1">
+            <label
+              htmlFor="currentBalance"
+              className="block text-sm font-medium mb-1"
+            >
               Current Balance
             </label>
             <input
               id="currentBalance"
               type="number"
               value={formData.currentBalance}
-              onChange={(e) => onFormChange('currentBalance', Number(e.target.value))}
+              onChange={(e) =>
+                onFormChange('currentBalance', Number(e.target.value))
+              }
               disabled={disabled}
               className="w-full border p-2 text-sm"
               min="0"
@@ -132,14 +159,19 @@ function FinancingForm({ type, propertyPrice, formData, onFormChange, disabled =
 
         {/* Additional Fees */}
         <div>
-          <label htmlFor="additionalFees" className="block text-sm font-medium mb-1">
+          <label
+            htmlFor="additionalFees"
+            className="block text-sm font-medium mb-1"
+          >
             Additional Fees
           </label>
           <input
             id="additionalFees"
             type="number"
             value={formData.additionalFees}
-            onChange={(e) => onFormChange('additionalFees', Number(e.target.value))}
+            onChange={(e) =>
+              onFormChange('additionalFees', Number(e.target.value))
+            }
             disabled={disabled}
             className="w-full border p-2 text-sm"
             min="0"
@@ -166,7 +198,9 @@ function FinancingForm({ type, propertyPrice, formData, onFormChange, disabled =
             </div>
             <div className="flex justify-between font-medium border-t pt-1">
               <span>Total Cost:</span>
-              <span>{formatCurrency(propertyPrice + formData.additionalFees)}</span>
+              <span>
+                {formatCurrency(propertyPrice + formData.additionalFees)}
+              </span>
             </div>
           </div>
         </div>
