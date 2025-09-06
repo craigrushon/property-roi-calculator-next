@@ -66,14 +66,6 @@ function FinancingSection({ propertyPrice, currentFinancing }: Props) {
       const formDataObj = new FormData();
       formDataObj.set('propertyId', propertyId.toString());
       formDataObj.set('financingType', selectedType);
-
-      // Debug: Log what we're sending
-      console.log(
-        'Sending financingType:',
-        selectedType,
-        'Type:',
-        typeof selectedType
-      );
       formDataObj.set('downPayment', formData.downPayment.toString());
       formDataObj.set('interestRate', formData.interestRate.toString());
       formDataObj.set('loanTermYears', formData.loanTermYears.toString());
