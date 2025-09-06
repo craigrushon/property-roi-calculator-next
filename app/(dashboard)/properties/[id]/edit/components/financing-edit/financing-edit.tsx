@@ -3,6 +3,7 @@
 import {
   Card,
   CardHeader,
+  CardTitle,
   CardContent,
   CardFooter
 } from '@/components/ui/card';
@@ -13,7 +14,7 @@ import { FinancingType } from 'models/financing/types';
 import {
   updatePropertyFinancingAction,
   clearPropertyFinancingAction
-} from '../actions';
+} from '../../../actions';
 import FinancingTypeSelector from './financing-type-selector';
 import FinancingForm from './financing-form';
 import FinancingResults from './financing-results';
@@ -30,7 +31,7 @@ interface Props {
   };
 }
 
-function FinancingSection({ propertyPrice, currentFinancing }: Props) {
+function FinancingEdit({ propertyPrice, currentFinancing }: Props) {
   const [selectedType, setSelectedType] = useState<FinancingType>(
     currentFinancing?.type || FinancingType.MORTGAGE
   );
@@ -130,7 +131,7 @@ function FinancingSection({ propertyPrice, currentFinancing }: Props) {
   return (
     <Card>
       <CardHeader>
-        <h2 className="text-lg font-bold">Financing Configuration</h2>
+        <CardTitle>Financing</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {error && (
@@ -196,4 +197,4 @@ function FinancingSection({ propertyPrice, currentFinancing }: Props) {
   );
 }
 
-export default FinancingSection;
+export default FinancingEdit;
