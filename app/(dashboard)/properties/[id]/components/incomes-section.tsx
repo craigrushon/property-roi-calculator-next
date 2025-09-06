@@ -1,4 +1,5 @@
 'use client';
+
 import {
   Card,
   CardHeader,
@@ -7,18 +8,36 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Income } from 'models/types';
+import { useState } from 'react';
+import { useParams } from 'next/navigation';
+import IncomeRow from './income-row';
+import IncomeForm from './income-form';
+import ListItem from './list-item';
+import { createIncome } from '../actions';
 
 interface Props {
   incomes: Income[];
 }
 
 function IncomesSection({ incomes }: Props) {
+  const [isAdding, setIsAdding] = useState(false);
+  const params = useParams();
+  const propertyId = Number(params.id);
+
   const handleAddIncome = () => {
-    console.log('Add income clicked');
+    setIsAdding(true);
   };
 
-  const handleDeleteIncome = (id: number) => {
-    console.log('Delete income clicked', id);
+  const handleCreateIncome = async (formData: FormData) => {
+    formData.set('propertyId', propertyId.toString());
+
+    await createIncome(formData);
+
+    setIsAdding(false);
+  };
+
+  const handleCancelCreate = () => {
+    setIsAdding(false);
   };
 
   return (
@@ -27,39 +46,34 @@ function IncomesSection({ incomes }: Props) {
         <h2 className="text-lg font-bold">Income Streams</h2>
       </CardHeader>
       <CardContent>
-        {incomes.length > 0 ? (
-          <ul className="space-y-4">
-            {incomes.map((income) => (
-              <li
-                key={income.id}
-                className="flex justify-between items-center border-b pb-2"
-              >
-                <div>
-                  <p>
-                    <strong>Amount:</strong> ${income.amount.toLocaleString()}
-                  </p>
-                  <p>
-                    <strong>Frequency:</strong> {income.frequency}
-                  </p>
-                </div>
-                <Button
-                  onClick={() => handleDeleteIncome(income.id)}
-                  size="sm"
-                  variant="destructive"
-                >
-                  Delete
-                </Button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No income streams added.</p>
-        )}
+        <ul>
+          {incomes.map((income, index) => (
+            <IncomeRow
+              key={income.id}
+              unitIdentifier={`${index + 1}`}
+              income={income}
+            />
+          ))}
+          {isAdding && (
+            <ListItem>
+              <IncomeForm
+                initialData={{ frequency: 'monthly' }}
+                onCancel={handleCancelCreate}
+                primaryAction={{
+                  label: 'Create',
+                  action: handleCreateIncome
+                }}
+              />
+            </ListItem>
+          )}
+        </ul>
       </CardContent>
       <CardFooter>
-        <Button onClick={handleAddIncome} size="sm" variant="outline">
-          Add Income
-        </Button>
+        {!isAdding && (
+          <Button onClick={handleAddIncome} size="sm" variant="outline">
+            Add Income
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );
