@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Expense } from 'models/types';
 import { useState } from 'react';
 import ExpenseForm from './expense-form';
-import ExpenseListItem from './expense-list-item';
+import ListItem from './list-item';
 import { deleteExpense, updateExpense } from '../actions';
 
 interface Props {
@@ -33,7 +33,7 @@ function ExpenseRow({ expense, editingByDefault = false }: Props) {
   };
 
   return (
-    <ExpenseListItem onClick={() => !isEditing && setIsEditing(true)}>
+    <ListItem onClick={() => !isEditing && setIsEditing(true)}>
       {isEditing ? (
         <ExpenseForm
           initialData={{
@@ -76,7 +76,7 @@ function ExpenseRow({ expense, editingByDefault = false }: Props) {
           </div>
         </>
       )}
-    </ExpenseListItem>
+    </ListItem>
   );
 }
 

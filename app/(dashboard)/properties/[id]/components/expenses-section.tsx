@@ -12,7 +12,7 @@ import { createExpense } from '../actions';
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import ExpenseForm from './expense-form';
-import ExpenseListItem from './expense-list-item';
+import ListItem from './list-item';
 
 interface Props {
   expenses: Expense[];
@@ -49,7 +49,7 @@ function ExpensesSection({ expenses }: Props) {
             <ExpenseRow key={expense.id} expense={expense} />
           ))}
           {isAdding && (
-            <ExpenseListItem>
+            <ListItem>
               <ExpenseForm
                 key="new-expense"
                 initialData={{ frequency: 'monthly' }}
@@ -59,7 +59,7 @@ function ExpensesSection({ expenses }: Props) {
                   action: handleCreateExpense
                 }}
               />
-            </ExpenseListItem>
+            </ListItem>
           )}
         </ul>
       </CardContent>
