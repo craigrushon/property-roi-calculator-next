@@ -1,16 +1,17 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from 'components/ui/button';
-import GeneralInfoSection from '../components/info-section';
+import { GeneralInfoEdit, FinancingEdit, FocusHandler } from './components';
 import ExpensesSection from '../components/expenses-section';
 import IncomesSection from '../components/incomes-section';
-import { FinancingEdit } from './components';
 import { getPropertyById } from 'prisma/helpers/property';
 
 export default async function PropertyEditPage({
-  params
+  params,
+  searchParams
 }: {
   params: { id: string };
+  searchParams: { focus?: string };
 }) {
   const propertyId = Number(params.id);
 
@@ -26,6 +27,7 @@ export default async function PropertyEditPage({
 
   return (
     <div>
+      <FocusHandler focus={searchParams.focus} />
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Edit Property</h1>
         <div className="flex gap-2">
@@ -38,15 +40,23 @@ export default async function PropertyEditPage({
         </div>
       </div>
       <form id="property-form" className="space-y-6">
-        <GeneralInfoSection
-          currentData={{ ...property, price: property.price.toString() }}
-        />
-        <FinancingEdit
-          propertyPrice={property.price}
-          currentFinancing={property.financing}
-        />
-        <ExpensesSection expenses={property.expenses} />
-        <IncomesSection incomes={property.incomes} />
+        <div id="general-section">
+          <GeneralInfoEdit
+            currentData={{ ...property, price: property.price.toString() }}
+          />
+        </div>
+        <div id="financing-section">
+          <FinancingEdit
+            propertyPrice={property.price}
+            currentFinancing={property.financing}
+          />
+        </div>
+        <div id="expenses-section">
+          <ExpensesSection expenses={property.expenses} />
+        </div>
+        <div id="incomes-section">
+          <IncomesSection incomes={property.incomes} />
+        </div>
       </form>
     </div>
   );

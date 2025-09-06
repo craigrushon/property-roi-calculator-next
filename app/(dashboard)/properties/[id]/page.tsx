@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from 'components/ui/button';
-import GeneralInfoSection from './components/info-section';
+import { GeneralInfoDisplay } from './components/general-info-display';
 import ExpensesSection from './components/expenses-section';
 import IncomesSection from './components/incomes-section';
 import { FinancingDisplay } from './components/financing-display';
@@ -33,10 +33,9 @@ export default async function PropertyPage({
         </Link>
       </div>
       <div className="space-y-6">
-        <GeneralInfoSection
-          currentData={{ ...property, price: property.price.toString() }}
-        />
+        <GeneralInfoDisplay property={property} />
         <FinancingDisplay
+          propertyId={property.id}
           propertyPrice={property.price}
           currentFinancing={property.financing}
         />

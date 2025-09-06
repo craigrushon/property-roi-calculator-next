@@ -1,16 +1,21 @@
 import { FinancingType, FinancingOption } from 'models/financing/types';
 import { Badge } from 'components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
+import { Button } from 'components/ui/button';
+import { Edit } from 'lucide-react';
+import Link from 'next/link';
 import EmptyState from '../empty-state';
 import CashFinancingDisplay from './cash-financing-display';
 import LoanFinancingDisplay from './loan-financing-display';
 
 interface FinancingDisplayProps {
+  propertyId: number;
   propertyPrice: number;
   currentFinancing?: FinancingOption;
 }
 
 function FinancingDisplay({
+  propertyId,
   propertyPrice,
   currentFinancing
 }: FinancingDisplayProps) {
@@ -56,8 +61,16 @@ function FinancingDisplay({
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
-          Financing
-          {getFinancingTypeBadge(type)}
+          <div className="flex items-center gap-2">
+            <span>Financing</span>
+            {getFinancingTypeBadge(type)}
+          </div>
+          <Link href={`/properties/${propertyId}/edit?focus=financing`}>
+            <Button variant="outline" size="sm">
+              <Edit className="h-4 w-4 mr-1" />
+              Edit
+            </Button>
+          </Link>
         </CardTitle>
       </CardHeader>
       <CardContent>
