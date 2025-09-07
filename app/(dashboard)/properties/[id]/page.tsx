@@ -57,8 +57,8 @@ export default async function PropertyPage({
         propertyPrice={property.price}
         currentFinancing={property.financing}
       />
-      <ExpensesDisplay propertyId={property.id} expenses={property.expenses} />
       <IncomesDisplay propertyId={property.id} incomes={property.incomes} />
+      <ExpensesDisplay propertyId={property.id} expenses={property.expenses} />
     </div>
   );
 }

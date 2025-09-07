@@ -16,12 +16,19 @@ function IncomesDisplay({ propertyId, incomes }: IncomesDisplayProps) {
     return frequency.charAt(0).toUpperCase() + frequency.slice(1);
   };
 
+  // Calculate total monthly income
+  const totalMonthlyIncome = incomes.reduce((total, income) => {
+    const monthlyAmount =
+      income.frequency === 'monthly' ? income.amount : income.amount / 12; // Convert yearly to monthly
+    return total + monthlyAmount;
+  }, 0);
+
   if (incomes.length === 0) {
     return (
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            <span>Income Streams</span>
+            <span>Income</span>
             <Link href={`/properties/${propertyId}/edit?focus=incomes`}>
               <Button variant="outline" size="sm">
                 <Edit className="h-4 w-4 mr-1" />
@@ -32,8 +39,8 @@ function IncomesDisplay({ propertyId, incomes }: IncomesDisplayProps) {
         </CardHeader>
         <CardContent>
           <EmptyState
-            title="No Income Streams"
-            description="No income streams have been configured for this property."
+            title="No Income"
+            description="No income has been configured for this property."
             badgeText="No income configured"
           />
         </CardContent>
@@ -45,7 +52,7 @@ function IncomesDisplay({ propertyId, incomes }: IncomesDisplayProps) {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
-          <span>Income Streams</span>
+          <span>Income</span>
           <Link href={`/properties/${propertyId}/edit?focus=incomes`}>
             <Button variant="outline" size="sm">
               <Edit className="h-4 w-4 mr-1" />
@@ -59,7 +66,7 @@ function IncomesDisplay({ propertyId, incomes }: IncomesDisplayProps) {
           {incomes.map((income, index) => (
             <div
               key={income.id}
-              className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50/50 transition-colors"
+              className="flex items-center justify-between py-3 border-b border-gray-100 hover:bg-gray-50/50 transition-colors"
             >
               <div>
                 <p className="font-semibold text-sm">Unit #{index + 1}</p>
@@ -70,6 +77,12 @@ function IncomesDisplay({ propertyId, incomes }: IncomesDisplayProps) {
               </div>
             </div>
           ))}
+
+          {/* Total Monthly Income */}
+          <div className="flex items-center justify-between py-3 font-bold text-green-700 border-t pt-3 mt-2">
+            <span>Total Monthly Income:</span>
+            <span>{formatCurrency(totalMonthlyIncome)}</span>
+          </div>
         </div>
       </CardContent>
     </Card>

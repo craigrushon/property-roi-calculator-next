@@ -16,6 +16,13 @@ function ExpensesDisplay({ propertyId, expenses }: ExpensesDisplayProps) {
     return frequency.charAt(0).toUpperCase() + frequency.slice(1);
   };
 
+  // Calculate total monthly expenses
+  const totalMonthlyExpenses = expenses.reduce((total, expense) => {
+    const monthlyAmount =
+      expense.frequency === 'monthly' ? expense.amount : expense.amount / 12; // Convert yearly to monthly
+    return total + monthlyAmount;
+  }, 0);
+
   if (expenses.length === 0) {
     return (
       <Card>
@@ -59,7 +66,7 @@ function ExpensesDisplay({ propertyId, expenses }: ExpensesDisplayProps) {
           {expenses.map((expense) => (
             <div
               key={expense.id}
-              className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50/50 transition-colors"
+              className="flex items-center justify-between py-3 border-b border-gray-100 hover:bg-gray-50/50 transition-colors"
             >
               <div>
                 <p className="font-semibold text-sm">{expense.name}</p>
@@ -70,6 +77,12 @@ function ExpensesDisplay({ propertyId, expenses }: ExpensesDisplayProps) {
               </div>
             </div>
           ))}
+
+          {/* Total Monthly Expenses */}
+          <div className="flex items-center justify-between py-3 font-bold text-red-700 border-t pt-3 mt-2">
+            <span>Total Monthly Expenses:</span>
+            <span>{formatCurrency(totalMonthlyExpenses)}</span>
+          </div>
         </div>
       </CardContent>
     </Card>
