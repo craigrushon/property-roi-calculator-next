@@ -106,22 +106,6 @@ function PropertyHero({ property }: PropertyHeroProps) {
               {/* Investment Metrics */}
               <div className="mt-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Annual Cashflow */}
-                  <div className={`${cashflowBgColor} p-4 rounded-lg`}>
-                    <div className="flex items-center gap-2 mb-2">
-                      <CashflowIcon className={`h-4 w-4 ${cashflowColor}`} />
-                      <div className="text-sm font-medium text-gray-600">
-                        Annual Cashflow
-                      </div>
-                    </div>
-                    <div className={`text-2xl font-bold ${cashflowColor}`}>
-                      {formatCurrency(cashflow)}
-                    </div>
-                    <div className="text-xs text-gray-500 mt-1">
-                      {isPositiveCashflow ? 'Positive' : 'Negative'} cashflow
-                    </div>
-                  </div>
-
                   {/* Monthly Cashflow */}
                   <div className={`${cashflowBgColor} p-4 rounded-lg`}>
                     <div className="flex items-center gap-2 mb-2">
@@ -134,6 +118,22 @@ function PropertyHero({ property }: PropertyHeroProps) {
                       {formatCurrency(monthlyCashflow)}
                     </div>
                     <div className="text-xs text-gray-500 mt-1">Per month</div>
+                  </div>
+
+                  {/* Annual Profit */}
+                  <div className={`${cashflowBgColor} p-4 rounded-lg`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <CashflowIcon className={`h-4 w-4 ${cashflowColor}`} />
+                      <div className="text-sm font-medium text-gray-600">
+                        Annual Profit
+                      </div>
+                    </div>
+                    <div className={`text-2xl font-bold ${cashflowColor}`}>
+                      {formatCurrency(cashflow)}
+                    </div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      {isPositiveCashflow ? 'Positive' : 'Negative'} cashflow
+                    </div>
                   </div>
 
                   {/* Annual ROI */}
