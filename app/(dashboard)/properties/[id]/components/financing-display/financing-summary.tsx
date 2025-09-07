@@ -46,29 +46,29 @@ function FinancingSummary({ financing, propertyPrice }: FinancingSummaryProps) {
         </div>
 
         {/* Total Interest */}
-        <div className="bg-orange-50 p-4 rounded-lg">
-          <div className="text-sm text-orange-600 font-medium">
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="text-sm text-gray-600 font-medium">
             Total Interest
           </div>
-          <div className="text-2xl font-bold text-orange-900">
+          <div className="text-2xl font-bold text-gray-900">
             {formatCurrency(result.totalInterest)}
           </div>
         </div>
 
         {/* Total Cost */}
-        <div className="bg-green-50 p-4 rounded-lg">
-          <div className="text-sm text-green-600 font-medium">Total Cost</div>
-          <div className="text-2xl font-bold text-green-900">
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="text-sm text-gray-600 font-medium">Total Cost</div>
+          <div className="text-2xl font-bold text-gray-900">
             {formatCurrency(result.totalCost)}
           </div>
         </div>
 
         {/* Principal Amount */}
-        <div className="bg-purple-50 p-4 rounded-lg">
-          <div className="text-sm text-purple-600 font-medium">
+        <div className="bg-gray-50 p-4 rounded-lg">
+          <div className="text-sm text-gray-600 font-medium">
             Principal Amount
           </div>
-          <div className="text-2xl font-bold text-purple-900">
+          <div className="text-2xl font-bold text-gray-900">
             {formatCurrency(principalAmount)}
           </div>
         </div>
