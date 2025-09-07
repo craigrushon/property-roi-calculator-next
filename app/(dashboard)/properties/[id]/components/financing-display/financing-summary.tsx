@@ -45,24 +45,6 @@ function FinancingSummary({ financing, propertyPrice }: FinancingSummaryProps) {
           </div>
         </div>
 
-        {/* Total Interest */}
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <div className="text-sm text-gray-600 font-medium">
-            Total Interest
-          </div>
-          <div className="text-2xl font-bold text-gray-900">
-            {formatCurrency(result.totalInterest)}
-          </div>
-        </div>
-
-        {/* Total Cost */}
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <div className="text-sm text-gray-600 font-medium">Total Cost</div>
-          <div className="text-2xl font-bold text-gray-900">
-            {formatCurrency(result.totalCost)}
-          </div>
-        </div>
-
         {/* Principal Amount */}
         <div className="bg-gray-50 p-4 rounded-lg">
           <div className="text-sm text-gray-600 font-medium">
@@ -70,6 +52,24 @@ function FinancingSummary({ financing, propertyPrice }: FinancingSummaryProps) {
           </div>
           <div className="text-2xl font-bold text-gray-900">
             {formatCurrency(principalAmount)}
+          </div>
+        </div>
+
+        {/* Down Payment */}
+        <div className="bg-amber-50 p-4 rounded-lg">
+          <div className="text-sm text-amber-600 font-medium">Down Payment</div>
+          <div className="text-2xl font-bold text-amber-900">
+            {formatCurrency(parameters.downPayment)}
+          </div>
+        </div>
+
+        {/* Interest Rate */}
+        <div className="bg-purple-50 p-4 rounded-lg">
+          <div className="text-sm text-purple-600 font-medium">
+            Interest Rate
+          </div>
+          <div className="text-2xl font-bold text-purple-900">
+            {parameters.interestRate.toFixed(2)}%
           </div>
         </div>
       </div>

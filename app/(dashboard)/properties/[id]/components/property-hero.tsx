@@ -68,11 +68,11 @@ function PropertyHero({ property }: PropertyHeroProps) {
             </div>
 
             {/* Right: Property Details and Investment Metrics */}
-            <div className="space-y-6">
+            <div className="flex flex-col justify-between h-full">
               {/* Property Details */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <div className="text-3xl font-bold text-green-600">
+                  <div className="text-3xl font-bold text-gray-900 mt-2">
                     {formatCurrency(price).replace('.00', '')}
                   </div>
                   <Link href={`/properties/${id}/edit`}>
