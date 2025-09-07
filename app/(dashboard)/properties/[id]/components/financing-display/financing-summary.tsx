@@ -18,6 +18,7 @@ interface FinancingSummaryProps {
 
 function FinancingSummary({ financing, propertyPrice }: FinancingSummaryProps) {
   const [isScheduleExpanded, setIsScheduleExpanded] = useState(false);
+  const [isBreakdownExpanded, setIsBreakdownExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const { type, parameters, result } = financing;
 
@@ -74,45 +75,59 @@ function FinancingSummary({ financing, propertyPrice }: FinancingSummaryProps) {
         </div>
       </div>
 
-      {/* Detailed Breakdown */}
+      {/* Collapsible Detailed Breakdown */}
       <div className="bg-gray-50 p-4 rounded-lg">
-        <h5 className="font-medium mb-3">Detailed Breakdown</h5>
-        <div className="text-sm space-y-1">
-          <div className="flex justify-between">
-            <span>Property Price:</span>
-            <span>{formatCurrency(propertyPrice)}</span>
-          </div>
-          <div className="flex justify-between">
-            <span>Down Payment:</span>
-            <span>{formatCurrency(parameters.downPayment)}</span>
-          </div>
-          <div className="flex justify-between">
-            <span>Principal Amount:</span>
-            <span>{formatCurrency(principalAmount)}</span>
-          </div>
-          <div className="flex justify-between">
-            <span>Additional Fees:</span>
-            <span>{formatCurrency(parameters.additionalFees || 0)}</span>
-          </div>
-          {type === FinancingType.HELOC && (
-            <div className="flex justify-between">
-              <span>Current Balance:</span>
-              <span>{formatCurrency(parameters.currentBalance || 0)}</span>
-            </div>
+        <Button
+          variant="ghost"
+          onClick={() => setIsBreakdownExpanded(!isBreakdownExpanded)}
+          className="flex items-center gap-2 p-0 h-auto font-medium mb-0"
+        >
+          {isBreakdownExpanded ? (
+            <ChevronDown className="h-4 w-4" />
+          ) : (
+            <ChevronRight className="h-4 w-4" />
           )}
-          <div className="flex justify-between font-medium border-t pt-1">
-            <span>Total Interest:</span>
-            <span>{formatCurrency(result.totalInterest)}</span>
+          Detailed Breakdown
+        </Button>
+
+        {isBreakdownExpanded && (
+          <div className="text-sm space-y-1 pt-3">
+            <div className="flex justify-between">
+              <span>Property Price:</span>
+              <span>{formatCurrency(propertyPrice)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Down Payment:</span>
+              <span>{formatCurrency(parameters.downPayment)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Principal Amount:</span>
+              <span>{formatCurrency(principalAmount)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Additional Fees:</span>
+              <span>{formatCurrency(parameters.additionalFees || 0)}</span>
+            </div>
+            {type === FinancingType.HELOC && (
+              <div className="flex justify-between">
+                <span>Current Balance:</span>
+                <span>{formatCurrency(parameters.currentBalance || 0)}</span>
+              </div>
+            )}
+            <div className="flex justify-between font-medium border-t pt-1">
+              <span>Total Interest:</span>
+              <span>{formatCurrency(result.totalInterest)}</span>
+            </div>
+            <div className="flex justify-between font-bold text-teal-700 border-t pt-2 mt-2">
+              <span>Total Cash Investment:</span>
+              <span>
+                {formatCurrency(
+                  parameters.downPayment + (parameters.additionalFees || 0)
+                )}
+              </span>
+            </div>
           </div>
-          <div className="flex justify-between font-bold text-teal-700 border-t pt-2 mt-2">
-            <span>Total Cash Investment:</span>
-            <span>
-              {formatCurrency(
-                parameters.downPayment + (parameters.additionalFees || 0)
-              )}
-            </span>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Collapsible Amortization Schedule for Mortgage */}
@@ -137,7 +152,7 @@ function FinancingSummary({ financing, propertyPrice }: FinancingSummaryProps) {
           </Button>
 
           {isScheduleExpanded && (
-            <div className="space-y-4">
+            <div className="space-y-4 pt-3">
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>

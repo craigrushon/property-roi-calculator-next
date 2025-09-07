@@ -68,7 +68,7 @@ function FinancingDisplay({
           <Link href={`/properties/${propertyId}/edit?focus=financing`}>
             <Button variant="outline" size="sm">
               <Edit className="h-4 w-4 mr-1" />
-              Edit
+              Update financing
             </Button>
           </Link>
         </CardTitle>
