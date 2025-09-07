@@ -22,12 +22,18 @@ interface PropertyHeroProps {
 }
 
 function PropertyHero({ property }: PropertyHeroProps) {
-  const { returnOnInvestment, cashflow, price, address, imageUrl, id } =
-    property;
+  const {
+    returnOnInvestment,
+    cashflow,
+    price,
+    address,
+    imageUrl,
+    id,
+    financing
+  } = property;
 
   // Calculate additional metrics
   const monthlyCashflow = cashflow / 12;
-  const monthlyROI = returnOnInvestment / 12;
 
   // Determine if cashflow is positive or negative
   const isPositiveCashflow = cashflow > 0;
@@ -68,7 +74,7 @@ function PropertyHero({ property }: PropertyHeroProps) {
             </div>
 
             {/* Right: Property Details and Investment Metrics */}
-            <div className="flex flex-col justify-between h-full">
+            <div className="flex flex-col justify-center h-full">
               {/* Property Details */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -98,7 +104,7 @@ function PropertyHero({ property }: PropertyHeroProps) {
               </div>
 
               {/* Investment Metrics */}
-              <div>
+              <div className="mt-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Annual Cashflow */}
                   <div className={`${cashflowBgColor} p-4 rounded-lg`}>
@@ -146,19 +152,25 @@ function PropertyHero({ property }: PropertyHeroProps) {
                     </div>
                   </div>
 
-                  {/* Monthly ROI */}
-                  <div className={`${roiBgColor} p-4 rounded-lg`}>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Percent className={`h-4 w-4 ${roiColor}`} />
-                      <div className="text-sm font-medium text-gray-600">
-                        Monthly ROI
+                  {/* Down Payment */}
+                  {financing && (
+                    <div className="bg-amber-50 p-4 rounded-lg">
+                      <div className="flex items-center gap-2 mb-2">
+                        <DollarSign className="h-4 w-4 text-amber-600" />
+                        <div className="text-sm font-medium text-amber-600">
+                          Down Payment
+                        </div>
+                      </div>
+                      <div className="text-2xl font-bold text-amber-900">
+                        {formatCurrency(
+                          financing.parameters.downPayment
+                        ).replace('.00', '')}
+                      </div>
+                      <div className="text-xs text-amber-700 mt-1">
+                        Initial investment
                       </div>
                     </div>
-                    <div className={`text-2xl font-bold ${roiColor}`}>
-                      {monthlyROI.toFixed(2)}%
-                    </div>
-                    <div className="text-xs text-gray-500 mt-1">Per month</div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

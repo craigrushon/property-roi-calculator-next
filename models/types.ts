@@ -1,4 +1,5 @@
 import { Frequency } from '@prisma/client';
+import { FinancingOption } from './financing/types';
 
 export interface Property {
   id: number;
@@ -7,6 +8,7 @@ export interface Property {
   returnOnInvestment: number;
   cashflow: number;
   imageUrl: string | null;
+  financing?: FinancingOption;
 }
 
 export interface Income {
