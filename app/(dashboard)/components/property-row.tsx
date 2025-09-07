@@ -7,7 +7,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { HousePlus, MoreHorizontal } from 'lucide-react';
+import { HousePlus, MoreHorizontal, Eye } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import Link from 'next/link';
 import {
@@ -37,7 +37,7 @@ export function PropertyRow({ item: property }: { item: Property }) {
         ) : (
           <Tooltip>
             <TooltipTrigger asChild>
-              <Link href={`/properties/${property.id}/edit`}>
+              <Link href={`/properties/${property.id}`}>
                 <div className="bg-gray-100 h-16 w-16 rounded-md text-center">
                   <HousePlus className="h-16 w-16 p-5 rounded-md text-center opacity-50" />
                 </div>
@@ -48,10 +48,7 @@ export function PropertyRow({ item: property }: { item: Property }) {
         )}
       </TableCell>
       <TableCell className="font-medium">
-        <Link
-          className="hover:underline"
-          href={`/properties/${property.id}/edit`}
-        >
+        <Link className="hover:underline" href={`/properties/${property.id}`}>
           {property.address}
         </Link>
       </TableCell>
@@ -68,6 +65,15 @@ export function PropertyRow({ item: property }: { item: Property }) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem>
+              <Link
+                href={`/properties/${property.id}`}
+                className="flex items-center"
+              >
+                <Eye className="h-4 w-4 mr-2" />
+                View
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <Link href={`/properties/${property.id}/edit`}>Edit</Link>
             </DropdownMenuItem>
