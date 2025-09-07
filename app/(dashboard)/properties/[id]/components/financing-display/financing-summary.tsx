@@ -104,6 +104,14 @@ function FinancingSummary({ financing, propertyPrice }: FinancingSummaryProps) {
             <span>Total Interest:</span>
             <span>{formatCurrency(result.totalInterest)}</span>
           </div>
+          <div className="flex justify-between font-bold text-teal-700 border-t pt-2 mt-2">
+            <span>Total Cash Investment:</span>
+            <span>
+              {formatCurrency(
+                parameters.downPayment + (parameters.additionalFees || 0)
+              )}
+            </span>
+          </div>
         </div>
       </div>
 
